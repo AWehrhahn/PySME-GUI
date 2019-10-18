@@ -1,0 +1,42 @@
+{
+  "name": "pysme-gui",
+  "productName": "pysme-gui",
+  "version": "0.0.1",
+  "description": "A GUI for PySME",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "keywords": [],
+  "author": {
+    "name": "Ansgar Wehrhahn",
+    "email": "ansgar.wehrhahn@physics.uu.se"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [{
+        "name": "@electron-forge/maker-zip"
+      }]
+    }
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "find-free-port": "^2.0.0",
+    "plotly": "^1.0.6",
+    "plotly.js-dist": "^1.50.1",
+    "zerorpc": "^0.9.8"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.45",
+    "@electron-forge/maker-deb": "^6.0.0-beta.45",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.45",
+    "@electron-forge/maker-zip": "^6.0.0-beta.45",
+    "electron": "6.0.12"
+  }
+}

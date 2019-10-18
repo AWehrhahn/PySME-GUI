@@ -1,0 +1,75 @@
+html * {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* The sidebar menu */
+.sidenav {
+    height: 100% ; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #dadada; /* Grey */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #ffffff;
+  }
+  
+  /* Style page content */
+  .main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 20px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: lighter;
+    background-color: rgb(65, 65, 65);
+    color: white;
+    text-align: left;
+    z-index: 2; /* Stay on top */
+  }
+
+  .scaleable-wrapper {
+    display: inline-block; /* shrink to fit */
+    width: 70%;           /* whatever width you like */
+    position: relative;    /* so .content can use position: absolute */
+  }
+  .scaleable-wrapper::after {
+    padding-top: 56.25%; /* percentage of containing block _width_ */
+    display: block;
+    content: '';
+  }
+
+  .graphDiv {
+    position: absolute;
+    top: 0; bottom: 0; right: 0; left: 0;  /* follow the parent's edges */
+    outline: thin dashed green;            /* just so you can see the box */
+  }
+  
+ 
