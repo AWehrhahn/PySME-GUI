@@ -213,7 +213,7 @@ ipcMain.on("python-start", (event) => {
   // var promise = new Promise(createPyProcess);
   createPyProcess.then((port) => {
     event.reply("python-ready", port)
-  }).catch((err)=> console.error(err))
+  }).catch((err) => console.error(err))
 })
 
 // This method will be called when Electron has finished
