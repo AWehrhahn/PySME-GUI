@@ -11,7 +11,7 @@ const call = (name, args, callback) => {
     client.invoke(name, args, (err, res, more) => {
         // If we get an error from python (But not from zerorpc)
         // Then we consider that still an error
-        if ((err == null) && typeof(res) === 'string') {
+        if ((err == null) && typeof (res) === 'string') {
             if (res.indexOf("ERROR") >= 0) {
                 err = res;
             }
@@ -55,6 +55,10 @@ const get_cont_mask = (segment, callback) => {
 
 const get_annotations = (segment, wmin, wmax, callback) => {
     return call("get_annotations", [segment, wmin, wmax], callback)
+}
+
+const get_parameters = (callback) => {
+    return call("get_parameters", null, callback)
 }
 
 const set_mask = (segment, points, value, callback) => {

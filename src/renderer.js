@@ -105,6 +105,26 @@ const plot = (segment) => {
   })
 }
 
+const update_parameters = () => {
+  get_parameters((err, res) => {
+    console.log(res)
+    var teff = document.getElementById("param-teff")
+    var monh = document.getElementById("param-monh")
+    var logg = document.getElementById("param-logg")
+
+    teff.value = res.teff.toFixed(2);
+    monh.value = res.monh.toFixed(2);
+    logg.value = res.logg.toFixed(2);
+
+  })
+}
+
+$(".parameter").on("input", () => {
+  console.log("Teff changed");
+  $(this).css("border", "2px solid red")
+  console.log($(this))
+})
+
 // Define Plotly graph events
 graphDiv.on('plotly_selected', (event) => {
   console.log("Selected points" + event.points.length)
@@ -173,7 +193,7 @@ ButtonMaskLine.addEventListener('click', (event) => {
 const ButtonSegmentPrev = document.getElementById('button-segment-prev')
 ButtonSegmentPrev.addEventListener('click', (event) => {
   console.log("Going to previous segment")
-  if (segment > 0){
+  if (segment > 0) {
     segment = segment - 1
     plot(segment)
   }
@@ -182,7 +202,7 @@ ButtonSegmentPrev.addEventListener('click', (event) => {
 const ButtonSegmentNext = document.getElementById('button-segment-next')
 ButtonSegmentNext.addEventListener('click', (event) => {
   console.log("Going tp next segment")
-  if (segment < nSegment - 1){
+  if (segment < nSegment - 1) {
     segment = segment + 1
     plot(segment)
   }
