@@ -20,16 +20,22 @@
   "config": {
     "forge": {
       "packagerConfig": {},
-      "makers": [{
-        "name": "@electron-forge/maker-zip"
-      }]
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip"
+        }
+      ]
     }
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "electron-squirrel-startup": "^1.0.0",
+    "eslint": "^6.5.1",
     "find-free-port": "^2.0.0",
+    "jquery": "^3.4.1",
     "plotly": "^1.0.6",
     "plotly.js-dist": "^1.50.1",
+    "popper.js": "^1.16.0",
     "zerorpc": "^0.9.8"
   },
   "devDependencies": {
