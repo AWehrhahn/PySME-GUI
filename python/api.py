@@ -25,8 +25,8 @@ import gevent, signal
 import numpy as np
 from scipy.constants import speed_of_light
 
-from sme.sme import SME_Struct
-from sme.util import log_version
+from pysme.sme import SME_Struct
+from pysme.util import log_version
 
 __version__ = "0.0.1b0"
 clight = speed_of_light * 1e-3
@@ -177,6 +177,16 @@ class SMEApi(object):
             ]
 
         return annotations
+
+    @catch_exception
+    @requires_load
+    def get_parameters(self, _=None):
+        parameters = {
+            "teff": float(self.sme.teff),
+            "logg": float(self.sme.logg),
+            "monh": float(self.sme.monh),
+        }
+        return parameters
 
     @catch_exception
     @requires_load
