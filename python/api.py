@@ -25,8 +25,14 @@ import gevent, signal
 import numpy as np
 from scipy.constants import speed_of_light
 
-from pysme.sme import SME_Struct
-from pysme.util import log_version
+try:
+    from pysme.sme import SME_Struct
+    from pysme.util import log_version
+
+    has_sme = True
+except ImportError as e:
+    has_sme = False
+    ex = e
 
 __version__ = "0.0.1b0"
 clight = speed_of_light * 1e-3
@@ -272,6 +278,10 @@ def main():
         format="%(asctime)-15s - %(levelname)s - %(name)-8s - %(message)s",
     )
 
+    if not has_sme:
+        logger.error("Could not import module pysme")
+        logger.exception(ex)
+
     try:
         addr = "tcp://127.0.0.1:" + parse_port()
         s = zerorpc.Server(SMEApi())
@@ -283,7 +293,8 @@ def main():
         logger.debug("Server version: %s", __version__)
         s.run()
     except Exception as e:
-        logger.exception("Sever failed to start", e)
+        logger.error("Sever failed to start")
+        logger.exception(e)
 
 
 if __name__ == "__main__":
