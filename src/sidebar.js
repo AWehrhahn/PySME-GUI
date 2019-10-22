@@ -61,8 +61,8 @@ ButtonWindowPlot.addEventListener('click', (event) => {
 
 
 // Show Parameters Button
-var ButtonWindowPlot = document.getElementById("sidebar-show-parameters")
-ButtonWindowPlot.addEventListener('click', (event) => {
+var ButtonWindowParameters = document.getElementById("sidebar-show-parameters")
+ButtonWindowParameters.addEventListener('click', (event) => {
     console.log("Clicked 'Show Parameters' in the sidebar")
     var window = document.getElementById("window-spectrum")
     var window2 = document.getElementById("window-parameters")
