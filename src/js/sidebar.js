@@ -45,7 +45,7 @@ ButtonSaveAs.addEventListener('click', (event) => {
         if (!out.canceled) {
             var fname = out.filePath
             console.log("Saving SME structure to file: " + fname)
-            save(fname).then((res)=>console.log("Data saved")).catch((err)=>console.error(err))
+            save(fname).then((res) => console.log("Data saved")).catch((err) => console.error(err))
         } else {
             console.log("User did not select a file")
         }
