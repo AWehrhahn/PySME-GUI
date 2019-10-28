@@ -149,12 +149,12 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'js', 'preload.js')
     }
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
+  mainWindow.loadURL(`file://${__dirname}/dashboard.html`);
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -187,6 +187,8 @@ const createPyProcess = () => {
     pyProc = require('child_process').spawn('python', [script, port])
     if (pyProc != null) {
       console.log('child process success, running on localhost:' + port)
+    } else {
+      console.error("could not succesfully start the python server");
     }
   }).catch((err) => {
     console.error(err);
@@ -226,4 +228,4 @@ app.on('activate', function () {
 })
 
 // Provide the Python port of the API server to the renderer process
-ipcMain.on("python-port", (event) => {event.returnValue = pyPort;})
+ipcMain.on("python-port", (event) => { event.returnValue = pyPort; })
