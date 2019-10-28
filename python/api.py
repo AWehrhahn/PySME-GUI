@@ -281,6 +281,7 @@ def main():
     if not has_sme:
         logger.error("Could not import module pysme")
         logger.exception(ex)
+        exit()
 
     try:
         addr = "tcp://127.0.0.1:" + parse_port()
@@ -289,7 +290,6 @@ def main():
         gevent.signal(signal.SIGTERM, s.stop)
         gevent.signal(signal.SIGINT, s.stop)
         logger.info("start running on %s", addr)
-        log_version()
         logger.debug("Server version: %s", __version__)
         s.run()
     except Exception as e:
