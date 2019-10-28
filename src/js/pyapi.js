@@ -11,7 +11,7 @@ ipcRenderer.send("python-start")
 // var port = ipcRenderer.sendSync('python-port') // TODO: use the same port as in main
 
 const call = (name, args) => new Promise((resolve, reject) => {
-   client.invoke(name, args, (err, res, more) => {
+    client.invoke(name, args, (err, res, more) => {
         // If we get an error from python (But not from zerorpc)
         // Then we consider that still an error
         if (err) reject(err);

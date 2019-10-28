@@ -17,7 +17,7 @@ var lines = []
 const print_log = (lines) => {
   var show_levels = ["INFO"]
   var text = "";
-  for (var line in lines){
+  for (var line in lines) {
     line = lines[line]
     timestamp = line[0]
     label = line[1]
@@ -25,9 +25,9 @@ const print_log = (lines) => {
     message = line[3]
 
     // Filter to only the relevant entries
-    if (label == show_levels[0]){
+    if (label == show_levels[0]) {
       text += timestamp + " - " + label + " - " + pymodule + " - " + message + "\n"
-    } 
+    }
   }
   LogTextArea.textContent = text;
 }
@@ -40,14 +40,14 @@ chokidar.watch(logfilename, { usePolling: true }).on('all', (event, path) => {
 
 // read the whole log as it exists on startup
 fs.readFile(logfilename, 'utf-8', (err, data) => {
-  if(err){
-      alert("An error ocurred reading the file :" + err.message);
-      return;
+  if (err) {
+    alert("An error ocurred reading the file :" + err.message);
+    return;
   }
 
   lines = [];
   var d;
-  while (d = regex.exec(data)){
+  while (d = regex.exec(data)) {
     timestamp = d[1]
     label = d[2]
     pymodule = d[3]
