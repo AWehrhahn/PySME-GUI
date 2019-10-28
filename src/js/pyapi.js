@@ -16,7 +16,7 @@ const call = (name, args, callback) => {
                 err = res;
             }
         }
-        if (err) { console.error(err); alert(err); }
+        if (err) { console.error(err); }
         callback(err, res)
     })
 }

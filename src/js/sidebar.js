@@ -15,7 +15,10 @@ ButtonLoad.addEventListener('click', (event) => {
         if (!out.canceled) {
             var fname = out.filePaths[0];
             console.log("Opening new file: " + fname)
-            load(fname, (err, res) => { nSegment = res; plot(0); update_parameters() })
+            load(fname, (err, res) => {
+                nSegment = res; plot(0);
+                // update_parameters() 
+            })
         } else {
             console.log("User did not select a file")
         }
@@ -49,25 +52,25 @@ ButtonSaveAs.addEventListener('click', (event) => {
     })
 })
 
-// Show Spectrum Button
-var ButtonWindowPlot = document.getElementById("sidebar-show-spectrum")
-ButtonWindowPlot.addEventListener('click', (event) => {
-    console.log("Clicked 'Show Spectrum' in the sidebar")
-    var window = document.getElementById("window-spectrum")
-    var window2 = document.getElementById("window-parameters")
-    window.style.display = "block"
-    window2.style.display = "none"
-})
+// // Show Spectrum Button
+// var ButtonWindowPlot = document.getElementById("sidebar-show-spectrum")
+// ButtonWindowPlot.addEventListener('click', (event) => {
+//     console.log("Clicked 'Show Spectrum' in the sidebar")
+//     var window = document.getElementById("window-spectrum")
+//     var window2 = document.getElementById("window-parameters")
+//     window.style.display = "block"
+//     window2.style.display = "none"
+// })
 
 
-// Show Parameters Button
-var ButtonWindowParameters = document.getElementById("sidebar-show-parameters")
-ButtonWindowParameters.addEventListener('click', (event) => {
-    console.log("Clicked 'Show Parameters' in the sidebar")
-    var window = document.getElementById("window-spectrum")
-    var window2 = document.getElementById("window-parameters")
-    window.style.display = "none"
-    window2.style.display = "block"
-})
+// // Show Parameters Button
+// var ButtonWindowParameters = document.getElementById("sidebar-show-parameters")
+// ButtonWindowParameters.addEventListener('click', (event) => {
+//     console.log("Clicked 'Show Parameters' in the sidebar")
+//     var window = document.getElementById("window-spectrum")
+//     var window2 = document.getElementById("window-parameters")
+//     window.style.display = "none"
+//     window2.style.display = "block"
+// })
 
 
