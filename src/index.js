@@ -178,7 +178,7 @@ function createWindow() {
 let pyProc = null
 let pyPort = null
 
-const createPyProcess = () => {
+const createPyProcess = (callback) => {
   // TODO: what is a good range for port numbers?
   require("find-free-port")(3000, 4000).then(([free_port]) => {
     pyPort = free_port;
@@ -187,13 +187,16 @@ const createPyProcess = () => {
     pyProc = require('child_process').spawn('python', [script, port])
     if (pyProc != null) {
       console.log('child process success, running on localhost:' + port)
+      callback(port)
     } else {
       console.error("could not succesfully start the python server");
+      callback("could not succesfully start the python server")
     }
   }).catch((err) => {
     console.error(err);
     pyPort = null;
     pyProc = null;
+    callback(err)
   })
 }
 
@@ -204,12 +207,17 @@ const exitPyProcess = () => {
   console.log('child process killed')
 }
 
+// Provide the Python port of the API server to the renderer process
+ipcMain.on("python-start", (event) => {
+  const reply = (port) => event.reply("python-ready", port)
+  createPyProcess(reply);
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
-app.on('ready', createPyProcess)
+// app.on('ready', createPyProcess)
 
 // When the App is about to quit
 app.on('will-quit', exitPyProcess)
@@ -227,5 +235,3 @@ app.on('activate', function () {
   if (mainWindow === null) createWindow()
 })
 
-// Provide the Python port of the API server to the renderer process
-ipcMain.on("python-port", (event) => { event.returnValue = pyPort; })

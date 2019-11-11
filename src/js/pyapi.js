@@ -1,11 +1,15 @@
-
-
 // Connect to the Python server
 let client = new zerorpc.Client()
-var port = ipcRenderer.sendSync('python-port') // TODO: use the same port as in main
-var url = 'tcp://127.0.0.1:' + port
-client.connect(url)
-client.on("error", (error) => { alert("RPC client error: ", error); });
+
+ipcRenderer.on("python-ready", (event, port) => {
+    var url = 'tcp://127.0.0.1:' + port
+    console.log(url)
+    client.on("error", (error) => { alert("RPC client error: ", error); });
+    client.connect(url)    
+})
+ipcRenderer.send("python-start")
+// var port = ipcRenderer.sendSync('python-port') // TODO: use the same port as in main
+
 
 const call = (name, args, callback) => {
     client.invoke(name, args, (err, res, more) => {
