@@ -27,6 +27,7 @@ from scipy.constants import speed_of_light
 
 try:
     from pysme.sme import SME_Struct
+    from pysme.solve import synthesize_spectrum, SME_Solver
     from pysme.util import log_version
 
     has_sme = True
@@ -70,6 +71,29 @@ class SMEApi(object):
         self.sme = None
 
     @catch_exception
+    def log(self, msg):
+        logger.info(msg)
+        return True
+
+    @catch_exception
+    @requires_load
+    def synthesize_spectrum(self, _=None):
+        logger.info("Starting spectral synthesis")
+        self.sme = synthesize_spectrum(self.sme)
+        return True
+
+    @catch_exception
+    @requires_load
+    def solve(self, _=None):
+        if self.sme.spec is not None:
+            logger.info("Start fitting the observation")
+            solver = SME_Solver()
+            self.sme = solver.solve(self.sme)
+            return True
+        else:
+            raise ValueError("An observation is required to determine a best fit")
+
+    @catch_exception
     def new(self, _=None):
         """ Just create an empty SME structure """
         logger.info("Creating new empty SME structure")
@@ -98,17 +122,23 @@ class SMEApi(object):
     @requires_load
     def get_spectrum(self, segment=0):
         logger.info("Requested Spectrum, segment %i", segment)
-        x = self.sme.wave[segment]
-        y = self.sme.spec[segment]
-        return x.tolist(), y.tolist()
+        if self.sme.spec is not None:
+            x = self.sme.wave[segment]
+            y = self.sme.spec[segment]
+            return x.tolist(), y.tolist()
+        else:
+            return None, None
 
     @catch_exception
     @requires_load
     def get_synthetic(self, segment=0):
         logger.info("Requested Synthetic spectrum, segment %i", segment)
-        x = self.sme.wave[segment]
-        y = self.sme.synth[segment]
-        return x.tolist(), y.tolist()
+        if self.sme.synth is not None:
+            x = self.sme.wave[segment]
+            y = self.sme.synth[segment]
+            return x.tolist(), y.tolist()
+        else:
+            return None, None
 
     @catch_exception
     @requires_load
@@ -193,6 +223,14 @@ class SMEApi(object):
             "monh": float(self.sme.monh),
         }
         return parameters
+
+    @catch_exception
+    @requires_load
+    def set_parameters(self, args):
+        args = dict(args)
+        for k, v in args.items():
+            self.sme[k] = v
+        return True
 
     @catch_exception
     @requires_load
