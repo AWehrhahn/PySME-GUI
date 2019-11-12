@@ -15,10 +15,10 @@ ButtonLoad.addEventListener('click', (event) => {
         if (!out.canceled) {
             var fname = out.filePaths[0];
             console.log("Opening new file: " + fname)
-            load(fname, (err, res) => {
+            load(fname).then((res) => {
                 nSegment = res; plot(0);
                 // update_parameters() 
-            })
+            }).catch((err) => console.error(err))
         } else {
             console.log("User did not select a file")
         }
@@ -32,7 +32,7 @@ ButtonSave.addEventListener('click', (event) => {
     fname = "test.sme"
 
     console.log("Saving SME structure to file: " + fname)
-    save(fname, (err, res) => { if (!err) console.log("Data saved") })
+    save(fname).then((res) => console.log("Data saved")).catch((err) => console.error(err))
 })
 
 
@@ -45,7 +45,7 @@ ButtonSaveAs.addEventListener('click', (event) => {
         if (!out.canceled) {
             var fname = out.filePath
             console.log("Saving SME structure to file: " + fname)
-            save(fname, (err, res) => { if (!err) console.log("Data saved") })
+            save(fname).then((res)=>console.log("Data saved")).catch((err)=>console.error(err))
         } else {
             console.log("User did not select a file")
         }
