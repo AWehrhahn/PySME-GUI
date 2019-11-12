@@ -54,7 +54,6 @@ fs.readFile(logfilename, 'utf-8', (err, data) => {
     message = d[4]
     lines.push([timestamp, label, pymodule, message])
   }
-  console.log(lines)
   lines_read = lines.length
 
   print_log(lines)
