@@ -157,7 +157,7 @@ function createWindow() {
   mainWindow.loadURL(`file://${__dirname}/dashboard.html`);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -178,7 +178,7 @@ function createWindow() {
 let pyProc = null
 let pyPort = null
 
-const createPyProcess = (callback) => {
+const createPyProcess = new Promise((resolve, reject) => {
   // TODO: what is a good range for port numbers?
   require("find-free-port")(3000, 4000).then(([free_port]) => {
     pyPort = free_port;
@@ -187,18 +187,19 @@ const createPyProcess = (callback) => {
     pyProc = require('child_process').spawn('python', [script, port])
     if (pyProc != null) {
       console.log('child process success, running on localhost:' + port)
-      callback(port)
+      resolve(port)
     } else {
-      console.error("could not succesfully start the python server");
-      callback("could not succesfully start the python server")
+      let err = "could not succesfully start the python server"
+      console.error(err);
+      reject(err)
     }
   }).catch((err) => {
     console.error(err);
     pyPort = null;
     pyProc = null;
-    callback(err)
+    reject(err)
   })
-}
+})
 
 const exitPyProcess = () => {
   pyProc.kill()
@@ -209,8 +210,10 @@ const exitPyProcess = () => {
 
 // Provide the Python port of the API server to the renderer process
 ipcMain.on("python-start", (event) => {
-  const reply = (port) => event.reply("python-ready", port)
-  createPyProcess(reply);
+  // var promise = new Promise(createPyProcess);
+  createPyProcess.then((port) => {
+    event.reply("python-ready", port)
+  }).catch((err)=> console.error(err))
 })
 
 // This method will be called when Electron has finished

@@ -71,7 +71,7 @@ const update_annotations = (segment, wmin, wmax) => {
         wave_range = [wmin, wmax]
         console.log("Get annotations for:")
         console.log("Wmin: " + wmin + ", Wmax: " + wmax)
-        get_annotations(segment, wmin, wmax, (err, res) => {
+        get_annotations(segment, wmin, wmax).then((res) => {
             layout.annotations = res
             layout.datarevision = layout.datarevision + 1
             Plotly.react(graphDiv, data, layout)
@@ -81,30 +81,31 @@ const update_annotations = (segment, wmin, wmax) => {
 
 const plot = (segment) => {
     layout.title = "Segment " + segment
-    get_spectrum(segment, (err, res) => {
+    get_spectrum(segment).then((res) => {
         trace1.x = res[0]
         trace1.y = res[1]
-        get_synthetic(segment, (err, res) => {
-            trace2.x = res[0]
-            trace2.y = res[1]
-            get_cont_mask(segment, (err, res) => {
-                trace3.x = res[0]
-                trace3.y = res[1]
-                get_line_mask(segment, (err, res) => {
-                    trace4.x = res[0]
-                    trace4.y = res[1]
-                    var wmin = res[0][0]
-                    var wmax = res[0][res[0].length - 1]
-                    layout.xaxis.autorange = true
-                    get_annotations(segment, wmin, wmax, (err, res) => {
-                        layout.annotations = res
-                        layout.datarevision = layout.datarevision + 1
-                        Plotly.react(graphDiv, data, layout)
-                    })
-                })
-            })
-        })
+        return get_synthetic(segment)
+    }).then((res) => {
+        trace2.x = res[0]
+        trace2.y = res[1]
+        return get_cont_mask(segment)
+    }).then((res) => {
+        trace3.x = res[0]
+        trace3.y = res[1]
+        return get_line_mask(segment)
+    }).then((res) => {
+        trace4.x = res[0]
+        trace4.y = res[1]
+        var wmin = res[0][0]
+        var wmax = res[0][res[0].length - 1]
+        layout.xaxis.autorange = true
+        return get_annotations(segment, wmin, wmax)
+    }).then((res) => {
+        layout.annotations = res
+        layout.datarevision = layout.datarevision + 1
+        Plotly.react(graphDiv, data, layout)
     })
+
 }
 
 // Define Plotly graph events
@@ -119,7 +120,7 @@ graphDiv.on('plotly_selected', (event) => {
         }
     })
     console.log(x)
-    set_mask(segment, x, mask_mode, () => { plot(segment) });
+    set_mask(segment, x, mask_mode).then(() => { plot(segment) });
 })
 
 //TODO resize without event
