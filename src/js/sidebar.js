@@ -16,8 +16,9 @@ ButtonLoad.addEventListener('click', (event) => {
             var fname = out.filePaths[0];
             console.log("Opening new file: " + fname)
             load(fname).then((res) => {
-                nSegment = res; plot(0);
-                // update_parameters() 
+                nSegment = res;
+                plot(0);
+                update_parameters();
             }).catch((err) => console.error(err))
         } else {
             console.log("User did not select a file")

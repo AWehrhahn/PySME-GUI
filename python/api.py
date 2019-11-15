@@ -228,6 +228,7 @@ class SMEApi(object):
     @requires_load
     def set_parameters(self, args):
         args = dict(args)
+        logger.info("Set parameters: %s", args)
         for k, v in args.items():
             self.sme[k] = v
         return True

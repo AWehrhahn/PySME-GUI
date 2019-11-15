@@ -32,29 +32,34 @@ const print_log = (lines) => {
   LogTextArea.textContent = text;
 }
 
+const readFile = () => {
+  // read the whole log as it exists on startup
+  fs.readFile(logfilename, 'utf-8', (err, data) => {
+    if (err) {
+      alert("An error ocurred reading the file :" + err.message);
+      return;
+    }
+
+    lines = [];
+    var d;
+    while (d = regex.exec(data)) {
+      timestamp = d[1]
+      label = d[2]
+      pymodule = d[3]
+      message = d[4]
+      lines.push([timestamp, label, pymodule, message])
+    }
+    lines_read = lines.length
+
+    print_log(lines)
+  });
+}
+
 // let vue deal with it?
 // usePolling needs to be true only on Windows?
 chokidar.watch(logfilename, { usePolling: true }).on('all', (event, path) => {
   // Only read the newest changes from the file?
+  readFile();
 });
 
-// read the whole log as it exists on startup
-fs.readFile(logfilename, 'utf-8', (err, data) => {
-  if (err) {
-    alert("An error ocurred reading the file :" + err.message);
-    return;
-  }
-
-  lines = [];
-  var d;
-  while (d = regex.exec(data)) {
-    timestamp = d[1]
-    label = d[2]
-    pymodule = d[3]
-    message = d[4]
-    lines.push([timestamp, label, pymodule, message])
-  }
-  lines_read = lines.length
-
-  print_log(lines)
-});
+readFile()

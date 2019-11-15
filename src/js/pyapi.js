@@ -64,6 +64,10 @@ const get_parameters = () => {
     return call("get_parameters", null)
 }
 
+const set_parameters = (dict) => {
+    return call("set_parameters", dict)
+}
+
 const set_mask = (segment, points, value) => {
     return call("set_mask", [segment, points, value])
 }
