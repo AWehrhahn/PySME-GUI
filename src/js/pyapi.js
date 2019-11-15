@@ -33,9 +33,7 @@ const empty = () => {
 }
 
 const load = (fname) => {
-    const p = call("load", fname)
-    console.log(p)
-    return p
+    return call("load", fname)
 }
 
 const save = (fname) => {
