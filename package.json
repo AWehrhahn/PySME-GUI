@@ -20,9 +20,11 @@
   "config": {
     "forge": {
       "packagerConfig": {},
-      "makers": [{
-        "name": "@electron-forge/maker-zip"
-      }]
+      "makers": [
+        {
+          "name": "@electron-forge/maker-zip"
+        }
+      ]
     }
   },
   "dependencies": {

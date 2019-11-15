@@ -116,15 +116,33 @@
 
         <h2>Parameters</h2>
 
-        <form>
-          <div class="form-group row">
-            <label for="parameter-teff" class="col-sm-2 col-form-label">Teff</label>
-            <div class="col-sm-5">
-              <input type="number" class="form-control" id="parameter-teff" placeholder="Teff" aria-label="Teff">
-            </div>
-            <label class="col-sm-2 col-form-label">K</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Teff</span>
           </div>
-        </form>
+          <input class="form-control parameter" id="parameter-teff" placeholder="Teff" aria-label="Teff">
+          <div class="input-group-append">
+            <span class="input-group-text">K</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">log(g)</span>
+          </div>
+          <input class="form-control parameter" id="parameter-logg" placeholder="log(g)" aria-label="log(g)">
+          <div class="input-group-append">
+            <span class="input-group-text">log(cgs)</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">MonH</span>
+          </div>
+          <input class="form-control parameter" id="parameter-monh" placeholder="MonH" aria-label="MonH">
+          <div class="input-group-append">
+            <span class="input-group-text">dex</span>
+          </div>
+        </div>
 
         <h2>Log</h2>
 
