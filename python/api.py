@@ -234,6 +234,10 @@ class SMEApi(object):
         return True
 
     @catch_exception
+    def get_logfile(self, _=None):
+        raise NotImplementedError
+
+    @catch_exception
     @requires_load
     def set_mask(self, args):
         logger.info("Change mask values")
