@@ -40,6 +40,14 @@ const save = (fname) => {
     return call("save", fname)
 }
 
+const synthesize_spectrum = () => {
+    return call("synthesize_spectrum", null)
+}
+
+const solve = () => {
+    return call("solve", null)
+}
+
 const get_spectrum = (segment) => {
     return call("get_spectrum", segment)
 }
