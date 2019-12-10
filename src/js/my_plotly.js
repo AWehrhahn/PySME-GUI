@@ -105,7 +105,20 @@ const plot = (segment) => {
         layout.datarevision = layout.datarevision + 1
         Plotly.react(graphDiv, data, layout)
     })
+}
 
+const update_mask = (segment) => {
+    layout.title = "Segment " + segment
+    get_cont_mask(segment).then((res) => {
+        trace3.x = res[0]
+        trace3.y = res[1]
+        return get_line_mask(segment)
+    }).then((res) => {
+        trace4.x = res[0]
+        trace4.y = res[1]
+        layout.datarevision = layout.datarevision + 1
+        Plotly.react(graphDiv, data, layout)
+    })
 }
 
 // Define Plotly graph events
@@ -120,7 +133,7 @@ graphDiv.on('plotly_selected', (event) => {
         }
     })
     console.log(x)
-    set_mask(segment, x, mask_mode).then(() => { plot(segment) });
+    set_mask(segment, x, mask_mode).then(() => { update_mask(segment) });
 })
 
 //TODO resize without event
@@ -140,17 +153,17 @@ graphDiv.on('plotly_relayout', (event) => {
     }
 })
 
-// const ButtonMaskGood = document.getElementById('button-mask-good')
-// ButtonMaskGood.addEventListener('click', (event) => {
-//     console.log("Changing mask mode to good")
-//     mask_mode = "good"
-// })
+const ButtonMaskGood = document.getElementById('button-mask-good')
+ButtonMaskGood.addEventListener('click', (event) => {
+    console.log("Changing mask mode to good")
+    mask_mode = "good"
+})
 
-// const ButtonMaskBad = document.getElementById('button-mask-bad')
-// ButtonMaskBad.addEventListener('click', (event) => {
-//     console.log("Changing mask mode to bad")
-//     mask_mode = "bad"
-// })
+const ButtonMaskBad = document.getElementById('button-mask-bad')
+ButtonMaskBad.addEventListener('click', (event) => {
+    console.log("Changing mask mode to bad")
+    mask_mode = "bad"
+})
 
 // const ButtonMaskCont = document.getElementById('button-mask-cont')
 // ButtonMaskCont.addEventListener('click', (event) => {
