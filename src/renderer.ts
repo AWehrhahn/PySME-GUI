@@ -6,6 +6,10 @@ const { dialog } = require('electron').remote
 var fs = require('fs');
 var JSZip = require("jszip");
 const { Table } = require("apache-arrow");
+const { spawn } = require('child_process');
+const { join } = require('path');
+var tmp = require('tmp');
+
 
 interface ZipObject {
     name: string
@@ -17,6 +21,13 @@ interface SmeFile {
 }
 
 var sme: SmeFile;
+
+class SmeError {
+    constructor(public message: string) {
+    }
+}
+
+class EndianError extends SmeError { }
 
 function checkEndian() {
     var arrayBuffer = new ArrayBuffer(2);
@@ -58,7 +69,7 @@ function create_array(data: ArrayBuffer, descr: string) {
 
     if ((descr[0] != "|") && (endian != checkEndian())) {
         // TODO: flip endianness of data
-        throw new Error(`Endianess of datafile ${descr[0]} does not match machine Endianness`)
+        throw new EndianError(`Endianess of datafile ${descr[0]} does not match machine Endianness`)
     }
 
     // new DataView(buffer).setFloat64(0, endian_flag)
@@ -291,13 +302,69 @@ async function save_file(fname: string, sme: SmeFile) {
 }
 
 
+async function cast_to_little_endian(fname: string) {
+    console.log("Converting sme file to little endian")
+    var script_file = join(__dirname, "scripts/to_little_endian.py")
+    var tmpobj = tmp.fileSync({ postfix: ".sme" });
+    var fname_out: string = tmpobj.name;
+    console.log(fname_out)
+
+    var promise = new Promise<string>((resolve, reject) => {
+        var child = spawn("python", [script_file, fname, fname_out])
+
+        child.on('exit', (code: any, signal: any) => {
+            console.log(`child process exited with code ${code}`);
+            resolve(fname_out)
+        });
+    })
+
+    return promise
+}
+
+async function load_from_idl_file(fname: string) {
+    console.log("Converting sme file to little endian")
+    var script_file = join(__dirname, "scripts/from_idl_file.py")
+    var tmpobj = tmp.fileSync({ postfix: ".sme" });
+    var fname_out: string = tmpobj.name;
+    console.log(fname_out)
+
+    var promise = new Promise<string>((resolve, reject) => {
+        var child = spawn("python", [script_file, fname, fname_out])
+
+        child.on('exit', (code: any, signal: any) => {
+            console.log(`child process exited with code ${code}`);
+            resolve(fname_out)
+        });
+    })
+
+    return promise
+}
+
 var ButtonLoad = document.getElementById("btn-load")
 ButtonLoad.addEventListener('click', async (event) => {
     var out = await dialog.showOpenDialog({ properties: ["openFile"] })
     if (!out.canceled) {
         var fname = out.filePaths[0];
         console.log("Opening new file: " + fname)
-        sme = await load_file(fname)
+        while (true) {
+            try {
+                sme = await load_file(fname)
+                break;
+            } catch (err) {
+                // if error is big endian
+                console.error(err)
+                if (err instanceof EndianError) {
+                    console.log("Casting file to little endian")
+                    fname = await cast_to_little_endian(fname)
+                    continue
+                }
+                if (err instanceof IdlError) {
+                    console.log("Loading IDL SME file")
+                    fname = await load_from_idl_file(fname)
+                    continue
+                }
+            }
+        }
         plot_sme(sme)
     } else {
         console.log("User did not select a file")

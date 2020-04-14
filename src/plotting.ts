@@ -10,7 +10,7 @@ var fmt = {
 }
 
 var mask_mode: "bad" | "line" | "cont" = "cont"
-
+var initial_setup = true
 var graphDiv: any = document.getElementById('graphDiv');
 var data: any = []
 var layout: any = {}
@@ -19,6 +19,18 @@ var data_index: { [id: string]: { [id: number]: number } } = {
     contmask: {},
     spec: {},
     synth: {}
+}
+
+function reset_plot() {
+    initial_setup = true
+    data = []
+    layout = {}
+    data_index = {
+        linemask: {},
+        contmask: {},
+        spec: {},
+        synth: {}
+    }
 }
 
 function get_mask_value() {
@@ -114,6 +126,7 @@ function create_mask_points(x: Float64Array, y: Float64Array, mask: Uint8Array, 
 }
 
 function plot_sme(sme: any) {
+    reset_plot()
     var nSegment = sme["wave"].length
 
     // Create Plot
@@ -250,10 +263,13 @@ function plot_sme(sme: any) {
     var buttons = [["zoom2d", "pan2d", "select2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"]];
     Plotly.react(graphDiv, data, layout, { responsive: true, modeBarButtons: buttons });
 
-    graphDiv.on('plotly_selected', (event: any) => {
-        var range: [number, number] = event.range.x
-        set_mask(sme, range)
-    })
+    if (initial_setup) {
+        graphDiv.on('plotly_selected', (event: any) => {
+            var range: [number, number] = event.range.x
+            set_mask(sme, range)
+        })
+        initial_setup = false
+    }
 }
 
 var ButtonMaskLine = document.getElementById("btn-mask-line")

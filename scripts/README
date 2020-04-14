@@ -1,0 +1,6 @@
+These scripts get called by the Electron GUI, when it comes to handling non default PySME files.
+
+For example for loading IDL SME save files, or to fix the endianness.
+
+Each script should take a file (and maybe parameters) as well as a target filename as command line arguments and then write a (temp) file to disk.
+
