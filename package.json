@@ -49,7 +49,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "PySME GUI"
+            "name": "PySmeGUI"
           }
         },
         {
