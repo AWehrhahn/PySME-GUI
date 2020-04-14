@@ -2,13 +2,15 @@
   "name": "pysme-gui",
   "version": "1.0.0",
   "description": "A minimal Electron application written with Typescript",
+  "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "lint": "tslint -c tslint.json -p tsconfig.json",
-    "start": "electron-forge start",
+    "make": "electron-forge make",
+    "start": "tsc && electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts ."
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",
   "keywords": [

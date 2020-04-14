@@ -28,6 +28,8 @@ class SmeError {
 }
 
 class EndianError extends SmeError { }
+class IdlError extends SmeError { }
+
 
 function checkEndian() {
     var arrayBuffer = new ArrayBuffer(2);
@@ -346,9 +348,12 @@ ButtonLoad.addEventListener('click', async (event) => {
     if (!out.canceled) {
         var fname = out.filePaths[0];
         console.log("Opening new file: " + fname)
-        while (true) {
+        var isLoaded = false;
+        while (!isLoaded) {
             try {
+                console.log("Load file: " + fname)
                 sme = await load_file(fname)
+                isLoaded = true;
                 break;
             } catch (err) {
                 // if error is big endian
@@ -356,12 +361,11 @@ ButtonLoad.addEventListener('click', async (event) => {
                 if (err instanceof EndianError) {
                     console.log("Casting file to little endian")
                     fname = await cast_to_little_endian(fname)
-                    continue
+                    console.log("New filename: " + fname)
                 }
                 if (err instanceof IdlError) {
                     console.log("Loading IDL SME file")
                     fname = await load_from_idl_file(fname)
-                    continue
                 }
             }
         }
