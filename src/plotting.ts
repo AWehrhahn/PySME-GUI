@@ -225,6 +225,8 @@ function plot_sme(sme: any) {
     for (let seg = 0; seg < nSegment; seg++) {
         // Slider Steps
         var visibility = Array.apply(null, Array(visible.length)).map(function (x: any, i: number) { return visible[i] == seg })
+        var wmin = sme.wave[seg][0]
+        var wmax = sme.wave[seg][sme.wave[seg].length - 1]
         var step = {
             label: `Segment ${seg}`,
             method: "update",
@@ -233,7 +235,7 @@ function plot_sme(sme: any) {
                 {
                     title: `Segment ${seg}`,
                     // annotations: annotations[i],
-                    xaxis: { range: sme.wran[seg] },
+                    xaxis: { range: [wmin, wmax] },
                     yaxis: { autorange: true },
                 },
             ],

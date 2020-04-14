@@ -155,8 +155,12 @@ async function load_file(filename: string) {
             resolve(data)
         })
     });
-    var data = await promise
-    var zip = await JSZip.loadAsync(data)
+    try {
+        var data = await promise
+        var zip = await JSZip.loadAsync(data)
+    } catch (err) {
+        throw new IdlError(err.message)
+    }
 
     var length = 0
     zip.forEach(() => length += 1)
