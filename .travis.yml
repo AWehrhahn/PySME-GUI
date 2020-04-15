@@ -2,5 +2,12 @@ language: node_js
 node_js:
   - 12
 
+os: linux
+dist: bionic
+
+before_install:
+  - sudo apt-install dpkg
+  - sudo apt-install fakeroot
+
 script:
   - npm run make
