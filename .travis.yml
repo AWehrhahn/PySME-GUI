@@ -17,12 +17,13 @@ before_deploy:
 - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
 - git tag $TRAVIS_TAG
 - ls out/make/
- 
+
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
     secure: n/ObJ3St9fVWm/Vl/NjAPLcBsgD533sZBPEADCyI0GPzE6txCzcbm8XMur4HLszlB4n+moQZ6Z7o9CkQRAipfMbf1NFurwLB80qGmUEfoD4fv5LEx6praz8Uj4C9iIhBRpMxsrYfd1apNOpzUSeItqYF7f7CecA0lfZvBjYFctlUwXgd9CaFgEr9hnLevEbAOByMWNoE7mF4x3MjMM9gTm2xItW/wL/MRTIlobDJx4/2/pAfXqYM83awWD3JqKOBi4esEHM7YGz7CJadfTbbNdzytPr8xiupBsQTgMkgHc+tvqcSYU51Blqu0PJIYPY7JN+AevPwFYRg9SfdPoWCZilV60UTDzzxTvYxsUTAH61XJMMc2FrRTFLkiA9X5Xkxw+HylHt6G0W9QbEGxN7Lhi37yxKbsCbRup9mxM9TNItfs3hy/WjP9AVcnHYbRDaS2HDBxkfx+cF/ebjyY2By6JPlY+UxXPlivo0MkNE1ms4GoZXJbBOkeIZgv11mjbtJ1YmiIHazPY9ieUEH74x2Dz5ReftWnVdGQxPnBL6eH41MwEo6rHh4pg1cMJUV0MUNtYOhSQhWK/iu3IqW06oLuqsKBDu52JYRgBk4o2TGEPOlARdTqofvLBI1uhJ1nlvrYw6oNj+DpUZuencQISKzkMXQgzsX33PbX+XnPUDp+mk=
+  file_glob: true
   file: out/make/*/*/*
   on:
     repo: AWehrhahn/PySME-GUI
