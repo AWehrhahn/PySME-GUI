@@ -6,8 +6,8 @@ os: linux
 dist: bionic
 
 before_install:
-  - sudo apt-install dpkg
-  - sudo apt-install fakeroot
+  - sudo apt-get install dpkg
+  - sudo apt-get install fakeroot
 
 script:
   - npm run make
