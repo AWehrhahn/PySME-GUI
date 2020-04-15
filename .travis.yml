@@ -2,6 +2,10 @@ language: node_js
 node_js:
 - 12
 
+branches:
+  only:
+    - master
+
 os: linux
 dist: bionic
 
@@ -24,7 +28,7 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: VFbbSfU8fTx3uPfpXvOYpHgcif/vND7+hLz3X1DqqNNsid4e+H7jQ3TJipqZC+9NHa4ajhoz7dEB/3ZBsqwhD6u3d7u9hYd0kD1fH6a6YNn3RvpiQT/sVKsI1U/iCrPfrajhZm/BQ1fTYpmujqpz4GyUQXopypvTnffpePzdrgvMWAFDpmLt76o2fomLhy0RsZM5oP57xJZ7nINPnB17e4U7itIhTn0gJesVanpRPsYiwbPfllaYi7RFjlZxVNGhDV0DXESL6SOfy6UQFqE1/4whTh+oZsfJFrKF+zdtiJQZP8zoWzVI6JRjJJdtElY8lhBFJNHRZaLTW9bcwSYHGyBwn59XoSezCbz/oyrI+p1ReeD7gIw9JCKg4QnmMLP7KZb/UNG0b7UlbtbteXQDyjnBAtQpp0MkYekg2wV9f0nXqfcoszRTYuSTZH/f3ZrYTAWaVGJ/nnBXoGgc8Ms4LRvYWbo3VxdwaEtZwCJsWxslFEhRJNnRG+T/ORDIXQlsIUe3g8uNXdNkQsHeWksMAuUaLBpK4/ltARkFtbmnFTgzGFLehgsBq1O9z7H21K/gbA8IayO66UDuLzYvk4Hpn6vWaciIs9I5NBap/DNBosBnN/YNHzQPY0L2JKPmb4rItOtWAAMC9qg3YnVOsrEMv24Iebhgyt5Mnvl/KFHxk4k=
-  file: out/make/deb/x64/*.deb
+  file: $TRAVIS_BUILD_DIR/out/make/*/*/*
   on:
     repo: AWehrhahn/PySME-GUI
     branch: master
