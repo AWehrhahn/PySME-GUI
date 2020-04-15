@@ -17,12 +17,11 @@ before_deploy:
 - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
 - git tag $TRAVIS_TAG
 - ls out/make/
-
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: n/ObJ3St9fVWm/Vl/NjAPLcBsgD533sZBPEADCyI0GPzE6txCzcbm8XMur4HLszlB4n+moQZ6Z7o9CkQRAipfMbf1NFurwLB80qGmUEfoD4fv5LEx6praz8Uj4C9iIhBRpMxsrYfd1apNOpzUSeItqYF7f7CecA0lfZvBjYFctlUwXgd9CaFgEr9hnLevEbAOByMWNoE7mF4x3MjMM9gTm2xItW/wL/MRTIlobDJx4/2/pAfXqYM83awWD3JqKOBi4esEHM7YGz7CJadfTbbNdzytPr8xiupBsQTgMkgHc+tvqcSYU51Blqu0PJIYPY7JN+AevPwFYRg9SfdPoWCZilV60UTDzzxTvYxsUTAH61XJMMc2FrRTFLkiA9X5Xkxw+HylHt6G0W9QbEGxN7Lhi37yxKbsCbRup9mxM9TNItfs3hy/WjP9AVcnHYbRDaS2HDBxkfx+cF/ebjyY2By6JPlY+UxXPlivo0MkNE1ms4GoZXJbBOkeIZgv11mjbtJ1YmiIHazPY9ieUEH74x2Dz5ReftWnVdGQxPnBL6eH41MwEo6rHh4pg1cMJUV0MUNtYOhSQhWK/iu3IqW06oLuqsKBDu52JYRgBk4o2TGEPOlARdTqofvLBI1uhJ1nlvrYw6oNj+DpUZuencQISKzkMXQgzsX33PbX+XnPUDp+mk=
+    secure: XMzZiFOaqyQUcqAGpfUCTaJ5frrL7r1CWTsSONyj/gCd1Vvh+QgN575yPUllxoQ4gz3QSQlV5eazTmITqANb+Ne6zX9soxXVJY1ZrSJpBOupp4h7s9JeU6Yh+0n1GfZnrbVpdXm9yzkxvPMqJV6YPnENyMpxIUz7lmWxeviHOYisG+8TA3N8cz+qWF+0KWuDFY5PrxtyHDl5RJK0qim/O4BNY93WsiYCz23qJATke/4nO8KwdAbulbBBbBYPs/i6R3AYJnwhWmT+HT2sjLaBgMii1J0DGT6cZ7oDZjZVl1IkOP9/mIdKFRA4IQNFY491hUVc5P1OoH0PvzyZsgROv4X4pm7H9qjD+zqukAbuDEKZH7JZxcJvdEiPXG0iy9HbDFgOw6wuSwc+rzo3kf/TftVIGf9ZMJ+8jJuG8kZRZe0iNt/alNbDLiu7rSbx5B2jd5mm75eRdLSQt8hFzptWo9DzbmK4HH56h0n/xsCCEBJCy1HQ83ZhLie3LYPgPLjwP9rS7bbLiYYG4bRb+MsWpuHtnejE6hIKcdmaKp4J1Tt9xdFhuK7ZO5+hQssLjIjs4k65wsV0HZ4X7U+XASxYzhOzawDaG05F2/615o2wZU1Y9apzR/MCI8cA4ACKCa8HsFFeeB9h9pLq67GOnytpuJfleJob/osd/YkbfvmuzSA=
   file_glob: true
   file: out/make/*/*/*
   on:
