@@ -1,34 +1,29 @@
 language: node_js
 node_js:
 - 12
-
 branches:
   only:
-    - master
-
+  - master
 os: linux
 dist: bionic
-
 before_install:
 - sudo apt-get install dpkg
 - sudo apt-get install fakeroot
-
 script:
 - npm run make
-
 before_deploy:
-# Set up git user name and tag this commit
 - git config --local user.name "AWehrhahn"
 - git config --local user.email "ansgar.wehrhahn@physics.uu.se"
 - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
 - git tag $TRAVIS_TAG
-
+- ls out/make/
+ 
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: VFbbSfU8fTx3uPfpXvOYpHgcif/vND7+hLz3X1DqqNNsid4e+H7jQ3TJipqZC+9NHa4ajhoz7dEB/3ZBsqwhD6u3d7u9hYd0kD1fH6a6YNn3RvpiQT/sVKsI1U/iCrPfrajhZm/BQ1fTYpmujqpz4GyUQXopypvTnffpePzdrgvMWAFDpmLt76o2fomLhy0RsZM5oP57xJZ7nINPnB17e4U7itIhTn0gJesVanpRPsYiwbPfllaYi7RFjlZxVNGhDV0DXESL6SOfy6UQFqE1/4whTh+oZsfJFrKF+zdtiJQZP8zoWzVI6JRjJJdtElY8lhBFJNHRZaLTW9bcwSYHGyBwn59XoSezCbz/oyrI+p1ReeD7gIw9JCKg4QnmMLP7KZb/UNG0b7UlbtbteXQDyjnBAtQpp0MkYekg2wV9f0nXqfcoszRTYuSTZH/f3ZrYTAWaVGJ/nnBXoGgc8Ms4LRvYWbo3VxdwaEtZwCJsWxslFEhRJNnRG+T/ORDIXQlsIUe3g8uNXdNkQsHeWksMAuUaLBpK4/ltARkFtbmnFTgzGFLehgsBq1O9z7H21K/gbA8IayO66UDuLzYvk4Hpn6vWaciIs9I5NBap/DNBosBnN/YNHzQPY0L2JKPmb4rItOtWAAMC9qg3YnVOsrEMv24Iebhgyt5Mnvl/KFHxk4k=
-  file: $TRAVIS_BUILD_DIR/out/make/*/*/*
+    secure: n/ObJ3St9fVWm/Vl/NjAPLcBsgD533sZBPEADCyI0GPzE6txCzcbm8XMur4HLszlB4n+moQZ6Z7o9CkQRAipfMbf1NFurwLB80qGmUEfoD4fv5LEx6praz8Uj4C9iIhBRpMxsrYfd1apNOpzUSeItqYF7f7CecA0lfZvBjYFctlUwXgd9CaFgEr9hnLevEbAOByMWNoE7mF4x3MjMM9gTm2xItW/wL/MRTIlobDJx4/2/pAfXqYM83awWD3JqKOBi4esEHM7YGz7CJadfTbbNdzytPr8xiupBsQTgMkgHc+tvqcSYU51Blqu0PJIYPY7JN+AevPwFYRg9SfdPoWCZilV60UTDzzxTvYxsUTAH61XJMMc2FrRTFLkiA9X5Xkxw+HylHt6G0W9QbEGxN7Lhi37yxKbsCbRup9mxM9TNItfs3hy/WjP9AVcnHYbRDaS2HDBxkfx+cF/ebjyY2By6JPlY+UxXPlivo0MkNE1ms4GoZXJbBOkeIZgv11mjbtJ1YmiIHazPY9ieUEH74x2Dz5ReftWnVdGQxPnBL6eH41MwEo6rHh4pg1cMJUV0MUNtYOhSQhWK/iu3IqW06oLuqsKBDu52JYRgBk4o2TGEPOlARdTqofvLBI1uhJ1nlvrYw6oNj+DpUZuencQISKzkMXQgzsX33PbX+XnPUDp+mk=
+  file: out/make/*/*/*
   on:
     repo: AWehrhahn/PySME-GUI
     branch: master
