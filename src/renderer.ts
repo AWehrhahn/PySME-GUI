@@ -310,7 +310,6 @@ async function save_file(fname: string, sme: SmeFile) {
 
 
 async function cast_to_little_endian(fname: string) {
-    console.log("Converting sme file to little endian")
     var script_file = join(__dirname, "scripts/to_little_endian.py")
     var tmpobj = tmp.fileSync({ postfix: ".sme" });
     var fname_out: string = tmpobj.name;
@@ -329,7 +328,6 @@ async function cast_to_little_endian(fname: string) {
 }
 
 async function load_from_idl_file(fname: string) {
-    console.log("Converting sme file to little endian")
     var script_file = join(__dirname, "scripts/from_idl_file.py")
     var tmpobj = tmp.fileSync({ postfix: ".sme" });
     var fname_out: string = tmpobj.name;
@@ -374,7 +372,26 @@ async function synthesize_spectrum(sme: SmeFile) {
     })
 
     return promise
+}
 
+async function get_pysme_version() {
+    var script_file = join(__dirname, "scripts/get_pysme_version.py")
+    var tmpout = tmp.fileSync({ postfix: ".txt" });
+
+    var promise = new Promise<string>((resolve, reject) => {
+        var child = spawn("python", [script_file, tmpout.name])
+
+        child.on('exit', (code: any, signal: any) => {
+            console.log(`child process exited with code ${code}`);
+            if (code == 0) {
+                var data = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
+                resolve(data)
+            } else {
+                reject(code)
+            }
+        });
+    })
+    return promise
 }
 
 var ButtonLoad = document.getElementById("btn-load")
@@ -396,7 +413,6 @@ ButtonLoad.addEventListener('click', async (event) => {
                 if (err instanceof EndianError) {
                     console.log("Casting file to little endian")
                     fname = await cast_to_little_endian(fname)
-                    console.log("New filename: " + fname)
                 }
                 if (err instanceof IdlError) {
                     console.log("Loading IDL SME file")
