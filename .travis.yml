@@ -27,3 +27,4 @@ deploy:
   file: out/make/deb/x64/*.deb
   on:
     repo: AWehrhahn/PySME-GUI
+    branch: master
