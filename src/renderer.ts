@@ -142,9 +142,30 @@ function load_npy(data: ArrayBuffer) {
 }
 
 function load_feather(data: ArrayBuffer) {
-    console.warn("Linelist fileformat not working at the moment")
-    return data
-    // return Table.from([data]);
+    // console.warn("Linelist fileformat not working at the moment")
+    console.log("Loading Linelist")
+
+    var script_file = join(__dirname, "scripts/read_linelist.py")
+    var tmpin = tmp.fileSync({ postfix: ".txt" });
+    var tmpout = tmp.fileSync({ postfix: ".json" });
+
+    var promise = new Promise<string>((resolve, reject) => {
+        fs.writeFileSync(tmpin.name, new Uint8Array(data), { encoding: null })
+
+        var child = spawn("python", [script_file, tmpin.name, tmpout.name])
+
+        child.on('exit', (code: any, signal: any) => {
+            console.log(`child process exited with code ${code}`);
+            if (code == 0) {
+                var data = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
+                var json = JSON.parse(data)
+                resolve(json)
+            } else {
+                reject(code)
+            }
+        });
+    })
+    return promise
 }
 
 async function load_file(filename: string) {
@@ -189,7 +210,8 @@ async function load_file(filename: string) {
                 files[name.slice(0, -4)] = load_npy(await element.async("arraybuffer"))
                 break;
             case "feather":
-                files[name.slice(0, -8)] = load_feather(await element.async("arraybuffer"))
+                console.log(element.name)
+                files[name.slice(0, -8)] = await load_feather(await element.async("arraybuffer"))
                 break;
             default:
                 console.log("File type not understood: " + name)
@@ -437,24 +459,21 @@ ButtonLoad.addEventListener('click', async (event) => {
     if (!out.canceled) {
         var fname = out.filePaths[0];
         console.log("Opening new file: " + fname)
-        var isLoaded = false;
-        while (!isLoaded) {
-            try {
-                console.log("Load file: " + fname)
+        try {
+            console.log("Load file: " + fname)
+            sme = await load_file(fname)
+        } catch (err) {
+            // if error is big endian
+            console.error(err)
+            if (err instanceof EndianError) {
+                console.log("Casting file to little endian")
+                fname = await cast_to_little_endian(fname)
                 sme = await load_file(fname)
-                isLoaded = true;
-                break;
-            } catch (err) {
-                // if error is big endian
-                console.error(err)
-                if (err instanceof EndianError) {
-                    console.log("Casting file to little endian")
-                    fname = await cast_to_little_endian(fname)
-                }
-                if (err instanceof IdlError) {
-                    console.log("Loading IDL SME file")
-                    fname = await load_from_idl_file(fname)
-                }
+            }
+            if (err instanceof IdlError) {
+                console.log("Loading IDL SME file")
+                fname = await load_from_idl_file(fname)
+                sme = await load_file(fname)
             }
         }
         plot_sme(sme)
