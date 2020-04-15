@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/AWehrhahn/PySME-GUI.svg?branch=master)](https://travis-ci.com/AWehrhahn/PySME-GUI)
+
 # PySME-GUI
 
 This is a GUI for [PySME](https://github.com/AWehrhahn/SME).
