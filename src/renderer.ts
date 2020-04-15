@@ -11,6 +11,7 @@ const { join } = require('path');
 var tmp = require('tmp');
 const chokidar = require('chokidar');
 
+tmp.setGracefulCleanup();
 
 interface ZipObject {
     name: string
@@ -279,7 +280,6 @@ function save_feather(obj: ArrayBuffer) {
 
 async function save_file(fname: string, sme: SmeFile) {
     var zip = JSZip()
-    console.log(sme)
 
     for (const key in sme) {
         if (sme.hasOwnProperty(key)) {
@@ -367,20 +367,57 @@ async function load_from_idl_file(fname: string) {
     return promise
 }
 
+var logDiv = document.getElementById('logDiv');
 async function synthesize_spectrum(sme: SmeFile) {
     var script_file = join(__dirname, "scripts/synthesize_spectrum.py")
     var tmpin = tmp.fileSync({ postfix: ".sme" });
     var tmpout = tmp.fileSync({ postfix: ".sme" });
-    var tmplog = tmp.fileSync({ postfix: ".log" });
+    var tmplog = tmp.fileSync({ postfix: ".log", keep: true, dir: join(__dirname, "log") });
 
+    console.log("Watching file: " + tmplog.name)
     const watcher = chokidar.watch(tmplog.name, { usePolling: true })
     watcher.on('change', (path: any, stats: any) => {
-        console.log(path, stats);
+        // TODO: color the log
+        var log = fs.readFileSync(path, { encoding: "utf-8" })
+        logDiv.innerText = log;
     });
 
     var promise = new Promise<SmeFile>((resolve, reject) => {
         save_file(tmpin.name, sme).then(() => {
             var child = spawn("python", [script_file, tmpin.name, tmpout.name, "--log_file=" + tmplog.name])
+
+            child.on('exit', (code: any, signal: any) => {
+                console.log(`child process exited with code ${code}`);
+                if (code == 0) {
+                    load_file(tmpout.name).then(resolve)
+                } else {
+                    reject(code)
+                }
+            });
+        });
+    })
+
+    return promise
+}
+
+
+async function fit_spectrum(sme: SmeFile) {
+    var script_file = join(__dirname, "scripts/fit_spectrum.py")
+    var tmpin = tmp.fileSync({ postfix: ".sme" });
+    var tmpout = tmp.fileSync({ postfix: ".sme" });
+    var tmplog = tmp.fileSync({ postfix: ".log", keep: true, dir: join(__dirname, "log") });
+
+    console.log("Watching file: " + tmplog.name)
+    const watcher = chokidar.watch(tmplog.name, { usePolling: true })
+    watcher.on('change', (path: any, stats: any) => {
+        // TODO: color the log
+        var log = fs.readFileSync(path, { encoding: "utf-8" })
+        logDiv.innerText = log;
+    });
+
+    var promise = new Promise<SmeFile>((resolve, reject) => {
+        save_file(tmpin.name, sme).then(() => {
+            var child = spawn("python", [script_file, tmpin.name, tmpout.name, "teff", "monh", "logg", "--log_file=" + tmplog.name])
 
             child.on('exit', (code: any, signal: any) => {
                 console.log(`child process exited with code ${code}`);
@@ -462,6 +499,17 @@ ButtonSynthesize.addEventListener('click', async (event) => {
     console.log("Start synthesizing")
     try {
         sme = await synthesize_spectrum(sme)
+        plot_sme(sme)
+    } catch (err) {
+        console.error(err)
+    }
+})
+
+var ButtonFit = document.getElementById("btn-fit")
+ButtonFit.addEventListener('click', async (event) => {
+    console.log("Start fitting")
+    try {
+        sme = await fit_spectrum(sme)
         plot_sme(sme)
     } catch (err) {
         console.error(err)
