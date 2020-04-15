@@ -1,5 +1,4 @@
 var Plotly = require("plotly.js")
-// import * as Plotly from 'plotly.js';
 
 // Define the colors and linestyles to use in the plot
 var fmt = {
@@ -130,7 +129,7 @@ function plot_sme(sme: any) {
     var nSegment = sme["wave"].length
 
     // Create Plot
-    var annotations: any;
+    var annotations: any = {};
     var visible: any = [];
     var line_mask_idx: { [id: number]: any } = {};
     var cont_mask_idx: { [id: number]: any } = {};
@@ -221,12 +220,76 @@ function plot_sme(sme: any) {
             counter += 1
         }
         // TODO: annotations
+        if (sme["linelist/data"]) {
+            var lines = sme["linelist/data"]
+            var wmin: number = sme.wave[seg][0]
+            var wmax: number = sme.wave[seg][sme.wave[seg].length - 1]
+            wmin *= 1 - sme.vrad[seg] / 3e5
+            wmax *= 1 - sme.vrad[seg] / 3e5
+
+            var seg_annotations: any = []
+
+            for (const key in lines["wlcent"]) {
+                if (lines["wlcent"].hasOwnProperty(key)) {
+                    const element: number = lines["wlcent"][key];
+                    if ((element > wmin) && (element < wmax)) {
+
+                        var x_loc = element * (1 + sme.vrad[seg] / 3e5)
+                        var y_loc = 1
+
+                        // Find the clostest data point
+                        var i = 0;
+                        var idx = -1;
+                        var closest = sme.wave[seg].reduce((acc: number, value: number) => {
+                            i += 1;
+                            if (Math.abs(value - x_loc) < acc) {
+                                idx = i;
+                                return Math.abs(value - x_loc)
+                            } else {
+                                return acc
+                            }
+                        }, wmax)
+
+                        if (idx != -1) {
+                            if (sme.synth) {
+                                y_loc = sme.synth[seg][idx]
+                            } else {
+                                if (sme.spec) {
+                                    y_loc = sme.spec[seg][idx]
+                                }
+                            }
+                        }
+
+                        seg_annotations.push({
+                            x: x_loc,
+                            y: y_loc,
+                            xref: "x",
+                            yref: "y",
+                            text: lines["species"][key],
+                            hovertext: lines["wlcent"][key],
+                            textangle: 90,
+                            opacity: 1,
+                            ax: 0,
+                            ay: 1.2,
+                            ayref: "y",
+                            showarrow: true,
+                            arrowhead: 7,
+                            xanchor: "left"
+                        })
+
+                    }
+                }
+            }
+            annotations[seg] = seg_annotations
+        }
+
+
     }
     for (let seg = 0; seg < nSegment; seg++) {
         // Slider Steps
         var visibility = Array.apply(null, Array(visible.length)).map(function (x: any, i: number) { return visible[i] == seg })
-        var wmin = sme.wave[seg][0]
-        var wmax = sme.wave[seg][sme.wave[seg].length - 1]
+        var wmin: number = sme.wave[seg][0]
+        var wmax: number = sme.wave[seg][sme.wave[seg].length - 1]
         var step = {
             label: `Segment ${seg}`,
             method: "update",
@@ -234,7 +297,7 @@ function plot_sme(sme: any) {
                 { visible: visibility },
                 {
                     title: `Segment ${seg}`,
-                    // annotations: annotations[i],
+                    annotations: annotations[seg],
                     xaxis: { range: [wmin, wmax] },
                     yaxis: { autorange: true },
                 },
@@ -260,6 +323,7 @@ function plot_sme(sme: any) {
         font: { family: "Open Sans, sans-serif" },
         selectdirection: "h",
         sliders: [slider],
+        annotations: annotations[0]
     }
 
     var buttons = [["zoom2d", "pan2d", "select2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"]];
