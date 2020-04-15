@@ -26,4 +26,4 @@ deploy:
   on:
     repo: AWehrhahn/PySME-GUI
     branch: master
-    tag: true
+    tags: true
