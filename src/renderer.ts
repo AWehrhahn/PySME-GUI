@@ -9,6 +9,7 @@ const { Table } = require("apache-arrow");
 const { spawn } = require('child_process');
 const { join } = require('path');
 var tmp = require('tmp');
+const chokidar = require('chokidar');
 
 
 interface ZipObject {
@@ -346,6 +347,36 @@ async function load_from_idl_file(fname: string) {
     return promise
 }
 
+async function synthesize_spectrum(sme: SmeFile) {
+    var script_file = join(__dirname, "scripts/synthesize_spectrum.py")
+    var tmpin = tmp.fileSync({ postfix: ".sme" });
+    var tmpout = tmp.fileSync({ postfix: ".sme" });
+    var tmplog = tmp.fileSync({ postfix: ".log" });
+
+    const watcher = chokidar.watch(tmplog.name, { usePolling: true })
+    watcher.on('change', (path: any, stats: any) => {
+        console.log(path, stats);
+    });
+
+    var promise = new Promise<SmeFile>((resolve, reject) => {
+        save_file(tmpin.name, sme).then(() => {
+            var child = spawn("python", [script_file, tmpin.name, tmpout.name, "--log_file=" + tmplog.name])
+
+            child.on('exit', (code: any, signal: any) => {
+                console.log(`child process exited with code ${code}`);
+                if (code == 0) {
+                    load_file(tmpout.name).then(resolve)
+                } else {
+                    reject(code)
+                }
+            });
+        });
+    })
+
+    return promise
+
+}
+
 var ButtonLoad = document.getElementById("btn-load")
 ButtonLoad.addEventListener('click', async (event) => {
     var out = await dialog.showOpenDialog({ properties: ["openFile"] })
@@ -388,5 +419,16 @@ ButtonSave.addEventListener('click', async (event) => {
         save_file(fname, sme)
     } else {
         console.log("User did not select a file")
+    }
+})
+
+var ButtonSynthesize = document.getElementById("btn-synthesize")
+ButtonSynthesize.addEventListener('click', async (event) => {
+    console.log("Start synthesizing")
+    try {
+        sme = await synthesize_spectrum(sme)
+        plot_sme(sme)
+    } catch (err) {
+        console.error(err)
     }
 })
