@@ -274,8 +274,30 @@ async function save_npz(obj: Array<Float64Array>) {
     return stream
 }
 
-function save_feather(obj: ArrayBuffer) {
-    return obj
+function save_feather(obj: any) {
+    console.log("Loading Linelist")
+
+    var script_file = join(__dirname, "scripts/read_linelist.py")
+    var tmpin = tmp.fileSync({ postfix: ".txt" });
+    var tmpout = tmp.fileSync({ postfix: ".json" });
+
+    var promise = new Promise<string>((resolve, reject) => {
+        var data = JSON.stringify(obj)
+        fs.writeFileSync(tmpin.name, data, { encoding: "utf8" })
+
+        var child = spawn("python", [script_file, "--save", tmpin.name, tmpout.name])
+
+        child.on('exit', (code: any, signal: any) => {
+            console.log(`child process exited with code ${code}`);
+            if (code == 0) {
+                var data = fs.readFileSync(tmpout.name, { encoding: null })
+                resolve(data)
+            } else {
+                reject(code)
+            }
+        });
+    })
+    return promise
 }
 
 async function save_file(fname: string, sme: SmeFile) {
@@ -308,7 +330,7 @@ async function save_file(fname: string, sme: SmeFile) {
                     ending = "npy"
                     break;
                 case "feather":
-                    content = save_feather(element)
+                    content = await save_feather(element)
                     ending = "feather"
                     break;
                 default:
