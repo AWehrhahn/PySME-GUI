@@ -16,7 +16,6 @@ jobs:
 
 script:
 - npm run make
-- ls out/**/*
 
 deploy:
   provider: releases
@@ -25,7 +24,7 @@ deploy:
   api_key:
     secure: XMzZiFOaqyQUcqAGpfUCTaJ5frrL7r1CWTsSONyj/gCd1Vvh+QgN575yPUllxoQ4gz3QSQlV5eazTmITqANb+Ne6zX9soxXVJY1ZrSJpBOupp4h7s9JeU6Yh+0n1GfZnrbVpdXm9yzkxvPMqJV6YPnENyMpxIUz7lmWxeviHOYisG+8TA3N8cz+qWF+0KWuDFY5PrxtyHDl5RJK0qim/O4BNY93WsiYCz23qJATke/4nO8KwdAbulbBBbBYPs/i6R3AYJnwhWmT+HT2sjLaBgMii1J0DGT6cZ7oDZjZVl1IkOP9/mIdKFRA4IQNFY491hUVc5P1OoH0PvzyZsgROv4X4pm7H9qjD+zqukAbuDEKZH7JZxcJvdEiPXG0iy9HbDFgOw6wuSwc+rzo3kf/TftVIGf9ZMJ+8jJuG8kZRZe0iNt/alNbDLiu7rSbx5B2jd5mm75eRdLSQt8hFzptWo9DzbmK4HH56h0n/xsCCEBJCy1HQ83ZhLie3LYPgPLjwP9rS7bbLiYYG4bRb+MsWpuHtnejE6hIKcdmaKp4J1Tt9xdFhuK7ZO5+hQssLjIjs4k65wsV0HZ4X7U+XASxYzhOzawDaG05F2/615o2wZU1Y9apzR/MCI8cA4ACKCa8HsFFeeB9h9pLq67GOnytpuJfleJob/osd/YkbfvmuzSA=
   file_glob: true
-  file: out/make/**/*
+  file: out/make/**/*.*
   on:
     repo: AWehrhahn/PySME-GUI
     tags: true
