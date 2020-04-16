@@ -11,6 +11,8 @@ jobs:
     - sudo apt-get install fakeroot
   - os: windows
   - os: osx
+    before_install:
+    - npm install -D macos-alias
 
 script:
 - npm run make
