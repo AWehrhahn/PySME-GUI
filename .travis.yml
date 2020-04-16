@@ -15,6 +15,7 @@ jobs:
     - npm install -D macos-alias
 
 script:
+- npm run build
 - npm run make
 
 deploy:
