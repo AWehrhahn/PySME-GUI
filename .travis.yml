@@ -10,6 +10,7 @@ jobs:
     - sudo apt-get install dpkg
     - sudo apt-get install fakeroot
   - os: windows
+  - os: osx
 
 script:
 - npm run make
