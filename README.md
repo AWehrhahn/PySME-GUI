@@ -2,11 +2,13 @@
 
 # PySME-GUI
 
-This is a GUI for [PySME](https://github.com/AWehrhahn/SME).
-It can be used to look at and modify SME structures, and will eventually also be able to minitor
-a run of PySME.
+This is a GUI for [PySME](https://github.com/AWehrhahn/SME). It can be used to look at and modify SME structures, and will eventually also be able to monitor a run of PySME.
 
-## To Use
+## Installation
+
+Precompiled binaries for common systems are available under [Releases](https://github.com/AWehrhahn/PySME-GUI/releases/). Those can be installed directly on your system.
+
+## Build
 
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
