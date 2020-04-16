@@ -16,8 +16,6 @@ jobs:
 
 script:
 - npm run make
-
-before_deploy:
 - ls out/**/*
 
 deploy:
