@@ -10,21 +10,23 @@ def main(fname_in, fname_out, save_data=False):
     else:
         save(fname_in, fname_out)
 
+
 def save(fname_in, fname_out):
     df = pd.read_json(fname_in)
     df.to_feather(fname_out)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Read the linelist from a sme file")
     parser.add_argument("input_file", help="input file name")
     parser.add_argument("output_file", help="output file name")
-    parser.add_argument("--save", help="save instead of read", action='store_true')
+    parser.add_argument("--save", help="save instead of read", action="store_true")
 
     args = parser.parse_args()
 
     fname_in = args.input_file
     fname_out = args.output_file
-    save = args.s
+    save = args.save
 
     secret_log = join(dirname(__file__), "python.txt")
 
