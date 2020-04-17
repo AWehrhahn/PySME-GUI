@@ -314,15 +314,12 @@ async function save_file(fname: string, sme: SmeFile) {
             zip.file(`${key}.${ending}`, content)
         }
     }
-    // var content: ArrayBuffer
-    // fs.writeFile(fname, content, (err: Error) => { if (err) throw err; console.log("Saved file") })
-    zip
-        .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
+    zip.generateNodeStream({ type: 'nodebuffer', streamFiles: true })
         .pipe(fs.createWriteStream(fname))
         .on('finish', function () {
             // JSZip generates a readable stream with a "end" event,
             // but is piped here in a writable stream which emits a "finish" event.
-            console.log("out.zip written.");
+            console.log(`${fname} written.`);
         });
 }
 
@@ -330,18 +327,14 @@ async function save_file(fname: string, sme: SmeFile) {
 async function cast_to_little_endian(fname: string) {
     var tmpobj = tmp.fileSync({ postfix: ".sme" });
     var fname_out: string = tmpobj.name;
-
     var success = await call_python("to_little_endian.py", [fname, fname_out])
-
     return fname_out
 }
 
 async function load_from_idl_file(fname: string) {
     var tmpobj = tmp.fileSync({ postfix: ".sme" });
     var fname_out: string = tmpobj.name;
-
     var success = await call_python("from_idl_file.py", [fname, fname_out])
-
     return fname_out
 }
 
@@ -352,6 +345,7 @@ async function synthesize_spectrum(sme: SmeFile) {
     var tmpout = tmp.fileSync({ postfix: ".sme" });
     var tmplog = tmp.fileSync({ postfix: ".log", keep: true, dir: join(__dirname, "log") });
 
+    // Watch the logfile
     console.log("Watching file: " + tmplog.name)
     const watcher = chokidar.watch(tmplog.name, { usePolling: true })
     watcher.on('change', (path: any, stats: any) => {

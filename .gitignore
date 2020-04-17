@@ -6,3 +6,4 @@ test_data/
 out/
 
 scripts/python.txt
+scripts/__pycache__/
