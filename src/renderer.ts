@@ -410,22 +410,23 @@ ButtonLoad.addEventListener('click', async (event) => {
             try {
                 console.log("Load file: " + fname)
                 sme = await load_file(fname)
+                break;
             } catch (err) {
                 // if error is big endian
                 console.error(err)
                 if (err instanceof EndianError) {
                     console.log("Casting file to little endian")
                     fname = await cast_to_little_endian(fname)
-                    sme = await load_file(fname)
+                    continue;
                 }
                 if (err instanceof IdlError) {
                     console.log("Loading IDL SME file")
                     fname = await load_from_idl_file(fname)
-                    sme = await load_file(fname)
+                    continue;
                 }
             }
-            plot_sme(sme)
         }
+        plot_sme(sme)
     } else {
         console.log("User did not select a file")
     }
