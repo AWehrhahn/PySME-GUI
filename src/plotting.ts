@@ -224,8 +224,10 @@ function plot_sme(sme: any) {
             var lines = sme["linelist/data"]
             var wmin: number = sme.wave[seg][0]
             var wmax: number = sme.wave[seg][sme.wave[seg].length - 1]
-            wmin *= 1 - sme.vrad[seg] / 3e5
-            wmax *= 1 - sme.vrad[seg] / 3e5
+            var vrad = 0
+            if (sme.vrad) vrad = sme.vrad[seg]
+            wmin *= 1 - vrad / 3e5
+            wmax *= 1 - vrad / 3e5
 
             var seg_annotations: any = []
 
@@ -234,7 +236,7 @@ function plot_sme(sme: any) {
                     const element: number = lines["wlcent"][key];
                     if ((element > wmin) && (element < wmax)) {
 
-                        var x_loc = element * (1 + sme.vrad[seg] / 3e5)
+                        var x_loc = element * (1 + vrad / 3e5)
                         var y_loc = 1
 
                         // Find the clostest data point
