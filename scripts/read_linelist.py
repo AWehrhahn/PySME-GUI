@@ -1,19 +1,17 @@
 import argparse
 import pandas as pd
 from os.path import dirname, join
+from electron import call
 
 
+@call
 def main(fname_in, fname_out, save_data=False):
-    if not save:
+    if not save_data:
         df = pd.read_feather(fname_in)
         df.to_json(fname_out)
     else:
-        save(fname_in, fname_out)
-
-
-def save(fname_in, fname_out):
-    df = pd.read_json(fname_in)
-    df.to_feather(fname_out)
+        df = pd.read_json(fname_in)
+        df.to_feather(fname_out)
 
 
 if __name__ == "__main__":
@@ -28,17 +26,4 @@ if __name__ == "__main__":
     fname_out = args.output_file
     save = args.save
 
-    secret_log = join(dirname(__file__), "python.txt")
-
-    with open(secret_log, "w") as f:
-        f.write("Hello\n")
-        f.write(f"Input file: {fname_in}\n")
-        f.write(f"Output file: {fname_out}\n")
-
-    try:
-        main(fname_in, fname_out, save_data=save)
-    except Exception as ex:
-        with open(secret_log, "a") as f:
-            f.write(str(ex))
-        print(ex)
-        exit(1)
+    main(fname_in=fname_in, fname_out=fname_out, save_data=save)

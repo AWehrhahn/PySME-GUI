@@ -1,9 +1,12 @@
 from pysme import __version__
 import argparse
+from os.path import join, dirname
+from electron import call
 
 
-def main(fname_out):
-    with open(fname_out, "w") as f:
+@call
+def main(output_file):
+    with open(output_file, "w") as f:
         f.write(__version__)
 
 
@@ -12,7 +15,6 @@ if __name__ == "__main__":
     parser.add_argument("output_file", help="output file name")
 
     args = parser.parse_args()
+    output_file = args.output_file
 
-    fname_out = args.output_file
-
-    main(fname_out)
+    main(output_file=output_file)

@@ -3,6 +3,8 @@ from pysme.sme import SME_Structure
 import argparse
 import numpy as np
 
+from electron import call
+
 
 def to_little_endian(data):
     try:
@@ -15,6 +17,7 @@ def to_little_endian(data):
     return data
 
 
+@call
 def convert(fname_in, fname_out):
     sme = SME_Structure.load(fname_in)
 
@@ -35,4 +38,4 @@ if __name__ == "__main__":
     fname_in = args.input_file
     fname_out = args.output_file
 
-    convert(fname_in, fname_out)
+    convert(fname_in=fname_in, fname_out=fname_out)

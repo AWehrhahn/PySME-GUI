@@ -6,7 +6,6 @@ const { dialog } = require('electron').remote
 var fs = require('fs');
 var JSZip = require("jszip");
 const { Table } = require("apache-arrow");
-const { spawn } = require('child_process');
 const { join } = require('path');
 var tmp = require('tmp');
 const chokidar = require('chokidar');
@@ -31,7 +30,6 @@ class SmeError {
 
 class EndianError extends SmeError { }
 class IdlError extends SmeError { }
-
 
 function checkEndian() {
     var arrayBuffer = new ArrayBuffer(2);
@@ -141,31 +139,18 @@ function load_npy(data: ArrayBuffer) {
     return arraydata
 }
 
-function load_feather(data: ArrayBuffer) {
-    // console.warn("Linelist fileformat not working at the moment")
+async function load_feather(data: ArrayBuffer) {
     console.log("Loading Linelist")
 
-    var script_file = join(__dirname, "scripts/read_linelist.py")
     var tmpin = tmp.fileSync({ postfix: ".txt" });
     var tmpout = tmp.fileSync({ postfix: ".json" });
+    fs.writeFileSync(tmpin.name, new Uint8Array(data), { encoding: null })
 
-    var promise = new Promise<string>((resolve, reject) => {
-        fs.writeFileSync(tmpin.name, new Uint8Array(data), { encoding: null })
+    var success = await call_python("read_linelist.py", [tmpin.name, tmpout.name])
 
-        var child = spawn("python", [script_file, tmpin.name, tmpout.name])
-
-        child.on('exit', (code: any, signal: any) => {
-            console.log(`child process exited with code ${code}`);
-            if (code == 0) {
-                var data = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
-                var json = JSON.parse(data)
-                resolve(json)
-            } else {
-                reject(code)
-            }
-        });
-    })
-    return promise
+    var content: string = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
+    var linelist = JSON.parse(content)
+    return linelist
 }
 
 async function load_file(filename: string) {
@@ -274,30 +259,19 @@ async function save_npz(obj: Array<Float64Array>) {
     return stream
 }
 
-function save_feather(obj: any) {
+async function save_feather(obj: any) {
     console.log("Loading Linelist")
 
-    var script_file = join(__dirname, "scripts/read_linelist.py")
     var tmpin = tmp.fileSync({ postfix: ".txt" });
     var tmpout = tmp.fileSync({ postfix: ".json" });
 
-    var promise = new Promise<string>((resolve, reject) => {
-        var data = JSON.stringify(obj)
-        fs.writeFileSync(tmpin.name, data, { encoding: "utf8" })
+    var data = JSON.stringify(obj)
+    fs.writeFileSync(tmpin.name, data, { encoding: "utf8" })
 
-        var child = spawn("python", [script_file, "--save", tmpin.name, tmpout.name])
+    var success = await call_python("read_linelist.py", ["--save", tmpin.name, tmpout.name])
 
-        child.on('exit', (code: any, signal: any) => {
-            console.log(`child process exited with code ${code}`);
-            if (code == 0) {
-                var data = fs.readFileSync(tmpout.name, { encoding: null })
-                resolve(data)
-            } else {
-                reject(code)
-            }
-        });
-    })
-    return promise
+    var content = fs.readFileSync(tmpout.name, { encoding: null })
+    return content
 }
 
 async function save_file(fname: string, sme: SmeFile) {
@@ -354,39 +328,21 @@ async function save_file(fname: string, sme: SmeFile) {
 
 
 async function cast_to_little_endian(fname: string) {
-    var script_file = join(__dirname, "scripts/to_little_endian.py")
     var tmpobj = tmp.fileSync({ postfix: ".sme" });
     var fname_out: string = tmpobj.name;
-    console.log(fname_out)
 
-    var promise = new Promise<string>((resolve, reject) => {
-        var child = spawn("python", [script_file, fname, fname_out])
+    var success = await call_python("to_little_endian.py", [fname, fname_out])
 
-        child.on('exit', (code: any, signal: any) => {
-            console.log(`child process exited with code ${code}`);
-            resolve(fname_out)
-        });
-    })
-
-    return promise
+    return fname_out
 }
 
 async function load_from_idl_file(fname: string) {
-    var script_file = join(__dirname, "scripts/from_idl_file.py")
     var tmpobj = tmp.fileSync({ postfix: ".sme" });
     var fname_out: string = tmpobj.name;
-    console.log(fname_out)
 
-    var promise = new Promise<string>((resolve, reject) => {
-        var child = spawn("python", [script_file, fname, fname_out])
+    var success = await call_python("from_idl_file.py", [fname, fname_out])
 
-        child.on('exit', (code: any, signal: any) => {
-            console.log(`child process exited with code ${code}`);
-            resolve(fname_out)
-        });
-    })
-
-    return promise
+    return fname_out
 }
 
 var logDiv = document.getElementById('logDiv');
@@ -406,16 +362,9 @@ async function synthesize_spectrum(sme: SmeFile) {
 
     var promise = new Promise<SmeFile>((resolve, reject) => {
         save_file(tmpin.name, sme).then(() => {
-            var child = spawn("python", [script_file, tmpin.name, tmpout.name, "--log_file=" + tmplog.name])
-
-            child.on('exit', (code: any, signal: any) => {
-                console.log(`child process exited with code ${code}`);
-                if (code == 0) {
-                    load_file(tmpout.name).then(resolve)
-                } else {
-                    reject(code)
-                }
-            });
+            call_python("synthesize_spectrum.py", [tmpin.name, tmpout.name, "--log_file=" + tmplog.name]).then(() => {
+                load_file(tmpout.name).then(resolve)
+            })
         });
     })
 
@@ -439,16 +388,9 @@ async function fit_spectrum(sme: SmeFile) {
 
     var promise = new Promise<SmeFile>((resolve, reject) => {
         save_file(tmpin.name, sme).then(() => {
-            var child = spawn("python", [script_file, tmpin.name, tmpout.name, "teff", "monh", "logg", "--log_file=" + tmplog.name])
-
-            child.on('exit', (code: any, signal: any) => {
-                console.log(`child process exited with code ${code}`);
-                if (code == 0) {
-                    load_file(tmpout.name).then(resolve)
-                } else {
-                    reject(code)
-                }
-            });
+            call_python("fit_spectrum.py", [tmpin.name, tmpout.name, "teff", "monh", "logg", "--log_file=" + tmplog.name]).then(() => {
+                load_file(tmpout.name).then(resolve)
+            })
         });
     })
 
@@ -456,23 +398,10 @@ async function fit_spectrum(sme: SmeFile) {
 }
 
 async function get_pysme_version() {
-    var script_file = join(__dirname, "scripts/get_pysme_version.py")
     var tmpout = tmp.fileSync({ postfix: ".txt" });
-
-    var promise = new Promise<string>((resolve, reject) => {
-        var child = spawn("python", [script_file, tmpout.name])
-
-        child.on('exit', (code: any, signal: any) => {
-            console.log(`child process exited with code ${code}`);
-            if (code == 0) {
-                var data = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
-                resolve(data)
-            } else {
-                reject(code)
-            }
-        });
-    })
-    return promise
+    var success = await call_python("get_pysme_version.py", [tmpout.name])
+    var data = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
+    return data
 }
 
 var ButtonLoad = document.getElementById("btn-load")
