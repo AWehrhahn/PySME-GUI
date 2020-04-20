@@ -41,6 +41,10 @@
     <input type="number" id="par-vsini" name="vsini" step="any" /> <br>
     <label for="gamma6">gamma-6</label>
     <input type="number" id="par-gamma6" name="gamma6" step="any" /> <br>
+    <label for="h2broad">H2 broadening</label>
+    <input type="checkbox" id="par-h2broad" name="h2broad" /> <br>
+    <label for="mu">Integration Angles Mu</label>
+    <input type="text" id="par-mu" name="mu" /> <br>
     <label for="cscale-flag">cscale flag</label>
     <select id="par-cscale-flag" name="cscale-flag">
       <option value="none">none</option>
@@ -69,6 +73,7 @@
   <!-- You can also require other files to run in this process -->
   <script src=" ./dist/plotting.js"></script>
   <script src=" ./dist/python.js"></script>
+  <script src=" ./dist/parameters.js"></script>
   <script src=" ./dist/renderer.js"></script>
 </body>
 
