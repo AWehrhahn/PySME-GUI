@@ -20,13 +20,19 @@
     <input type="button" value="Synthesize" id="btn-synthesize" />
     <input type="button" value="Fit" id="btn-fit" />
   </div>
-  <div id="graphDiv" class="graphDiv"> </div>
+  <div id="graph-div" class="graph-div"> </div>
   <div>
     <input type="button" value="Line" id="btn-mask-line" />
     <input type="button" value="Continuum" id="btn-mask-cont" />
     <input type="button" value="Bad" id="btn-mask-bad" />
   </div>
-  <div id="logDiv">
+  <div id="parameter-div">
+    <label for="teff">effective temperature [K]</label>
+    <input type="number" id="par-teff" name="teff" min="0" /><br>
+    <label for="logg">surface gravity [log(cm/s**2)]</label>
+    <input type="number" id="par-logg" name="logg" />
+  </div>
+  <div id="log-div">
   </div>
   <!-- You can also require other files to run in this process -->
   <script src=" ./dist/plotting.js"></script>

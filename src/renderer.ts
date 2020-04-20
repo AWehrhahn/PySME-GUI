@@ -203,12 +203,27 @@ async function load_file(filename: string) {
                 break;
         }
     }
+
+    if (files.hasOwnProperty("info")) {
+        for (const key in files.info) {
+            if (files.info.hasOwnProperty(key)) {
+                const element = files.info[key];
+                files[key] = element
+            }
+        }
+        delete files.info
+    }
+
     return files
 }
 
 function determine_datatype(obj: any) {
     if (obj.constructor == Object) return "dict"
-    if (Array.isArray(obj)) return "array"
+    if (Array.isArray(obj)) {
+        if (typeof obj[0] === "object") return "array"
+        // other array that goes in info.json
+        return "object"
+    }
     if (obj instanceof Float64Array) return "<f8"
     if (obj instanceof Float32Array) return "<f4"
     if (obj instanceof Int8Array) return "|b1"
@@ -216,6 +231,9 @@ function determine_datatype(obj: any) {
     if (obj instanceof Int32Array) return "<i4"
     if (obj instanceof BigInt64Array) return "<i8"
     if (obj instanceof ArrayBuffer) return "feather"
+    if (typeof obj === "string") return "string"
+    if (typeof obj === "number") return "number"
+    if (typeof obj === "boolean") return "boolean"
     throw new Error(`Data type of ${obj} not recognised`)
 }
 
@@ -283,6 +301,7 @@ async function save_file(fname: string, sme: SmeFile) {
             var dtype = determine_datatype(element)
             var content: any = ""
             var ending = "dat"
+            var info: any = {}
             switch (dtype) {
                 case "dict":
                     content = JSON.stringify(element)
@@ -308,12 +327,15 @@ async function save_file(fname: string, sme: SmeFile) {
                     ending = "feather"
                     break;
                 default:
-                    throw new Error(`No saving mechanism for given filetype ${dtype}`)
+                    // Add to info
+                    info[key] = element
+                    // throw new Error(`No saving mechanism for given filetype ${dtype}`)
                     break;
             }
             zip.file(`${key}.${ending}`, content)
         }
     }
+    zip.file("info.json", JSON.stringify(info))
     zip.generateNodeStream({ type: 'nodebuffer', streamFiles: true })
         .pipe(fs.createWriteStream(fname))
         .on('finish', function () {
@@ -338,7 +360,7 @@ async function load_from_idl_file(fname: string) {
     return fname_out
 }
 
-var logDiv = document.getElementById('logDiv');
+var logDiv = document.getElementById('log-div');
 async function synthesize_spectrum(sme: SmeFile) {
     var script_file = join(__dirname, "scripts/synthesize_spectrum.py")
     var tmpin = tmp.fileSync({ postfix: ".sme" });
@@ -398,6 +420,14 @@ async function get_pysme_version() {
     return data
 }
 
+async function load_parameter_values(sme: SmeFile) {
+    //TODO: do this for every field
+    var FieldTeff: any = document.getElementById("par-teff")
+    var FieldLogg: any = document.getElementById("par-logg")
+    FieldTeff.value = sme.teff
+    FieldLogg.value = sme.logg
+}
+
 var ButtonLoad = document.getElementById("btn-load")
 ButtonLoad.addEventListener('click', async (event) => {
     var out = await dialog.showOpenDialog({ properties: ["openFile"] })
@@ -426,6 +456,7 @@ ButtonLoad.addEventListener('click', async (event) => {
                 }
             }
         }
+        load_parameter_values(sme)
         plot_sme(sme)
     } else {
         console.log("User did not select a file")
