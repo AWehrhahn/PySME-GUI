@@ -3,10 +3,8 @@
 // All of the Node.js APIs are available in this process.
 
 const { dialog } = require('electron').remote
-var fs = require('fs');
 var JSZip = require("jszip");
 const { Table } = require("apache-arrow");
-const { join } = require('path');
 var tmp = require('tmp');
 const chokidar = require('chokidar');
 
@@ -420,6 +418,7 @@ async function get_pysme_version() {
     return data
 }
 
+
 var ButtonLoad = document.getElementById("btn-load")
 ButtonLoad.addEventListener('click', async (event) => {
     var out = await dialog.showOpenDialog({ properties: ["openFile"] })
@@ -449,6 +448,7 @@ ButtonLoad.addEventListener('click', async (event) => {
             }
         }
         load_parameter_values(sme)
+        show_citation(sme)
         plot_sme(sme)
     } else {
         console.log("User did not select a file")

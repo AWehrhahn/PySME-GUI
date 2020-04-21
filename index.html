@@ -34,11 +34,11 @@
     <label for="monh">Metallicity</label>
     <input type="number" id="par-monh" name="monh" step="any" /> <br>
     <label for="vmic">micro turbulence [km/s]</label>
-    <input type="number" id="par-vmic" name="vmic" step="any" /> <br>
+    <input type="number" id="par-vmic" name="vmic" step="any" min="0" /> <br>
     <label for="vmac">macro turbulence [km/s]</label>
-    <input type="number" id="par-vmac" name="vmac" step="any" /> <br>
+    <input type="number" id="par-vmac" name="vmac" step="any" min="0" /> <br>
     <label for="vsini">projected rotation velocity [km/s]</label>
-    <input type="number" id="par-vsini" name="vsini" step="any" /> <br>
+    <input type="number" id="par-vsini" name="vsini" step="any" min="0" /> <br>
     <label for="gamma6">gamma-6</label>
     <input type="number" id="par-gamma6" name="gamma6" step="any" /> <br>
     <label for="h2broad">H2 broadening</label>
@@ -68,12 +68,15 @@
     <input type="text" id="par-fitparameters" name="fitparameters" /> <br>
 
   </div>
+  <div id="div-citation">
+  </div>
   <div id="log-div">
   </div>
   <!-- You can also require other files to run in this process -->
   <script src=" ./dist/plotting.js"></script>
   <script src=" ./dist/python.js"></script>
   <script src=" ./dist/parameters.js"></script>
+  <script src=" ./dist/citation.js"></script>
   <script src=" ./dist/renderer.js"></script>
 </body>
 

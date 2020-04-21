@@ -1,21 +1,21 @@
 //TODO: do this for every field
 
-var FieldTeff: any = document.getElementById("par-teff")
-var FieldLogg: any = document.getElementById("par-logg")
-var FieldMonh: any = document.getElementById("par-monh")
-var FieldVmic: any = document.getElementById("par-vmic")
-var FieldVmac: any = document.getElementById("par-vmac")
-var FieldVsini: any = document.getElementById("par-vsini")
-var FieldGamma6: any = document.getElementById("par-gamma6")
-var FieldH2broad: any = document.getElementById("par-h2broad")
+var FieldTeff = document.getElementById("par-teff") as HTMLInputElement
+var FieldLogg = document.getElementById("par-logg") as HTMLInputElement
+var FieldMonh = document.getElementById("par-monh") as HTMLInputElement
+var FieldVmic = document.getElementById("par-vmic") as HTMLInputElement
+var FieldVmac = document.getElementById("par-vmac") as HTMLInputElement
+var FieldVsini = document.getElementById("par-vsini") as HTMLInputElement
+var FieldGamma6 = document.getElementById("par-gamma6") as HTMLInputElement
+var FieldH2broad = document.getElementById("par-h2broad") as HTMLInputElement
 
 
-var FieldCscaleFlag: any = document.getElementById("par-cscale-flag")
-var FieldCscaleType: any = document.getElementById("par-cscale-type")
-var FieldVradFlag: any = document.getElementById("par-vrad-flag")
+var FieldCscaleFlag = document.getElementById("par-cscale-flag") as HTMLSelectElement
+var FieldCscaleType = document.getElementById("par-cscale-type") as HTMLSelectElement
+var FieldVradFlag = document.getElementById("par-vrad-flag") as HTMLSelectElement
 
-var FieldFitparameters: any = document.getElementById("par-fitparameters")
-var FieldMu: any = document.getElementById("par-mu")
+var FieldFitparameters = document.getElementById("par-fitparameters") as HTMLInputElement
+var FieldMu = document.getElementById("par-mu") as HTMLInputElement
 
 
 
