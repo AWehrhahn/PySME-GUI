@@ -39,8 +39,6 @@ async function show_citation(sme: SmeFile) {
         }
     }
 
-    console.log(data)
-
     for (let index = 0; index < data.length; index++) {
         const element = data[index];
         if (element.hasOwnProperty("container-title")) {
@@ -53,8 +51,6 @@ async function show_citation(sme: SmeFile) {
             }
         }
     }
-
-    console.log(data)
 
     let bib = new Cite(data)
 

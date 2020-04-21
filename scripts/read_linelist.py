@@ -8,9 +8,9 @@ from electron import call
 def main(fname_in, fname_out, save_data=False):
     if not save_data:
         df = pd.read_feather(fname_in)
-        df.to_json(fname_out)
+        df.to_json(fname_out, orient="records")
     else:
-        df = pd.read_json(fname_in)
+        df = pd.read_json(fname_in, orient="records")
         df.to_feather(fname_out)
 
 

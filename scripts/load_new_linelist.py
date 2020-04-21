@@ -19,7 +19,7 @@ def main(fname_in, fname_out, linelist_format="VALD", log_file=None):
             f"Unrecognised linelist format f{linelist_format}. Expected one of ['VALD']"
         )
 
-    data = linelist._lines.to_dict(orient="dict")
+    data = linelist._lines.to_dict(orient="records")
 
     result = {
         "info": {

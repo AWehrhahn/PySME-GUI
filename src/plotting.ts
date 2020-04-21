@@ -231,55 +231,52 @@ function plot_sme(sme: any) {
 
             var seg_annotations: any = []
 
-            for (const key in lines["wlcent"]) {
-                if (lines["wlcent"].hasOwnProperty(key)) {
-                    const element: number = lines["wlcent"][key];
-                    if ((element > wmin) && (element < wmax)) {
+            for (let key = 0; key < lines.length; key++) {
+                const element: number = lines[key]["wlcent"];
+                if ((element > wmin) && (element < wmax)) {
 
-                        var x_loc = element * (1 + vrad / 3e5)
-                        var y_loc = 1
+                    var x_loc = element * (1 + vrad / 3e5)
+                    var y_loc = 1
 
-                        // Find the clostest data point
-                        var i = 0;
-                        var idx = -1;
-                        var closest = sme.wave[seg].reduce((acc: number, value: number) => {
-                            i += 1;
-                            if (Math.abs(value - x_loc) < acc) {
-                                idx = i;
-                                return Math.abs(value - x_loc)
-                            } else {
-                                return acc
-                            }
-                        }, wmax)
+                    // Find the clostest data point
+                    var i = 0;
+                    var idx = -1;
+                    var closest = sme.wave[seg].reduce((acc: number, value: number) => {
+                        i += 1;
+                        if (Math.abs(value - x_loc) < acc) {
+                            idx = i;
+                            return Math.abs(value - x_loc)
+                        } else {
+                            return acc
+                        }
+                    }, wmax)
 
-                        if (idx != -1) {
-                            if (sme.synth) {
-                                y_loc = sme.synth[seg][idx]
-                            } else {
-                                if (sme.spec) {
-                                    y_loc = sme.spec[seg][idx]
-                                }
+                    if (idx != -1) {
+                        if (sme.synth) {
+                            y_loc = sme.synth[seg][idx]
+                        } else {
+                            if (sme.spec) {
+                                y_loc = sme.spec[seg][idx]
                             }
                         }
-
-                        seg_annotations.push({
-                            x: x_loc,
-                            y: y_loc,
-                            xref: "x",
-                            yref: "y",
-                            text: lines["species"][key],
-                            hovertext: lines["wlcent"][key],
-                            textangle: 90,
-                            opacity: 1,
-                            ax: 0,
-                            ay: 1.2,
-                            ayref: "y",
-                            showarrow: true,
-                            arrowhead: 7,
-                            xanchor: "left"
-                        })
-
                     }
+
+                    seg_annotations.push({
+                        x: x_loc,
+                        y: y_loc,
+                        xref: "x",
+                        yref: "y",
+                        text: lines[key]["species"],
+                        hovertext: lines[key]["wlcent"],
+                        textangle: 90,
+                        opacity: 1,
+                        ax: 0,
+                        ay: 1.2,
+                        ayref: "y",
+                        showarrow: true,
+                        arrowhead: 7,
+                        xanchor: "left"
+                    })
                 }
             }
             annotations[seg] = seg_annotations
