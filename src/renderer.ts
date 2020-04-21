@@ -7,6 +7,8 @@ var JSZip = require("jszip");
 const { Table } = require("apache-arrow");
 var tmp = require('tmp');
 const chokidar = require('chokidar');
+const $ = require("jquery");
+var dt = require('datatables.net')();
 
 tmp.setGracefulCleanup();
 
@@ -429,6 +431,26 @@ async function get_pysme_version() {
 }
 
 
+function show_linelist(sme: SmeFile) {
+    $(document).ready(function () {
+        $('#table-linelist').DataTable({
+            data: sme["linelist/data"],
+            columns: [
+                { title: 'species', data: 'species' },
+                { title: 'wlcent', data: 'wlcent' },
+                { title: 'excit', data: 'excit' },
+                { title: 'gflog', data: 'gflog' },
+                { title: 'gamrad', data: 'gamrad' },
+                { title: 'gamqst', data: 'gamqst' },
+                { title: 'gamvw', data: 'gamvw' },
+                { title: 'lande', data: 'lande' },
+                { title: 'depth', data: 'depth' },
+                { title: 'reference', data: 'reference' }
+            ]
+        });
+    });
+}
+
 var ButtonLoad = document.getElementById("btn-load")
 ButtonLoad.addEventListener('click', async (event) => {
     var out = await dialog.showOpenDialog({ properties: ["openFile"] })
@@ -459,6 +481,7 @@ ButtonLoad.addEventListener('click', async (event) => {
         }
         load_parameter_values(sme)
         show_citation(sme)
+        show_linelist(sme)
         plot_sme(sme)
     } else {
         console.log("User did not select a file")
@@ -507,6 +530,7 @@ ButtonLinelistLoad.addEventListener("click", async (event) => {
         var fname = out.filePaths[0];
         try {
             sme = await load_new_linelist(sme, fname)
+            show_linelist(sme)
             plot_sme(sme)
         } catch (err) {
             console.error(err)
