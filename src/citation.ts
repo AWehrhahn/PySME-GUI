@@ -1,6 +1,4 @@
 const Cite = require('citation-js')
-const fs = require('fs');
-const { join } = require('path');
 
 
 fs.readFile(join(__dirname, "data/the-astrophysical-journal.csl"), "utf-8", (err: any, template: string) => {

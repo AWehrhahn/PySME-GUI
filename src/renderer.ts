@@ -31,6 +31,9 @@ class SmeError {
 class EndianError extends SmeError { }
 class IdlError extends SmeError { }
 
+
+
+
 function checkEndian() {
     var arrayBuffer = new ArrayBuffer(2);
     var uint8Array = new Uint8Array(arrayBuffer);
@@ -536,5 +539,4 @@ ButtonLinelistLoad.addEventListener("click", async (event) => {
             console.error(err)
         }
     }
-
 })

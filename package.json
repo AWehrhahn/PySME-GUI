@@ -37,7 +37,8 @@
     "electron-squirrel-startup": "^1.0.0",
     "jszip": "^3.2.2",
     "plotly.js": "^1.53.0",
-    "tmp": "^0.1.0"
+    "tmp": "^0.1.0",
+    "untildify": "^4.0.0"
   },
   "config": {
     "forge": {

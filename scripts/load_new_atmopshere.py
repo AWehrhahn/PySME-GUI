@@ -1,5 +1,6 @@
 from pysme.util import start_logging
-from pysme.linelist.vald import ValdFile
+from pysme.atmosphere.savfile import SavFile
+from pysme.atmosphere.krzfile import KrzFile
 
 import json
 import argparse
@@ -8,18 +9,20 @@ from electron import call
 
 
 @call
-def main(fname_in, fname_out, linelist_format="VALD", log_file=None):
+def main(fname_in, fname_out, log_file=None):
     if log_file is not None:
         start_logging(log_file)
 
-    if linelist_format.lower() == "vald":
-        linelist = ValdFile(fname_in)
+    if fname_in.endswith(".sav"):
+        fileformat = SavFile
+    elif fname_in.endswith(".krz"):
+        fileformat = KrzFile
     else:
         raise ValueError(
-            f"Unrecognised linelist format f{linelist_format}. Expected one of ['VALD']"
+            f"File format {fname_in} not recognised. Expected one of ['.sav', '.krz']"
         )
 
-    data = linelist._lines.to_dict(orient="records")
+    data = fileformat(fname_in)
 
     result = {
         "info": {
@@ -42,16 +45,12 @@ if __name__ == "__main__":
     )
     parser.add_argument("input_file", help="Linelist file to load")
     parser.add_argument("output_file", help="output file name")
-    parser.add_argument(
-        "--format", help="Linelist format (e.g. 'VALD')", default="VALD"
-    )
     parser.add_argument("--log_file", help="Logfile", default=None)
 
     args = parser.parse_args()
 
     fname_in = args.input_file
     fname_out = args.output_file
-    linelist_format = args.format
     log_file = args.log_file
 
     main(
