@@ -411,6 +411,16 @@ async function fit_spectrum(sme: SmeFile) {
     return promise
 }
 
+async function load_new_linelist(sme: SmeFile, linelist_file: string) {
+    var tmpout = tmp.fileSync({ postfix: ".json" });
+    var success = await call_python("load_new_linelist.py", [linelist_file, tmpout.name, "--format=VALD"])
+    var data = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
+    var json = JSON.parse(data)
+    sme["linelist/data"] = json.data
+    sme["linelist/info"] = json.info
+    return sme
+}
+
 async function get_pysme_version() {
     var tmpout = tmp.fileSync({ postfix: ".txt" });
     var success = await call_python("get_pysme_version.py", [tmpout.name])
@@ -487,4 +497,20 @@ ButtonFit.addEventListener('click', async (event) => {
     } catch (err) {
         console.error(err)
     }
+})
+
+var ButtonLinelistLoad = document.getElementById("btn-linelist-load") as HTMLButtonElement
+ButtonLinelistLoad.addEventListener("click", async (event) => {
+    console.log("load Linelist")
+    var out = await dialog.showOpenDialog({ properties: ["openFile"] })
+    if (!out.canceled) {
+        var fname = out.filePaths[0];
+        try {
+            sme = await load_new_linelist(sme, fname)
+            plot_sme(sme)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
 })

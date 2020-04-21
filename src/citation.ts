@@ -30,7 +30,6 @@ async function show_citation(sme: SmeFile) {
             if (typeof element == "object") {
                 if (element.hasOwnProperty("citation_info")) {
                     let temp = await Cite.inputAsync(element["citation_info"], { forceType: "@bibtex/text" })
-                    console.log(temp)
                     for (let i = 0; i < temp.length; i++) {
                         const element = temp[i];
                         data.push(element)
