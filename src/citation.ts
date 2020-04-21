@@ -24,6 +24,24 @@ var DivCitation = document.getElementById("div-citation") as HTMLDivElement
 async function show_citation(sme: SmeFile) {
     let data = await Cite.inputAsync(sme.citation_info, { forceType: "@bibtex/text" })
 
+    for (const key in sme) {
+        if (sme.hasOwnProperty(key)) {
+            const element = sme[key];
+            if (typeof element == "object") {
+                if (element.hasOwnProperty("citation_info")) {
+                    let temp = await Cite.inputAsync(element["citation_info"], { forceType: "@bibtex/text" })
+                    console.log(temp)
+                    for (let i = 0; i < temp.length; i++) {
+                        const element = temp[i];
+                        data.push(element)
+                    }
+                }
+            }
+        }
+    }
+
+    console.log(data)
+
     for (let index = 0; index < data.length; index++) {
         const element = data[index];
         if (element.hasOwnProperty("container-title")) {
