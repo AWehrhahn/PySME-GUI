@@ -5,7 +5,6 @@ const fs = require('fs');
 const untildify = require('untildify');
 
 
-
 var FieldTeff = document.getElementById("par-teff") as HTMLInputElement
 var FieldLogg = document.getElementById("par-logg") as HTMLInputElement
 var FieldMonh = document.getElementById("par-monh") as HTMLInputElement
@@ -15,7 +14,6 @@ var FieldVsini = document.getElementById("par-vsini") as HTMLInputElement
 var FieldGamma6 = document.getElementById("par-gamma6") as HTMLInputElement
 var FieldH2broad = document.getElementById("par-h2broad") as HTMLInputElement
 
-
 var FieldCscaleFlag = document.getElementById("par-cscale-flag") as HTMLSelectElement
 var FieldCscaleType = document.getElementById("par-cscale-type") as HTMLSelectElement
 var FieldVradFlag = document.getElementById("par-vrad-flag") as HTMLSelectElement
@@ -23,6 +21,48 @@ var FieldAtmosphereFile = document.getElementById("par-atmosphere-file") as HTML
 
 var FieldFitparameters = document.getElementById("par-fitparameters") as HTMLInputElement
 var FieldMu = document.getElementById("par-mu") as HTMLInputElement
+
+// All the elements that can be used in SME (the first 100)
+var elements = [
+    "H", "He",
+    "Li", "Be", "B", "C", "N", "O", "F", "Ne",
+    "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar",
+    "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe",
+    "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se",
+    "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo",
+    "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn",
+    "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce",
+    "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy",
+    "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W",
+    "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb",
+    "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th",
+    "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf",
+    "Es",]
+
+// index of each element in the pattern data array
+var elements_dict: { [id: string]: number } = {}
+for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    elements_dict[element] = i
+}
+
+for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    let field = document.getElementById(`par-abund-${element}`)
+    // TODO: make input field for each element
+    field.innerHTML = `${i} ${element}`
+
+    let input = document.createElement("input") as HTMLInputElement
+    input.type = "number"
+    input.step = "any"
+    input.id = `par-abund-input-${element}`
+    input.addEventListener("change", (event: any) => {
+        sme["abund/pattern"][i] = event.target.value
+    })
+
+    field.appendChild(input)
+
+}
 
 async function load_atmosphere_files() {
     // Add files that are available from the server
@@ -103,6 +143,14 @@ async function load_parameter_values(sme: SmeFile) {
     add_atmosphere_file(atmo_file)
     FieldAtmosphereFile.value = sme["atmo/info"].source
 
+
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        let field = document.getElementById(`par-abund-input-${element}`) as HTMLInputElement
+        let value = sme["abund/pattern"][i]
+        if (isNaN(value)) value = -99
+        field.value = value
+    }
 }
 
 // React to the values being changed
