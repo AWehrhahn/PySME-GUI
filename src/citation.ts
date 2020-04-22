@@ -6,11 +6,11 @@ fs.readFile(join(__dirname, "data/the-astrophysical-journal.csl"), "utf-8", (err
     let config = Cite.plugins.config.get("@csl")
     config.templates.set("apj", template)
 })
-fs.readFile(join(__dirname, "data/nature.csl"), "utf-8", (err: any, template: string) => {
-    if (err) throw err;
-    let config = Cite.plugins.config.get("@csl")
-    config.templates.set("nature", template)
-})
+// fs.readFile(join(__dirname, "data/nature.csl"), "utf-8", (err: any, template: string) => {
+//     if (err) throw err;
+//     let config = Cite.plugins.config.get("@csl")
+//     config.templates.set("nature", template)
+// })
 
 var replacements: { [id: string]: string } = {}
 fs.readFile(join(__dirname, "data/citation-journal-replacements.json"), "utf-8", (err: any, data: string) => {

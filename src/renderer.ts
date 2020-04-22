@@ -2,13 +2,20 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const { dialog } = require('electron').remote
-var JSZip = require("jszip");
-const { Table } = require("apache-arrow");
-var tmp = require('tmp');
-const chokidar = require('chokidar');
 const $ = require("jquery");
 var dt = require('datatables.net')();
+require('datatables.net-bs4')();
+require("popper.js")
+require("bootstrap");
+
+const { dialog } = require('electron').remote
+var JSZip = require("jszip");
+var tmp = require('tmp');
+const chokidar = require('chokidar');
+
+const { Table } = require("apache-arrow");
+
+
 
 tmp.setGracefulCleanup();
 
@@ -427,9 +434,9 @@ async function load_new_linelist(sme: SmeFile, linelist_file: string) {
 }
 
 async function get_pysme_version() {
-    var tmpout = tmp.fileSync({ postfix: ".txt" });
-    var success = await call_python("get_pysme_version.py", [tmpout.name])
-    var data = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
+    let tmpout = tmp.fileSync({ postfix: ".txt" });
+    let success = await call_python("get_pysme_version.py", [tmpout.name])
+    let data = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
     return data
 }
 

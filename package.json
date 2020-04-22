@@ -29,14 +29,18 @@
     "typescript": "^3.6.0"
   },
   "dependencies": {
+    "acorn": "^6.4.1",
     "apache-arrow": "^0.16.0",
+    "bootstrap": "^4.4.1",
     "chokidar": "^3.3.1",
     "citation-js": "^0.5.0-alpha.5",
     "datatables.net": "^1.10.20",
-    "datatables.net-dt": "^1.10.20",
+    "datatables.net-bs4": "^1.10.20",
     "electron-squirrel-startup": "^1.0.0",
+    "jquery": "^3.5.0",
     "jszip": "^3.2.2",
     "plotly.js": "^1.53.0",
+    "popper.js": "^1.16.1",
     "tmp": "^0.1.0",
     "untildify": "^4.0.0"
   },

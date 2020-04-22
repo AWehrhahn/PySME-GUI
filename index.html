@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <!-- Required meta tags -->
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <title>PySME GUI</title>
-  <link rel="stylesheet" type="text/css" href="index.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="index.css"> -->
 </head>
 
 <body>
@@ -525,7 +531,7 @@
 
   </div>
   <div id="div-linelist">
-    <table id="table-linelist" class="display compact">
+    <table id="table-linelist" class="table table-striped table-bordered table-hover table-sm" style="width:100%">
     </table>
   </div>
   <div id="div-citation">
@@ -533,11 +539,11 @@
   <div id="log-div">
   </div>
   <!-- You can also require other files to run in this process -->
-  <script src=" ./dist/plotting.js"></script>
-  <script src=" ./dist/python.js"></script>
-  <script src=" ./dist/parameters.js"></script>
-  <script src=" ./dist/citation.js"></script>
-  <script src=" ./dist/renderer.js"></script>
+  <script src="./dist/plotting.js"></script>
+  <script src="./dist/python.js"></script>
+  <script src="./dist/parameters.js"></script>
+  <script src="./dist/citation.js"></script>
+  <script src="./dist/renderer.js"></script>
 </body>
 
 </html>
