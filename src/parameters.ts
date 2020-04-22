@@ -54,16 +54,16 @@ for (let i = 0; i < elements.length; i++) {
     // TODO: make input field for each element
     field.innerHTML = `${i} ${element}`
 
-    let input = document.createElement("input") as HTMLInputElement
-    input.type = "number"
-    input.step = "any"
-    input.width = 10
-    input.id = `par-abund-input-${element}`
-    input.addEventListener("change", (event: any) => {
-        sme["abund/pattern"][i] = event.target.value
-    })
+    // let input = document.createElement("input") as HTMLInputElement
+    // input.type = "number"
+    // input.step = "any"
+    // input.width = 10
+    // input.id = `par-abund-input-${element}`
+    // input.addEventListener("change", (event: any) => {
+    //     sme["abund/pattern"][i] = event.target.value
+    // })
 
-    field.appendChild(input)
+    // field.appendChild(input)
 
 }
 

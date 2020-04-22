@@ -10,7 +10,7 @@ var fmt = {
 
 var mask_mode: "bad" | "line" | "cont" = "cont"
 var initial_setup = true
-var graphDiv: any = document.getElementById('graph-div') as HTMLDivElement;
+var graphDiv: any = document.getElementById('div-graph') as HTMLDivElement;
 var data: any = []
 var layout: any = {}
 var data_index: { [id: string]: { [id: number]: number } } = {

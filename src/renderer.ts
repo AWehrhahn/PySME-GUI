@@ -15,6 +15,51 @@ const chokidar = require('chokidar');
 
 const { Table } = require("apache-arrow");
 
+// This section is from the template: https://startbootstrap.com/themes/sb-admin-2/
+// Toggle the side navigation
+$("#sidebarToggle, #sidebarToggleTop").on('click', function (e: any) {
+    $("body").toggleClass("sidebar-toggled");
+    $(".sidebar").toggleClass("toggled");
+    if ($(".sidebar").hasClass("toggled")) {
+        $('.sidebar .collapse').collapse('hide');
+    };
+});
+
+// Close any open menu accordions when window is resized below 768px
+$(window).resize(function () {
+    if ($(window).width() < 768) {
+        $('.sidebar .collapse').collapse('hide');
+    };
+});
+
+// Prevent the content wrapper from scrolling when the fixed side navigation hovered over
+$('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function (e: any) {
+    if ($(window).width() > 768) {
+        var e0 = e.originalEvent,
+            delta = e0.wheelDelta || -e0.detail;
+        this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+        e.preventDefault();
+    }
+});
+
+// Scroll to top button appear
+$(document).on('scroll', function () {
+    var scrollDistance = $(this).scrollTop();
+    if (scrollDistance > 100) {
+        $('.scroll-to-top').fadeIn();
+    } else {
+        $('.scroll-to-top').fadeOut();
+    }
+});
+
+// Smooth scrolling using jQuery easing
+$(document).on('click', 'a.scroll-to-top', function (e: any) {
+    var $anchor = $(this);
+    $('html, body').stop().animate({
+        scrollTop: ($($anchor.attr('href')).offset().top)
+    }, 1000, 'easeInOutExpo');
+    e.preventDefault();
+});
 
 
 tmp.setGracefulCleanup();
@@ -454,8 +499,7 @@ function show_linelist(sme: SmeFile) {
                 { title: 'gamqst', data: 'gamqst' },
                 { title: 'gamvw', data: 'gamvw' },
                 { title: 'lande', data: 'lande' },
-                { title: 'depth', data: 'depth' },
-                { title: 'reference', data: 'reference' }
+                { title: 'depth', data: 'depth' }
             ]
         });
     });

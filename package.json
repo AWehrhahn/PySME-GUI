@@ -25,10 +25,12 @@
     "@types/plotly.js": "^1.50.1",
     "@types/tmp": "^0.1.0",
     "electron": "^8.2.2",
+    "sass": "^1.26.3",
     "tslint": "^5.19.0",
     "typescript": "^3.6.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "acorn": "^6.4.1",
     "apache-arrow": "^0.16.0",
     "bootstrap": "^4.4.1",

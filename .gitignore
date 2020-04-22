@@ -7,3 +7,6 @@ out/
 
 scripts/python.txt
 scripts/__pycache__/
+
+# CSS are created from SCSS
+css/

@@ -1,22 +1,27 @@
 language: node_js
 node_js:
-- 12
+  - 12
 
 jobs:
   include:
-  - os: linux
-    dist: bionic
-    before_install:
-    - sudo apt-get install dpkg
-    - sudo apt-get install fakeroot
-  - os: windows
-  - os: osx
-    before_install:
-    - npm install -D macos-alias
+    - os: linux
+      dist: bionic
+      before_install:
+        - sudo apt-get install dpkg
+        - sudo apt-get install fakeroot
+    - os: windows
+    - os: osx
+      before_install:
+        - npm install -D macos-alias
+
+install:
+  - npm ci
+  - npm install -g sass
 
 script:
-- npm run build
-- npm run make
+  - sass /scss/sb-admin-2.scss /css/index.css
+  - npm run build
+  - npm run make
 
 deploy:
   provider: releases
