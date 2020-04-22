@@ -13,6 +13,8 @@ var FieldVmac = document.getElementById("par-vmac") as HTMLInputElement
 var FieldVsini = document.getElementById("par-vsini") as HTMLInputElement
 var FieldGamma6 = document.getElementById("par-gamma6") as HTMLInputElement
 var FieldH2broad = document.getElementById("par-h2broad") as HTMLInputElement
+var FieldAccrt = document.getElementById("par-accrt") as HTMLInputElement
+var FieldAccwt = document.getElementById("par-accwt") as HTMLInputElement
 
 var FieldCscaleFlag = document.getElementById("par-cscale-flag") as HTMLSelectElement
 var FieldCscaleType = document.getElementById("par-cscale-type") as HTMLSelectElement
@@ -127,6 +129,8 @@ async function load_parameter_values(sme: SmeFile) {
     FieldVmac.value = sme.vmac
     FieldVsini.value = sme.vsini
     FieldGamma6.value = sme.gam6
+    FieldAccrt.value = sme.accrt
+    FieldAccwt.value = sme.accwt
 
     FieldCscaleFlag.value = sme.cscale_flag
     FieldCscaleType.value = sme.cscale_type
@@ -177,6 +181,12 @@ FieldGamma6.addEventListener("change", (event: any) => {
 })
 FieldH2broad.addEventListener("change", (event: any) => {
     sme.h2broad = event.target.checked
+})
+FieldAccrt.addEventListener("change", (event: any) => {
+    sme.accrt = Number(event.target.value)
+})
+FieldAccwt.addEventListener("change", (event: any) => {
+    sme.accwt = Number(event.target.value)
 })
 
 FieldCscaleFlag.addEventListener("change", (event: any) => {
