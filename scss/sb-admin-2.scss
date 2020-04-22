@@ -2,6 +2,8 @@
 @import "variables.scss";
 
 // Import Bootstrap
+// 18 Columns of the Periodic Table
+$grid-columns: 18;
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 // Import Custom SB Admin 2 Mixins and Components

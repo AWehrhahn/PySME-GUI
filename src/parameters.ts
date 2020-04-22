@@ -52,19 +52,17 @@ for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let field = document.getElementById(`par-abund-${element}`)
     // TODO: make input field for each element
-    field.innerHTML = `${i} ${element}`
-
-    // let input = document.createElement("input") as HTMLInputElement
-    // input.type = "number"
-    // input.step = "any"
-    // input.width = 10
-    // input.id = `par-abund-input-${element}`
-    // input.addEventListener("change", (event: any) => {
-    //     sme["abund/pattern"][i] = event.target.value
-    // })
-
-    // field.appendChild(input)
-
+    field.innerHTML =
+        `
+        <div class="card w-5">
+            <div class="card-body">
+                <div class="card-title text-nowrap text-monospace">${element}</div>
+                <div class="input-group mb-3">
+                    <input type="number" step="any" class="form-control" id="par-abund-input-${element}">
+                </div>
+            </div>
+        </div>
+        `
 }
 
 async function load_atmosphere_files() {
@@ -137,7 +135,7 @@ async function load_parameter_values(sme: SmeFile) {
     FieldCscaleType.value = sme.cscale_type
     FieldVradFlag.value = sme.vrad_flag
 
-    FieldH2broad.checked = sme.h2broad
+    FieldH2broad.value = sme.h2broad
 
     // Fitparameters are comma seperated text
     // TODO: is there a better option?
@@ -181,7 +179,7 @@ FieldGamma6.addEventListener("change", (event: any) => {
     sme.gam6 = Number(event.target.value)
 })
 FieldH2broad.addEventListener("change", (event: any) => {
-    sme.h2broad = event.target.checked
+    sme.h2broad = Boolean(event.target.value)
 })
 FieldAccrt.addEventListener("change", (event: any) => {
     sme.accrt = Number(event.target.value)

@@ -554,27 +554,27 @@ ButtonSave.addEventListener('click', async (event) => {
     }
 })
 
-var ButtonSynthesize = document.getElementById("btn-synthesize")
-ButtonSynthesize.addEventListener('click', async (event) => {
-    console.log("Start synthesizing")
-    try {
-        sme = await synthesize_spectrum(sme)
-        plot_sme(sme)
-    } catch (err) {
-        console.error(err)
-    }
-})
+// var ButtonSynthesize = document.getElementById("btn-synthesize")
+// ButtonSynthesize.addEventListener('click', async (event) => {
+//     console.log("Start synthesizing")
+//     try {
+//         sme = await synthesize_spectrum(sme)
+//         plot_sme(sme)
+//     } catch (err) {
+//         console.error(err)
+//     }
+// })
 
-var ButtonFit = document.getElementById("btn-fit")
-ButtonFit.addEventListener('click', async (event) => {
-    console.log("Start fitting")
-    try {
-        sme = await fit_spectrum(sme)
-        plot_sme(sme)
-    } catch (err) {
-        console.error(err)
-    }
-})
+// var ButtonFit = document.getElementById("btn-fit")
+// ButtonFit.addEventListener('click', async (event) => {
+//     console.log("Start fitting")
+//     try {
+//         sme = await fit_spectrum(sme)
+//         plot_sme(sme)
+//     } catch (err) {
+//         console.error(err)
+//     }
+// })
 
 var ButtonLinelistLoad = document.getElementById("btn-linelist-load") as HTMLButtonElement
 ButtonLinelistLoad.addEventListener("click", async (event) => {

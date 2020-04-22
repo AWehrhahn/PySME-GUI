@@ -295,10 +295,9 @@ function plot_sme(sme: any) {
             args: [
                 { visible: visibility },
                 {
-                    title: `Segment ${seg}`,
                     annotations: annotations[seg],
-                    xaxis: { range: [wmin, wmax] },
-                    yaxis: { autorange: true },
+                    xaxis: { range: [wmin, wmax], title: "Wavelength [Å]" },
+                    yaxis: { autorange: true, title: "Intensity" },
                 },
             ],
         }
@@ -317,7 +316,6 @@ function plot_sme(sme: any) {
         xaxis: { title: "Wavelength [Å]" },
         yaxis: { title: "Intensity" },
         showlegend: true,
-        title: "Segment 0",
         legend: { traceorder: "reversed" },
         font: { family: "Open Sans, sans-serif" },
         selectdirection: "h",
