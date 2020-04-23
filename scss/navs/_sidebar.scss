@@ -80,6 +80,7 @@
     width: 2.5rem;
     height: 2.5rem;
     text-align: center;
+    margin-left: $sidebar-base-width * 0.5 - 1.25rem;
     margin-bottom: 1rem;
     cursor: pointer;
     &::after {
@@ -98,10 +99,13 @@
   &.toggled {
     width: 0 !important;
     overflow: hidden;
-    #sidebarToggle::after {
-      content: '\f105';
-      font-family: 'Font Awesome 5 Free';
-      margin-left: 0.25rem;
+    #sidebarToggle{
+      margin-left: $sidebar-collapsed-width * 0.5 - 1.25rem;
+      &::after {
+        content: '\f105';
+        font-family: 'Font Awesome 5 Free';
+        margin-left: 0.25rem;
+      }
     }
   }
   .sidebar-brand {

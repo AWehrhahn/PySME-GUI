@@ -25,6 +25,7 @@ $("#sidebarToggle, #sidebarToggleTop").on('click', function (e: any) {
     };
 });
 
+
 // Close any open menu accordions when window is resized below 768px
 $(window).resize(function () {
     if ($(window).width() < 768) {
@@ -60,6 +61,7 @@ $(document).on('click', 'a.scroll-to-top', function (e: any) {
     }, 1000, 'easeInOutExpo');
     e.preventDefault();
 });
+$("#sidebarToggle").click()
 
 
 tmp.setGracefulCleanup();

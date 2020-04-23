@@ -27,87 +27,86 @@
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <div class="sticky-top">
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="far fa-sun"></i>
+          </div>
+        </a>
 
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="far fa-sun"></i>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          File
         </div>
-        <div class="sidebar-brand-text mx-3">PySME GUI</div>
-      </a>
 
-      <!-- Divider -->
-      <hr class="sidebar-divider">
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="btn-load">
+            <i class="fas fa-file-upload"></i>
+            <span>Load File</span></a>
+        </li>
 
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        File
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="btn-save">
+            <i class="fas fa-save"></i>
+            <span>Save File</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Navigation
+        </div>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#nav-spectrum">
+            <i class="fas fa-chart-area"></i>
+            <span>Spectrum</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#nav-parameters">
+            <i class="fas fa-sliders-h"></i>
+            <span>Parameters</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#nav-abundance">
+            <i class="fas fa-vial"></i>
+            <span>Abundance</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#nav-linelist">
+            <i class="fas fa-list-ol"></i>
+            <span>Linelist</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#nav-log">
+            <i class="far fa-sticky-note"></i>
+            <span>Log</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#nav-citation">
+            <i class="fas fa-quote-right"></i>
+            <span>Citations</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
       </div>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#" id="btn-load">
-          <i class="fas fa-file-upload"></i>
-          <span>Load File</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#" id="btn-save">
-          <i class="fas fa-save"></i>
-          <span>Save File</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Navigation
-      </div>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#nav-spectrum">
-          <i class="fas fa-chart-area"></i>
-          <span>Spectrum</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#nav-parameters">
-          <i class="fas fa-sliders-h"></i>
-          <span>Parameters</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#nav-abundance">
-          <i class="fas fa-vial"></i>
-          <span>Abundance</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#nav-linelist">
-          <i class="fas fa-list-ol"></i>
-          <span>Linelist</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#nav-log">
-          <i class="far fa-sticky-note"></i>
-          <span>Log</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="#nav-citation">
-          <i class="fas fa-quote-right"></i>
-          <span>Citations</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
     </ul>
     <!-- End of Sidebar -->
 
@@ -125,6 +124,11 @@
             <i class="fa fa-bars"></i>
           </button>
 
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">PySME GUI</h1>
+          </div>
+
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
           </ul>
@@ -134,11 +138,6 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-          </div>
 
           <!-- Content Row Spectrum -->
 
