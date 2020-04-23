@@ -332,32 +332,37 @@
                   <h6 class="m-0 font-weight-bold text-primary">Abundance</h6>
                 </div>
                 <div class="card-body">
-                  <table id="table-abundance" class="table table-bordered table-hover table-sm" style="width:100%;">
+                  <table id="table-abundance" class="table table-bordered table-sm" style="width:100%;">
                     <thead>
                       <tr>
-                        <th scope="col">1</th>
-                        <th scope="col">2</th>
-                        <th scope="col">3</th>
-                        <th scope="col">4</th>
-                        <th scope="col">5</th>
-                        <th scope="col">6</th>
-                        <th scope="col">7</th>
-                        <th scope="col">8</th>
-                        <th scope="col">9</th>
-                        <th scope="col">10</th>
-                        <th scope="col">11</th>
-                        <th scope="col">12</th>
-                        <th scope="col">13</th>
-                        <th scope="col">14</th>
-                        <th scope="col">15</th>
-                        <th scope="col">16</th>
-                        <th scope="col">17</th>
-                        <th scope="col">18</th>
+                        <th scope="col" class="w-5">1</th>
+                        <th scope="col" class="w-5">2</th>
+                        <th scope="col" class="w-5">3</th>
+                        <th scope="col" class="w-5">4</th>
+                        <th scope="col" class="w-5">5</th>
+                        <th scope="col" class="w-5">6</th>
+                        <th scope="col" class="w-5">7</th>
+                        <th scope="col" class="w-5">8</th>
+                        <th scope="col" class="w-5">9</th>
+                        <th scope="col" class="w-5">10</th>
+                        <th scope="col" class="w-5">11</th>
+                        <th scope="col" class="w-5">12</th>
+                        <th scope="col" class="w-5">13</th>
+                        <th scope="col" class="w-5">14</th>
+                        <th scope="col" class="w-5">15</th>
+                        <th scope="col" class="w-5">16</th>
+                        <th scope="col" class="w-5">17</th>
+                        <th scope="col" class="w-5">18</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td id="par-abund-H" class="abundance-element">H</td>
+                        <td id="par-abund-H" class="abundance-element">
+                          <div class="font-weight-bold">H</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-H" value="12">
+                          </div>
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -374,11 +379,26 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td id="par-abund-He" class="abundance-element">He</td>
+                        <td id="par-abund-He" class="abundance-element">
+                          <div class="font-weight-bold">He</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-He" value="NaN">
+                          </div>
+                        </td>
                       </tr>
                       <tr>
-                        <td id="par-abund-Li" class="abundance-element">Li</td>
-                        <td id="par-abund-Be" class="abundance-element">Be</td>
+                        <td id="par-abund-Li" class="abundance-element">
+                          <div class="font-weight-bold">Li</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Li" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Be" class="abundance-element">
+                          <div class="font-weight-bold">Be</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Be" value="NaN">
+                          </div>
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -389,16 +409,56 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td id="par-abund-B" class="abundance-element">B</td>
-                        <td id="par-abund-C" class="abundance-element">C</td>
-                        <td id="par-abund-N" class="abundance-element">N</td>
-                        <td id="par-abund-O" class="abundance-element">O</td>
-                        <td id="par-abund-F" class="abundance-element">F</td>
-                        <td id="par-abund-Ne" class="abundance-element">Ne</td>
+                        <td id="par-abund-B" class="abundance-element">
+                          <div class="font-weight-bold">B</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-B" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-C" class="abundance-element">
+                          <div class="font-weight-bold">C</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-C" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-N" class="abundance-element">
+                          <div class="font-weight-bold">N</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-N" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-O" class="abundance-element">
+                          <div class="font-weight-bold">O</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-O" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-F" class="abundance-element">
+                          <div class="font-weight-bold">F</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-F" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ne" class="abundance-element">
+                          <div class="font-weight-bold">Ne</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ne" value="NaN">
+                          </div>
+                        </td>
                       </tr>
                       <tr>
-                        <td id="par-abund-Na" class="abundance-element">Na</td>
-                        <td id="par-abund-Mg" class="abundance-element">Mg</td>
+                        <td id="par-abund-Na" class="abundance-element">
+                          <div class="font-weight-bold">Na</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Na" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Mg" class="abundance-element">
+                          <div class="font-weight-bold">Mg</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Mg" value="NaN">
+                          </div>
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -409,76 +469,381 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td id="par-abund-Al" class="abundance-element">Al</td>
-                        <td id="par-abund-Si" class="abundance-element">Si</td>
-                        <td id="par-abund-P" class="abundance-element">P</td>
-                        <td id="par-abund-S" class="abundance-element">S</td>
-                        <td id="par-abund-Cl" class="abundance-element">Cl</td>
-                        <td id="par-abund-Ar" class="abundance-element">Ar</td>
+                        <td id="par-abund-Al" class="abundance-element">
+                          <div class="font-weight-bold">Al</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Al" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Si" class="abundance-element">
+                          <div class="font-weight-bold">Si</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Si" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-P" class="abundance-element">
+                          <div class="font-weight-bold">P</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-P" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-S" class="abundance-element">
+                          <div class="font-weight-bold">S</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-S" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Cl" class="abundance-element">
+                          <div class="font-weight-bold">Cl</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Cl" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ar" class="abundance-element">
+                          <div class="font-weight-bold">Ar</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ar" value="NaN">
+                          </div>
+                        </td>
                       </tr>
                       <tr>
-                        <td id="par-abund-K" class="abundance-element">K</td>
-                        <td id="par-abund-Ca" class="abundance-element">Ca</td>
-                        <td id="par-abund-Sc" class="abundance-element">Sc</td>
-                        <td id="par-abund-Ti" class="abundance-element">Ti</td>
-                        <td id="par-abund-V" class="abundance-element">V</td>
-                        <td id="par-abund-Cr" class="abundance-element">Cr</td>
-                        <td id="par-abund-Mn" class="abundance-element">Mn</td>
-                        <td id="par-abund-Fe" class="abundance-element">Fe</td>
-                        <td id="par-abund-Co" class="abundance-element">Co</td>
-                        <td id="par-abund-Ni" class="abundance-element">Ni</td>
-                        <td id="par-abund-Cu" class="abundance-element">Cu</td>
-                        <td id="par-abund-Zn" class="abundance-element">Zn</td>
-                        <td id="par-abund-Ga" class="abundance-element">Ga</td>
-                        <td id="par-abund-Ge" class="abundance-element">Ge</td>
-                        <td id="par-abund-As" class="abundance-element">As</td>
-                        <td id="par-abund-Se" class="abundance-element">Se</td>
-                        <td id="par-abund-Br" class="abundance-element">Br</td>
-                        <td id="par-abund-Kr" class="abundance-element">Kr</td>
+                        <td id="par-abund-K" class="abundance-element">
+                          <div class="font-weight-bold">K</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-K" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ca" class="abundance-element">
+                          <div class="font-weight-bold">Ca</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ca" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Sc" class="abundance-element">
+                          <div class="font-weight-bold">Sc</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Sc" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ti" class="abundance-element">
+                          <div class="font-weight-bold">Ti</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ti" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-V" class="abundance-element">
+                          <div class="font-weight-bold">V</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-V" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Cr" class="abundance-element">
+                          <div class="font-weight-bold">Cr</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Cr" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Mn" class="abundance-element">
+                          <div class="font-weight-bold">Mn</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Mn" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Fe" class="abundance-element">
+                          <div class="font-weight-bold">Fe</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Fe" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Co" class="abundance-element">
+                          <div class="font-weight-bold">Co</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Co" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ni" class="abundance-element">
+                          <div class="font-weight-bold">Ni</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ni" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Cu" class="abundance-element">
+                          <div class="font-weight-bold">Cu</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Cu" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Zn" class="abundance-element">
+                          <div class="font-weight-bold">Zn</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Zn" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ga" class="abundance-element">
+                          <div class="font-weight-bold">Ga</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ga" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ge" class="abundance-element">
+                          <div class="font-weight-bold">Ge</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ge" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-As" class="abundance-element">
+                          <div class="font-weight-bold">As</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-As" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Se" class="abundance-element">
+                          <div class="font-weight-bold">Se</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Se" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Br" class="abundance-element">
+                          <div class="font-weight-bold">Br</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Br" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Kr" class="abundance-element">
+                          <div class="font-weight-bold">Kr</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Kr" value="NaN">
+                          </div>
+                        </td>
                       </tr>
                       <tr>
-                        <td id="par-abund-Rb" class="abundance-element">Rb</td>
-                        <td id="par-abund-Sr" class="abundance-element">Sr</td>
-                        <td id="par-abund-Y" class="abundance-element">Y</td>
-                        <td id="par-abund-Zr" class="abundance-element">Zr</td>
-                        <td id="par-abund-Nb" class="abundance-element">Nb</td>
-                        <td id="par-abund-Mo" class="abundance-element">Mo</td>
-                        <td id="par-abund-Tc" class="abundance-element">Tc</td>
-                        <td id="par-abund-Ru" class="abundance-element">Ru</td>
-                        <td id="par-abund-Rh" class="abundance-element">Rh</td>
-                        <td id="par-abund-Pd" class="abundance-element">Pd</td>
-                        <td id="par-abund-Ag" class="abundance-element">Ag</td>
-                        <td id="par-abund-Cd" class="abundance-element">Cd</td>
-                        <td id="par-abund-In" class="abundance-element">In</td>
-                        <td id="par-abund-Sn" class="abundance-element">Sn</td>
-                        <td id="par-abund-Sb" class="abundance-element">Sb</td>
-                        <td id="par-abund-Te" class="abundance-element">Te</td>
-                        <td id="par-abund-I" class="abundance-element">I</td>
-                        <td id="par-abund-Xe" class="abundance-element">Xe</td>
+                        <td id="par-abund-Rb" class="abundance-element">
+                          <div class="font-weight-bold">Rb</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Rb" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Sr" class="abundance-element">
+                          <div class="font-weight-bold">Sr</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Sr" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Y" class="abundance-element">
+                          <div class="font-weight-bold">Y</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Y" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Zr" class="abundance-element">
+                          <div class="font-weight-bold">Zr</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Zr" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Nb" class="abundance-element">
+                          <div class="font-weight-bold">Nb</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Nb" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Mo" class="abundance-element">
+                          <div class="font-weight-bold">Mo</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Mo" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Tc" class="abundance-element">
+                          <div class="font-weight-bold">Tc</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Tc" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ru" class="abundance-element">
+                          <div class="font-weight-bold">Ru</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ru" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Rh" class="abundance-element">
+                          <div class="font-weight-bold">Rh</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Rh" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Pd" class="abundance-element">
+                          <div class="font-weight-bold">Pd</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Pd" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ag" class="abundance-element">
+                          <div class="font-weight-bold">Ag</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ag" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Cd" class="abundance-element">
+                          <div class="font-weight-bold">Cd</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Cd" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-In" class="abundance-element">
+                          <div class="font-weight-bold">In</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-In" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Sn" class="abundance-element">
+                          <div class="font-weight-bold">Sn</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Sn" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Sb" class="abundance-element">
+                          <div class="font-weight-bold">Sb</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Sb" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Te" class="abundance-element">
+                          <div class="font-weight-bold">Te</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Te" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-I" class="abundance-element">
+                          <div class="font-weight-bold">I</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-I" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Xe" class="abundance-element">
+                          <div class="font-weight-bold">Xe</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Xe" value="NaN">
+                          </div>
+                        </td>
                       </tr>
                       <tr>
-                        <td id="par-abund-Ce" class="abundance-element">Ce</td>
-                        <td id="par-abund-Ba" class="abundance-element">Ba</td>
+                        <td id="par-abund-Ce" class="abundance-element">
+                          <div class="font-weight-bold">Ce</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ce" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ba" class="abundance-element">
+                          <div class="font-weight-bold">Ba</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ba" value="NaN">
+                          </div>
+                        </td>
                         <td></td>
-                        <td id="par-abund-Hf" class="abundance-element">Hf</td>
-                        <td id="par-abund-Ta" class="abundance-element">Ta</td>
-                        <td id="par-abund-W" class="abundance-element">W</td>
-                        <td id="par-abund-Re" class="abundance-element">Re</td>
-                        <td id="par-abund-Os" class="abundance-element">Os</td>
-                        <td id="par-abund-Ir" class="abundance-element">Ir</td>
-                        <td id="par-abund-Pt" class="abundance-element">Pt</td>
-                        <td id="par-abund-Au" class="abundance-element">Au</td>
-                        <td id="par-abund-Hg" class="abundance-element">Hg</td>
-                        <td id="par-abund-Tl" class="abundance-element">Tl</td>
-                        <td id="par-abund-Pb" class="abundance-element">Pb</td>
-                        <td id="par-abund-Bi" class="abundance-element">Bi</td>
-                        <td id="par-abund-Po" class="abundance-element">Po</td>
-                        <td id="par-abund-At" class="abundance-element">At</td>
-                        <td id="par-abund-Rd" class="abundance-element">Rd</td>
+                        <td id="par-abund-Hf" class="abundance-element">
+                          <div class="font-weight-bold">Hf</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Hf" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ta" class="abundance-element">
+                          <div class="font-weight-bold">Ta</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ta" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-W" class="abundance-element">
+                          <div class="font-weight-bold">W</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-W" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Re" class="abundance-element">
+                          <div class="font-weight-bold">Re</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Re" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Os" class="abundance-element">
+                          <div class="font-weight-bold">Os</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Os" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ir" class="abundance-element">
+                          <div class="font-weight-bold">Ir</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ir" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Pt" class="abundance-element">
+                          <div class="font-weight-bold">Pt</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Pt" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Au" class="abundance-element">
+                          <div class="font-weight-bold">Au</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Au" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Hg" class="abundance-element">
+                          <div class="font-weight-bold">Hg</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Hg" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Tl" class="abundance-element">
+                          <div class="font-weight-bold">Tl</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Tl" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Pb" class="abundance-element">
+                          <div class="font-weight-bold">Pb</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Pb" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Bi" class="abundance-element">
+                          <div class="font-weight-bold">Bi</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Bi" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Po" class="abundance-element">
+                          <div class="font-weight-bold">Po</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Po" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-At" class="abundance-element">
+                          <div class="font-weight-bold">At</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-At" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Rd" class="abundance-element">
+                          <div class="font-weight-bold">Rd</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Rd" value="NaN">
+                          </div>
+                        </td>
                       </tr>
                       <tr>
-                        <td id="par-abund-Fr" class="abundance-element">Fr</td>
-                        <td id="par-abund-Ra" class="abundance-element">Ra</td>
+                        <td id="par-abund-Fr" class="abundance-element">
+                          <div class="font-weight-bold">Fr</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Fr" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ra" class="abundance-element">
+                          <div class="font-weight-bold">Ra</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ra" value="NaN">
+                          </div>
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -499,37 +864,167 @@
                       <tr>
                         <td></td>
                         <td></td>
-                        <td id="par-abund-La" class="abundance-element">La</td>
-                        <td id="par-abund-Ce" class="abundance-element">Ce</td>
-                        <td id="par-abund-Pr" class="abundance-element">Pr</td>
-                        <td id="par-abund-Nd" class="abundance-element">Nd</td>
-                        <td id="par-abund-Pm" class="abundance-element">Pm</td>
-                        <td id="par-abund-Sm" class="abundance-element">Sm</td>
-                        <td id="par-abund-Eu" class="abundance-element">Eu</td>
-                        <td id="par-abund-Gd" class="abundance-element">Gd</td>
-                        <td id="par-abund-Tb" class="abundance-element">Tb</td>
-                        <td id="par-abund-Dy" class="abundance-element">Dy</td>
-                        <td id="par-abund-Ho" class="abundance-element">Ho</td>
-                        <td id="par-abund-Er" class="abundance-element">Er</td>
-                        <td id="par-abund-Tm" class="abundance-element">Tm</td>
-                        <td id="par-abund-Yb" class="abundance-element">Yb</td>
-                        <td id="par-abund-Lu" class="abundance-element">Lu</td>
+                        <td id="par-abund-La" class="abundance-element">
+                          <div class="font-weight-bold">La</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-La" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ce" class="abundance-element">
+                          <div class="font-weight-bold">Ce</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ce" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Pr" class="abundance-element">
+                          <div class="font-weight-bold">Pr</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Pr" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Nd" class="abundance-element">
+                          <div class="font-weight-bold">Nd</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Nd" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Pm" class="abundance-element">
+                          <div class="font-weight-bold">Pm</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Pm" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Sm" class="abundance-element">
+                          <div class="font-weight-bold">Sm</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Sm" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Eu" class="abundance-element">
+                          <div class="font-weight-bold">Eu</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Eu" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Gd" class="abundance-element">
+                          <div class="font-weight-bold">Gd</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Gd" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Tb" class="abundance-element">
+                          <div class="font-weight-bold">Tb</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Tb" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Dy" class="abundance-element">
+                          <div class="font-weight-bold">Dy</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Dy" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Ho" class="abundance-element">
+                          <div class="font-weight-bold">Ho</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ho" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Er" class="abundance-element">
+                          <div class="font-weight-bold">Er</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Er" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Tm" class="abundance-element">
+                          <div class="font-weight-bold">Tm</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Tm" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Yb" class="abundance-element">
+                          <div class="font-weight-bold">Yb</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Yb" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Lu" class="abundance-element">
+                          <div class="font-weight-bold">Lu</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Lu" value="NaN">
+                          </div>
+                        </td>
                         <td></td>
                       </tr>
                       <tr>
                         <td></td>
                         <td></td>
-                        <td id="par-abund-Ac" class="abundance-element">Ac</td>
-                        <td id="par-abund-Th" class="abundance-element">Th</td>
-                        <td id="par-abund-Pa" class="abundance-element">Pa</td>
-                        <td id="par-abund-U" class="abundance-element">U</td>
-                        <td id="par-abund-Np" class="abundance-element">Np</td>
-                        <td id="par-abund-Pu" class="abundance-element">Pu</td>
-                        <td id="par-abund-Am" class="abundance-element">Am</td>
-                        <td id="par-abund-Cm" class="abundance-element">Cm</td>
-                        <td id="par-abund-Bk" class="abundance-element">Bk</td>
-                        <td id="par-abund-Cf" class="abundance-element">Cf</td>
-                        <td id="par-abund-Es" class="abundance-element">Es</td>
+                        <td id="par-abund-Ac" class="abundance-element">
+                          <div class="font-weight-bold">Ac</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ac" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Th" class="abundance-element">
+                          <div class="font-weight-bold">Th</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Th" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Pa" class="abundance-element">
+                          <div class="font-weight-bold">Pa</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Pa" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-U" class="abundance-element">
+                          <div class="font-weight-bold">U</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-U" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Np" class="abundance-element">
+                          <div class="font-weight-bold">Np</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Np" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Pu" class="abundance-element">
+                          <div class="font-weight-bold">Pu</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Pu" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Am" class="abundance-element">
+                          <div class="font-weight-bold">Am</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Am" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Cm" class="abundance-element">
+                          <div class="font-weight-bold">Cm</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Cm" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Bk" class="abundance-element">
+                          <div class="font-weight-bold">Bk</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Bk" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Cf" class="abundance-element">
+                          <div class="font-weight-bold">Cf</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Cf" value="NaN">
+                          </div>
+                        </td>
+                        <td id="par-abund-Es" class="abundance-element">
+                          <div class="font-weight-bold">Es</div>
+                          <div class="text-nowrap">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Es" value="NaN">
+                          </div>
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -612,7 +1107,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
                       aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Options</div>
+                      <div class="dropdown-header">Export</div>
+                      <a class="dropdown-item">Bibtex</a>
                     </div>
                   </div>
                 </div>

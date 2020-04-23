@@ -4,6 +4,7 @@
 // Import Bootstrap
 // 18 Columns of the Periodic Table
 $grid-columns: 18;
+$sizes: ( 5: 5%  );
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 // Import Custom SB Admin 2 Mixins and Components
@@ -20,3 +21,17 @@ $grid-columns: 18;
 @import "login.scss";
 @import "error.scss";
 @import "footer.scss";
+
+.hover-color{
+    cursor: pointer;
+    &:hover{
+        color: $blue
+    }
+}
+
+.no-border {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+}

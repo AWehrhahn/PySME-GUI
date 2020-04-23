@@ -12,7 +12,6 @@ const { dialog } = require('electron').remote
 var JSZip = require("jszip");
 var tmp = require('tmp');
 const chokidar = require('chokidar');
-
 const { Table } = require("apache-arrow");
 
 // This section is from the template: https://startbootstrap.com/themes/sb-admin-2/
