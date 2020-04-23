@@ -52,17 +52,17 @@ for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     let field = document.getElementById(`par-abund-${element}`)
     // TODO: make input field for each element
-    field.innerHTML =
-        `
-        <div class="card w-5">
-            <div class="card-body">
-                <div class="card-title text-nowrap text-monospace">${element}</div>
-                <div class="input-group mb-3">
-                    <input type="number" step="any" class="form-control" id="par-abund-input-${element}">
-                </div>
-            </div>
-        </div>
-        `
+    // field.innerHTML =
+    //     `
+    //     <div class="card w-5">
+    //         <div class="card-body">
+    //             <div class="card-title text-nowrap text-monospace">${element}</div>
+    //             <div class="input-group mb-3">
+    //                 <input type="number" step="any" class="form-control" id="par-abund-input-${element}">
+    //             </div>
+    //         </div>
+    //     </div>
+    //     `
 }
 
 async function load_atmosphere_files() {
