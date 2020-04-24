@@ -83,8 +83,6 @@ $("#sidebarToggle").click()
 
 tmp.setGracefulCleanup();
 
-show_error("Hello World")
-
 interface ZipObject {
     name: string
     async: Function
@@ -483,7 +481,7 @@ async function fit_spectrum(sme: SmeFile) {
 
     var promise = new Promise<SmeFile>((resolve, reject) => {
         save_file(tmpin.name, sme).then(() => {
-            call_python("fit_spectrum.py", [tmpin.name, tmpout.name, "teff", "monh", "logg", "--log_file=" + tmplog.name]).then(() => {
+            call_python("fit_spectrum.py", [tmpin.name, tmpout.name, ...sme.fitparameters, "--log_file=" + tmplog.name]).then(() => {
                 load_file(tmpout.name).then(resolve)
             })
         });
