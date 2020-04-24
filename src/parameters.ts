@@ -26,7 +26,13 @@ var DivFitparameters = document.getElementById("par-fitparameters-div") as HTMLD
 var BtnFitparametersAdd = document.getElementById("btn-fitparameters-add") as HTMLButtonElement
 var BtnFitparametersRem = document.getElementById("btn-fitparameters-rem") as HTMLButtonElement
 var DivFitparametersEnd = document.getElementById("par-fitparameters-end") as HTMLDivElement
+
 var FieldMu = document.getElementById("par-mu") as HTMLInputElement
+var DivMu = document.getElementById("par-mu-div") as HTMLDivElement
+var BtnMuAdd = document.getElementById("btn-mu-add") as HTMLButtonElement
+var BtnMuRem = document.getElementById("btn-mu-rem") as HTMLButtonElement
+var DivMUEnd = document.getElementById("par-mu-end") as HTMLDivElement
+//TODO Autocomplete for fitparameters
 
 // All the elements that can be used in SME (the first 100)
 var elements = [
@@ -134,8 +140,7 @@ async function load_parameter_values(sme: SmeFile) {
 
     FieldH2broad.value = sme.h2broad
 
-    // Fitparameters are comma seperated text
-    // TODO: is there a better option?
+    // Fitparameters
     for (let i = 0; i < sme.fitparameters.length; i++) {
         const element = sme.fitparameters[i];
         if (i >= get_n_fitparameters_fields()) {
@@ -148,8 +153,19 @@ async function load_parameter_values(sme: SmeFile) {
         BtnFitparametersRem.click()
     }
 
-
-    FieldMu.value = sme.mu.join(", ")
+    // Mu
+    for (let i = 0; i < sme.mu.length; i++) {
+        const element = sme.mu[i];
+        if (i >= get_n_mu_fields()) {
+            BtnMuAdd.click()
+        }
+        let field = get_mu_field(i);
+        field.value = element
+        field.dispatchEvent(new Event("change"))
+    }
+    while (sme.mu.length < get_n_mu_fields()) {
+        BtnMuRem.click()
+    }
 
     let atmo_file: string = sme["atmo/info"].source
     add_atmosphere_file(atmo_file)
@@ -211,11 +227,9 @@ FieldAtmosphereFile.addEventListener("change", (event) => {
     sme["atmo/info"].source = target.value
 })
 
-FieldMu.addEventListener("change", (event: any) => {
-    var value: string = event.target.value
-    sme.mu = value.split(",").map(Number)
-})
 
+
+// Fitparameters
 FieldFitparameters.addEventListener("change", (event: any) => {
     var value: string = event.target.value
     sme.fitparameters[0] = value
@@ -265,6 +279,77 @@ BtnFitparametersRem.addEventListener("click", (event: any) => {
         try {
             if (sme.fitparameters.length > get_n_fitparameters_fields()) {
                 sme.fitparameters.pop()
+            }
+        } catch (err) { console.log(err) }
+    }
+})
+
+// Mu Buttons
+FieldMu.addEventListener("change", (event) => {
+    let field = event.target as HTMLInputElement
+    var value = Number(field.value)
+    if (value > 1 || value < 0) {
+        field.classList.add("is-invalid")
+    } else {
+        field.classList.remove("is-invalid")
+        sme.mu[0] = value
+    }
+})
+
+function get_n_mu_fields() {
+    return DivMu.childElementCount - 2
+}
+
+function get_mu_field(index: number) {
+    if (index >= get_n_mu_fields()) {
+        throw "index out of range"
+    }
+    // There is an additional child after the first one
+    if (index != 0) index += 1
+    index += 3
+    return DivMu.childNodes[index] as HTMLInputElement
+}
+
+
+BtnMuAdd.addEventListener("click", (event: any) => {
+    let child = document.createElement("input")
+    // The index of this element will be equal to the number of fields at this moment
+    let i = get_n_mu_fields()
+    child.classList.add("form-control")
+    child.type = "number"
+    child.step = "any"
+    child.min = "0"
+    child.max = "1"
+    child.addEventListener("change", (event) => {
+        let field = event.target as HTMLInputElement
+        var value = Number(field.value)
+        if (value > 1 || value < 0) {
+            field.classList.add("is-invalid")
+        } else {
+            field.classList.remove("is-invalid")
+            sme.mu[i] = value
+        }
+    })
+    DivMu.insertBefore(child, DivMUEnd)
+    try {
+        if (sme.mu.length < get_n_mu_fields()) {
+            sme.mu.push(NaN)
+        }
+    } catch (err) { console.log(err) }
+})
+
+
+BtnMuRem.addEventListener("click", (event: any) => {
+    if (DivMu.childElementCount > 3) {
+        // If there are any fields to remove
+        let j = DivMu.childNodes.length
+        // Move to the last input field
+        j -= 3
+        let child = DivMu.childNodes[j]
+        DivMu.removeChild(child)
+        try {
+            if (sme.mu.length > get_n_mu_fields()) {
+                sme.mu.pop()
             }
         } catch (err) { console.log(err) }
     }

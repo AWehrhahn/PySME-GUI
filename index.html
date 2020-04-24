@@ -251,11 +251,15 @@
                       <option value="false">false</option>
                     </select>
                   </div>
-                  <div class="input-group input-group-sm mb-1">
+                  <div class="input-group input-group-sm mb-1" id="par-mu-div">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Mu</span>
                     </div>
-                    <input type="text" class="form-control" id="par-mu">
+                    <input type="number" class="form-control" id="par-mu" step="any" min="0" max="1">
+                    <div class="input-group-append" id="par-mu-end">
+                      <button class="btn btn-outline-secondary" type="button" id="btn-mu-rem">-</button>
+                      <button class="btn btn-outline-secondary" type="button" id="btn-mu-add">+</button>
+                    </div>
                   </div>
                   <div class="input-group input-group-sm mb-1">
                     <div class="input-group-prepend">
