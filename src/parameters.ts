@@ -14,7 +14,7 @@ var FieldVsini = document.getElementById("par-vsini") as HTMLInputElement
 var FieldGamma6 = document.getElementById("par-gamma6") as HTMLInputElement
 var FieldH2broad = document.getElementById("par-h2broad") as HTMLInputElement
 var FieldAccrt = document.getElementById("par-accrt") as HTMLInputElement
-var FieldAccwt = document.getElementById("par-accwt") as HTMLInputElement
+var FieldAccwi = document.getElementById("par-accwi") as HTMLInputElement
 
 var FieldCscaleFlag = document.getElementById("par-cscale-flag") as HTMLSelectElement
 var FieldCscaleType = document.getElementById("par-cscale-type") as HTMLSelectElement
@@ -22,6 +22,10 @@ var FieldVradFlag = document.getElementById("par-vrad-flag") as HTMLSelectElemen
 var FieldAtmosphereFile = document.getElementById("par-atmosphere-file") as HTMLSelectElement
 
 var FieldFitparameters = document.getElementById("par-fitparameters") as HTMLInputElement
+var DivFitparameters = document.getElementById("par-fitparameters-div") as HTMLDivElement
+var BtnFitparametersAdd = document.getElementById("btn-fitparameters-add") as HTMLButtonElement
+var BtnFitparametersRem = document.getElementById("btn-fitparameters-rem") as HTMLButtonElement
+var DivFitparametersEnd = document.getElementById("par-fitparameters-end") as HTMLDivElement
 var FieldMu = document.getElementById("par-mu") as HTMLInputElement
 
 // All the elements that can be used in SME (the first 100)
@@ -50,19 +54,12 @@ for (let i = 0; i < elements.length; i++) {
 
 for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
-    let field = document.getElementById(`par-abund-${element}`)
-    // TODO: make input field for each element
-    // field.innerHTML =
-    //     `
-    //     <div class="card w-5">
-    //         <div class="card-body">
-    //             <div class="card-title text-nowrap text-monospace">${element}</div>
-    //             <div class="input-group mb-3">
-    //                 <input type="number" step="any" class="form-control" id="par-abund-input-${element}">
-    //             </div>
-    //         </div>
-    //     </div>
-    //     `
+    let field = document.getElementById(`par-abund-input-${element}`)
+    field.addEventListener("change", (event: any) => {
+        let i = elements_dict[element]
+        let value = Number(event.target.value)
+        sme["abund/pattern"][i] = value
+    })
 }
 
 async function load_atmosphere_files() {
@@ -129,7 +126,7 @@ async function load_parameter_values(sme: SmeFile) {
     FieldVsini.value = sme.vsini
     FieldGamma6.value = sme.gam6
     FieldAccrt.value = sme.accrt
-    FieldAccwt.value = sme.accwt
+    FieldAccwi.value = sme.accwi
 
     FieldCscaleFlag.value = sme.cscale_flag
     FieldCscaleType.value = sme.cscale_type
@@ -139,7 +136,19 @@ async function load_parameter_values(sme: SmeFile) {
 
     // Fitparameters are comma seperated text
     // TODO: is there a better option?
-    FieldFitparameters.value = sme.fitparameters.join(", ")
+    for (let i = 0; i < sme.fitparameters.length; i++) {
+        const element = sme.fitparameters[i];
+        if (i >= get_n_fitparameters_fields()) {
+            BtnFitparametersAdd.click()
+        }
+        let field = get_fitparamters_field(i);
+        field.value = element
+    }
+    while (sme.fitparameters.length < get_n_fitparameters_fields()) {
+        BtnFitparametersRem.click()
+    }
+
+
     FieldMu.value = sme.mu.join(", ")
 
     let atmo_file: string = sme["atmo/info"].source
@@ -184,8 +193,8 @@ FieldH2broad.addEventListener("change", (event: any) => {
 FieldAccrt.addEventListener("change", (event: any) => {
     sme.accrt = Number(event.target.value)
 })
-FieldAccwt.addEventListener("change", (event: any) => {
-    sme.accwt = Number(event.target.value)
+FieldAccwi.addEventListener("change", (event: any) => {
+    sme.accwi = Number(event.target.value)
 })
 
 FieldCscaleFlag.addEventListener("change", (event: any) => {
@@ -202,11 +211,61 @@ FieldAtmosphereFile.addEventListener("change", (event) => {
     sme["atmo/info"].source = target.value
 })
 
-FieldFitparameters.addEventListener("change", (event: any) => {
-    var value: string = event.target.value
-    sme.fitparameters = value.split(",")
-})
 FieldMu.addEventListener("change", (event: any) => {
     var value: string = event.target.value
     sme.mu = value.split(",").map(Number)
+})
+
+FieldFitparameters.addEventListener("change", (event: any) => {
+    var value: string = event.target.value
+    sme.fitparameters[0] = value
+})
+
+function get_n_fitparameters_fields() {
+    return DivFitparameters.childElementCount - 2
+}
+
+function get_fitparamters_field(index: number) {
+    if (index >= get_n_fitparameters_fields()) {
+        throw "index out of range"
+    }
+    // There is an additional child after the first one
+    if (index != 0) index += 1
+    index += 3
+    return DivFitparameters.childNodes[index] as HTMLInputElement
+}
+
+
+BtnFitparametersAdd.addEventListener("click", (event: any) => {
+    let child = document.createElement("input")
+    // The index of this element will be equal to the number of fields at this moment
+    let i = get_n_fitparameters_fields()
+    child.classList.add("form-control")
+    child.addEventListener("change", (event: any) => {
+        var value: string = event.target.value
+        sme.fitparameters[i] = value
+    })
+    DivFitparameters.insertBefore(child, DivFitparametersEnd)
+    try {
+        if (sme.fitparameters.length < get_n_fitparameters_fields()) {
+            sme.fitparameters.push("")
+        }
+    } catch (err) { console.log(err) }
+})
+
+
+BtnFitparametersRem.addEventListener("click", (event: any) => {
+    if (DivFitparameters.childElementCount > 3) {
+        // If there are any fields to remove
+        let j = DivFitparameters.childNodes.length
+        // Move to the last input field
+        j -= 3
+        let child = DivFitparameters.childNodes[j]
+        DivFitparameters.removeChild(child)
+        try {
+            if (sme.fitparameters.length > get_n_fitparameters_fields()) {
+                sme.fitparameters.pop()
+            }
+        } catch (err) { console.log(err) }
+    }
 })

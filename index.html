@@ -282,7 +282,7 @@
                       <span class="input-group-text" for="par-vrad-flag">Radial velocity flag</span>
                     </div>
                     <select class="custom-select" id="par-vrad-flag">
-                      <option value="none">none</option>
+                      <option selected value="none">none</option>
                       <option value="fix">fix</option>
                       <option value="whole">whole</option>
                       <option value="each">each</option>
@@ -299,11 +299,15 @@
                         Atmosphere</button>
                     </div>
                   </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
+                  <div class="input-group input-group-sm mb-1" id="par-fitparameters-div">
+                    <div class=" input-group-prepend">
                       <span class="input-group-text">Fitparameters</span>
                     </div>
                     <input type="text" class="form-control" id="par-fitparameters">
+                    <div class="input-group-append" id="par-fitparameters-end">
+                      <button class="btn btn-outline-secondary" type="button" id="btn-fitparameters-rem">-</button>
+                      <button class="btn btn-outline-secondary" type="button" id="btn-fitparameters-add">+</button>
+                    </div>
                   </div>
                   <div class="input-group input-group-sm mb-1">
                     <div class="input-group-prepend">
@@ -315,7 +319,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">accuracy wavelength resolution</span>
                     </div>
-                    <input type="number" class="form-control" id="par-accwt" step="any">
+                    <input type="number" class="form-control" id="par-accwi" step="any">
                   </div>
                 </div>
               </div>
@@ -728,9 +732,9 @@
                       </tr>
                       <tr>
                         <td id="par-abund-Ce" class="abundance-element">
-                          <div class="font-weight-bold">Ce</div>
+                          <div class="font-weight-bold">Cs</div>
                           <div class="text-nowrap">
-                            <input class="form-control form-control-sm no-border" id="par-abund-input-Ce" value="NaN">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Cs" value="NaN">
                           </div>
                         </td>
                         <td id="par-abund-Ba" class="abundance-element">
@@ -825,9 +829,9 @@
                           </div>
                         </td>
                         <td id="par-abund-Rd" class="abundance-element">
-                          <div class="font-weight-bold">Rd</div>
+                          <div class="font-weight-bold">Rn</div>
                           <div class="text-nowrap">
-                            <input class="form-control form-control-sm no-border" id="par-abund-input-Rd" value="NaN">
+                            <input class="form-control form-control-sm no-border" id="par-abund-input-Rn" value="NaN">
                           </div>
                         </td>
                       </tr>
@@ -1059,8 +1063,7 @@
                   </div>
                 </div>
                 <div class="card-body" id="div-linelist">
-                  <table id="table-linelist" class="table table-striped table-bordered table-hover table-sm"
-                    style="width:100%;">
+                  <table id="table-linelist" class="table table-striped table-bordered table-hover w-100">
                   </table>
                 </div>
               </div>

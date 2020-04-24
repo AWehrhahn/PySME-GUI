@@ -490,6 +490,7 @@ async function get_pysme_version() {
 function show_linelist(sme: SmeFile) {
     $(document).ready(function () {
         $('#table-linelist').DataTable({
+            destroy: true,
             data: sme["linelist/data"],
             columns: [
                 { title: 'species', data: 'species' },
