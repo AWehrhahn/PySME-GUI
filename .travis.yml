@@ -20,8 +20,8 @@ install:
   - mkdir -p css
 
 script:
-  - sass scss/sb-admin-2.scss css/index.css
   - npm run build
+  - npm run sass
   - npm run make
 
 deploy:
