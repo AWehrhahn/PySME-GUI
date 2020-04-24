@@ -9,6 +9,7 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
+    "sass": "sass scss/index.scss css/index.css",
     "watch": "tsc -w",
     "make": "electron-forge make",
     "start": "tsc && electron-forge start",

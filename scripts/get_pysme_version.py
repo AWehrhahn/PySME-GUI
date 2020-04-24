@@ -1,7 +1,13 @@
-from pysme import __version__
 import argparse
 from os.path import join, dirname
-from electron import call
+from electron import call, write_error_message
+
+try:
+    from pysme import __version__
+except ImportError as ex:
+    write_error_message("No Installation of PySME found")
+    write_error_message("Try using pip install pysme-astro", "a")
+    exit(1)
 
 
 @call

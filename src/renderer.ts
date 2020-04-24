@@ -24,6 +24,24 @@ $("#sidebarToggle, #sidebarToggleTop").on('click', function (e: any) {
     };
 });
 
+var DivAlert = document.getElementById("div-alert")
+
+function show_error(message: string) {
+    let alert = document.createElement("div")
+    alert.classList.add("alert", "alert-danger", "alert-dismissable", "fade", "show")
+    alert.innerHTML = `
+        <div class="d-flex flex-row align-items-center justify-content-between">
+            <h4 class="alert-heading">Error</h4>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <hr>
+        <pre>${message}</pre>
+        </div>
+    `
+    DivAlert.appendChild(alert)
+}
 
 // Close any open menu accordions when window is resized below 768px
 $(window).resize(function () {
@@ -64,6 +82,8 @@ $("#sidebarToggle").click()
 
 
 tmp.setGracefulCleanup();
+
+show_error("Hello World")
 
 interface ZipObject {
     name: string
@@ -273,7 +293,10 @@ async function load_file(filename: string) {
     return files
 }
 
-function determine_datatype(obj: any) {
+function determine_datatype(obj: any, key: string) {
+    if (key) {
+        if (key == "linelist/data") return "feather"
+    }
     if (obj.constructor == Object) return "dict"
     if (Array.isArray(obj)) {
         if (typeof obj[0] === "object") return "array"
@@ -325,7 +348,7 @@ async function save_npz(obj: Array<Float64Array>) {
     for (let i = 0; i < obj.length; i++) {
         const element = obj[i];
         var name = `arr_${i}.npy`
-        var dtype = determine_datatype(element)
+        var dtype = determine_datatype(element, name)
         var buffer = save_npy(element, dtype)
         zip.file(name, buffer)
     }
@@ -354,9 +377,9 @@ async function save_file(fname: string, sme: SmeFile) {
     for (const key in sme) {
         if (sme.hasOwnProperty(key)) {
             const element = sme[key];
-            var dtype = determine_datatype(element)
-            var content: any = ""
-            var ending = "dat"
+            let dtype = determine_datatype(element, key)
+            let content: any = ""
+            let ending = "dat"
             var info: any = {}
             switch (dtype) {
                 case "dict":
@@ -421,7 +444,7 @@ async function synthesize_spectrum(sme: SmeFile) {
     var script_file = join(__dirname, "scripts/synthesize_spectrum.py")
     var tmpin = tmp.fileSync({ postfix: ".sme" });
     var tmpout = tmp.fileSync({ postfix: ".sme" });
-    var tmplog = tmp.fileSync({ postfix: ".log", keep: true, dir: join(__dirname, "log") });
+    var tmplog = tmp.fileSync({ postfix: ".log", keep: true });
 
     // Watch the logfile
     console.log("Watching file: " + tmplog.name)
@@ -448,7 +471,7 @@ async function fit_spectrum(sme: SmeFile) {
     var script_file = join(__dirname, "scripts/fit_spectrum.py")
     var tmpin = tmp.fileSync({ postfix: ".sme" });
     var tmpout = tmp.fileSync({ postfix: ".sme" });
-    var tmplog = tmp.fileSync({ postfix: ".log", keep: true, dir: join(__dirname, "log") });
+    var tmplog = tmp.fileSync({ postfix: ".log", keep: true });
 
     console.log("Watching file: " + tmplog.name)
     const watcher = chokidar.watch(tmplog.name, { usePolling: true })
@@ -556,27 +579,31 @@ ButtonSave.addEventListener('click', async (event) => {
     }
 })
 
-// var ButtonSynthesize = document.getElementById("btn-synthesize")
-// ButtonSynthesize.addEventListener('click', async (event) => {
-//     console.log("Start synthesizing")
-//     try {
-//         sme = await synthesize_spectrum(sme)
-//         plot_sme(sme)
-//     } catch (err) {
-//         console.error(err)
-//     }
-// })
+var ButtonSynthesize = document.getElementById("btn-synthesize")
+ButtonSynthesize.addEventListener('click', async (event) => {
 
-// var ButtonFit = document.getElementById("btn-fit")
-// ButtonFit.addEventListener('click', async (event) => {
-//     console.log("Start fitting")
-//     try {
-//         sme = await fit_spectrum(sme)
-//         plot_sme(sme)
-//     } catch (err) {
-//         console.error(err)
-//     }
-// })
+    console.log("Start synthesizing")
+    try {
+        sme = await synthesize_spectrum(sme)
+        plot_sme(sme)
+        show_citation(sme)
+    } catch (err) {
+        console.error(err)
+    }
+})
+
+var ButtonFit = document.getElementById("btn-fit")
+ButtonFit.addEventListener('click', async (event) => {
+    console.log("Start fitting")
+    try {
+        sme = await fit_spectrum(sme)
+        load_parameter_values(sme)
+        plot_sme(sme)
+        show_citation(sme)
+    } catch (err) {
+        console.error(err)
+    }
+})
 
 var ButtonLinelistLoad = document.getElementById("btn-linelist-load") as HTMLButtonElement
 ButtonLinelistLoad.addEventListener("click", async (event) => {

@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <!-- Custom styles for this template-->
   <!-- This replaces bootstrap CSS and needs to be compiled with SASS -->
+  <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="./css/index.css">
   <link rel="stylesheet" type="text/css" href="./node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
 </head>
@@ -29,8 +30,8 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <div class="sticky-top">
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-          <div class="sidebar-brand-icon rotate-n-15">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+          <div class="sidebar-brand-icon">
             <i class="far fa-sun"></i>
           </div>
         </a>
@@ -44,15 +45,28 @@
         </div>
 
         <li class="nav-item">
-          <a class="nav-link" href="#" id="btn-load">
+          <span class="nav-link" id="btn-load">
             <i class="fas fa-file-upload"></i>
-            <span>Load File</span></a>
+            <span>Load File</span>
+          </span>
         </li>
 
         <li class="nav-item">
           <a class="nav-link" href="#" id="btn-save">
             <i class="fas fa-save"></i>
             <span>Save File</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="btn-synthesize">
+            <i class="fas fa-sync-alt"></i>
+            <span>Synthesize</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="btn-fit">
+            <i class="fas fa-play"></i>
+            <span>Fit</span></a>
         </li>
 
         <!-- Divider -->
@@ -138,6 +152,13 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+
+          <!-- Error Notification -->
+          <div class="row">
+            <div class="col" id="div-alert">
+
+            </div>
+          </div>
 
           <!-- Content Row Spectrum -->
 

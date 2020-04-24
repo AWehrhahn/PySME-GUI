@@ -1,7 +1,7 @@
-from pysme.sme import SME_Structure
-
 import argparse
 from electron import call
+
+from pysme.sme import SME_Structure
 
 """
 When converting files from idl or ech, there is a good chance

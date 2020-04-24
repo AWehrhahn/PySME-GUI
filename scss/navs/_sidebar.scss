@@ -4,6 +4,7 @@
   min-height: 100vh;
   .nav-item {
     position: relative;
+    cursor: pointer;
     &:last-child {
       margin-bottom: 1rem;
     }

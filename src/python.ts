@@ -13,11 +13,14 @@ async function call_python(script: string, args: string[]) {
             } else {
                 try {
                     var err: string = fs.readFileSync(join(__dirname, "scripts/python.txt"), { encoding: "utf-8" })
+                    show_error(err)
                     console.error(err)
                     reject(err)
                 } catch (err) {
-                    console.error(`Unknown Python Error, code: ${code}`)
-                    reject(`Unknown Python Error, code: ${code}`)
+                    err = `Unknown Python Error, code: ${code}`
+                    show_error(err)
+                    console.error(err)
+                    reject(err)
                 }
             }
         });
