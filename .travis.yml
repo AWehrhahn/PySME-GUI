@@ -17,10 +17,10 @@ jobs:
 install:
   - npm ci
   - npm install -g sass
-  - mkdir css
+  - mkdir -p css
 
 script:
-  - sass /scss/sb-admin-2.scss /css/index.css
+  - sass scss/sb-admin-2.scss css/index.css
   - npm run build
   - npm run make
 
