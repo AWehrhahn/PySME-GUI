@@ -149,16 +149,16 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Spectrum</h6>
                   <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw section-menu"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
                       aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Mask Selection:</div>
-                      <a class="dropdown-item" href="#" id="btn-mask-bad">Bad Pixel</a>
-                      <a class="dropdown-item" href="#" id="btn-mask-line">Line Pixel</a>
-                      <a class="dropdown-item" href="#" id="btn-mask-cont">Cont Pixel</a>
+                      <div class="dropdown-header">Mask Selection</div>
+                      <span class="dropdown-item" id="btn-mask-bad">Bad Pixel</span>
+                      <span class="dropdown-item" id="btn-mask-line">Line Pixel</span>
+                      <span class="dropdown-item" id="btn-mask-cont">Cont Pixel</span>
                     </div>
                   </div>
                 </div>
@@ -175,11 +175,22 @@
           <!-- Content Row Parameters -->
           <div class="row">
             <!-- Content Column -->
-            <div class="col mb-4">
+            <div class="col">
               <!-- Project Card Example -->
               <div class="card mb-4" id="nav-parameters">
-                <div class="card-header py-3">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Parameters</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw section-menu"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
+                      aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Options</div>
+                      <span class="dropdown-item" id="btn-par-reset">Reset</span>
+                    </div>
+                  </div>
                 </div>
                 <div class="card-body" id="parameter-div">
                   <div class="input-group input-group-sm mb-1">
@@ -333,11 +344,24 @@
           <!-- Content Row Abundance -->
           <div class="row">
             <!-- Content Column -->
-            <div class="col mb-4">
+            <div class="col">
               <!-- Project Card Example -->
               <div class="card mb-4" id="nav-abundance">
-                <div class="card-header py-3">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Abundance</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw section-menu"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
+                      aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Options</div>
+                      <span class="dropdown-item" id="btn-abund-asplund2009">Asplund2009</span>
+                      <span class="dropdown-item" id="btn-abund-grevesse2007">Grevesse2007</span>
+                      <span class="dropdown-item" id="btn-abund-lodders2003">Lodders2003</span>
+                    </div>
+                  </div>
                 </div>
                 <div class="card-body">
                   <table id="table-abundance" class="table table-bordered table-sm" style="width:100%;">
@@ -1049,7 +1073,7 @@
           <!-- Content Row Linelist -->
           <div class="row">
             <!-- Content Column -->
-            <div class="col mb-4">
+            <div class="col">
               <!-- Project Card Example -->
               <div class="card mb-4" id="nav-linelist">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -1057,12 +1081,12 @@
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw section-menu"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
                       aria-labelledby="dropdownMenuLink">
                       <div class="dropdown-header">Options</div>
-                      <a class="dropdown-item" href="#" id="btn-linelist-load">Load Linelist</a>
+                      <span class="dropdown-item" href="#" id="btn-linelist-load">Load Linelist</span>
                     </div>
                   </div>
                 </div>
@@ -1077,7 +1101,7 @@
           <!-- Content Row Log -->
           <div class="row">
             <!-- Content Column -->
-            <div class="col mb-4">
+            <div class="col">
               <!-- Project Card Example -->
               <div class="card mb-4" id="nav-log">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -1085,7 +1109,7 @@
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw section-menu"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
                       aria-labelledby="dropdownMenuLink">
@@ -1102,7 +1126,7 @@
           <!-- Content Row Citations -->
           <div class="row">
             <!-- Content Column -->
-            <div class="col mb-4">
+            <div class="col">
               <!-- Project Card Example -->
               <div class="card mb-4" id="nav-citation">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -1110,12 +1134,13 @@
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                       aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw section-menu"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
                       aria-labelledby="dropdownMenuLink">
                       <div class="dropdown-header">Export</div>
-                      <a class="dropdown-item">Bibtex</a>
+                      <span class="dropdown-item" id="btn-citation-export-text">Text</span>
+                      <span class="dropdown-item" id="btn-citation-export-bibtex">Bibtex</span>
                     </div>
                   </div>
                 </div>
@@ -1315,31 +1340,6 @@
 
   </div>
   <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script src="./dist/plotting.js"></script>
   <script src="./dist/python.js"></script>

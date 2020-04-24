@@ -1,25 +1,6 @@
 const Cite = require('citation-js')
 
-
-fs.readFile(join(__dirname, "data/the-astrophysical-journal.csl"), "utf-8", (err: any, template: string) => {
-    if (err) throw err;
-    let config = Cite.plugins.config.get("@csl")
-    config.templates.set("apj", template)
-})
-// fs.readFile(join(__dirname, "data/nature.csl"), "utf-8", (err: any, template: string) => {
-//     if (err) throw err;
-//     let config = Cite.plugins.config.get("@csl")
-//     config.templates.set("nature", template)
-// })
-
-var replacements: { [id: string]: string } = {}
-fs.readFile(join(__dirname, "data/citation-journal-replacements.json"), "utf-8", (err: any, data: string) => {
-    if (err) throw err;
-    replacements = JSON.parse(data)
-})
-
-var DivCitation = document.getElementById("div-citation") as HTMLDivElement
-async function show_citation(sme: SmeFile) {
+async function collect_citations(sme: SmeFile) {
     let data = await Cite.inputAsync(sme.citation_info, { forceType: "@bibtex/text" })
 
     for (const key in sme) {
@@ -51,7 +32,10 @@ async function show_citation(sme: SmeFile) {
     }
 
     let bib = new Cite(data)
+    return bib;
+}
 
+function generate_citations_html(bib: any) {
     let content = bib.format("bibliography", {
         format: "html", template: "apj",
         prepend(entry: any) {
@@ -70,5 +54,66 @@ async function show_citation(sme: SmeFile) {
             return `</a>`
         }
     })
+    return content
+}
+
+function generate_citations_bibtex(bib: any) {
+    let content = bib.format("bibtex")
+    return content
+}
+
+function generate_citations_text(bib: any) {
+    let content = bib.format("bibliography", {
+        template: "apj",
+    })
+    return content
+}
+
+async function export_citations(sme: SmeFile, generator: any) {
+    var out = await dialog.showSaveDialog({ properties: ["showOverwriteConfirmation"] })
+    if (!out.canceled) {
+        var fname = out.filePath
+        let bib = await collect_citations(sme)
+        let content = generator(bib)
+        fs.writeFile(fname, content, (err: any) => {
+            if (err) throw err;
+            console.log("Citation saved")
+        })
+    } else {
+        console.log("User did not select a file")
+    }
+}
+
+var BtnExportText = document.getElementById("btn-citation-export-text") as HTMLButtonElement
+BtnExportText.addEventListener("click", async (event) => {
+    export_citations(sme, generate_citations_text)
+})
+
+var BtnExportBibtex = document.getElementById("btn-citation-export-bibtex") as HTMLButtonElement
+BtnExportBibtex.addEventListener("click", (event) => {
+    export_citations(sme, generate_citations_bibtex)
+})
+
+fs.readFile(join(__dirname, "data/the-astrophysical-journal.csl"), "utf-8", (err: any, template: string) => {
+    if (err) throw err;
+    let config = Cite.plugins.config.get("@csl")
+    config.templates.set("apj", template)
+})
+// fs.readFile(join(__dirname, "data/nature.csl"), "utf-8", (err: any, template: string) => {
+//     if (err) throw err;
+//     let config = Cite.plugins.config.get("@csl")
+//     config.templates.set("nature", template)
+// })
+
+var replacements: { [id: string]: string } = {}
+fs.readFile(join(__dirname, "data/citation-journal-replacements.json"), "utf-8", (err: any, data: string) => {
+    if (err) throw err;
+    replacements = JSON.parse(data)
+})
+
+var DivCitation = document.getElementById("div-citation") as HTMLDivElement
+async function show_citation(sme: SmeFile) {
+    let bib = await collect_citations(sme)
+    let content = generate_citations_html(bib)
     DivCitation.innerHTML = content
 }

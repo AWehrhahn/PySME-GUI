@@ -25,7 +25,7 @@ $sizes: ( 5: 5%  );
 .hover-color{
     cursor: pointer;
     &:hover{
-        color: $blue
+        color: $blue;
     }
 }
 
@@ -34,4 +34,12 @@ $sizes: ( 5: 5%  );
     padding: 0;
     margin: 0;
     box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+}
+
+.section-menu {
+    cursor: pointer;
+    color: $gray-400;
+    &:hover{
+        color: $gray-800;
+    }
 }

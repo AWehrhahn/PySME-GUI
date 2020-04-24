@@ -34,6 +34,53 @@ var BtnMuRem = document.getElementById("btn-mu-rem") as HTMLButtonElement
 var DivMUEnd = document.getElementById("par-mu-end") as HTMLDivElement
 //TODO Autocomplete for fitparameters
 
+
+var BtnAbundAsplund2009 = document.getElementById("btn-abund-asplund2009") as HTMLButtonElement
+BtnAbundAsplund2009.addEventListener("click", async (event) => {
+    let tmpout = tmp.fileSync({ postfix: ".dat" });
+    let success = await call_python("get_abundance_values.py", [tmpout.name, "asplund2009"])
+    var content: Buffer = fs.readFileSync(tmpout.name, { encoding: null })
+    var abund = new Float64Array(content.buffer, content.byteOffset, content.length / Float64Array.BYTES_PER_ELEMENT)
+    sme["abund/pattern"] = abund
+    sme["abund/info"]["type"] = "H-12"
+    sme["abund/info"]["monh"] = 0
+    update_abundance(sme)
+})
+
+var BtnAbundGrevesse2007 = document.getElementById("btn-abund-grevesse2007") as HTMLButtonElement
+BtnAbundAsplund2009.addEventListener("click", async (event) => {
+    let tmpout = tmp.fileSync({ postfix: ".dat" });
+    let success = await call_python("get_abundance_values.py", [tmpout.name, "grevesse2007"])
+    var content: Buffer = fs.readFileSync(tmpout.name, { encoding: null })
+    var abund = new Float64Array(content.buffer, content.byteOffset, content.length / Float64Array.BYTES_PER_ELEMENT)
+    sme["abund/pattern"] = abund
+    sme["abund/info"]["type"] = "H-12"
+    sme["abund/info"]["monh"] = 0
+    update_abundance(sme)
+})
+
+var BtnAbundLodders2003 = document.getElementById("btn-abund-lodders2003") as HTMLButtonElement
+BtnAbundAsplund2009.addEventListener("click", async (event) => {
+    let tmpout = tmp.fileSync({ postfix: ".dat" });
+    let success = await call_python("get_abundance_values.py", [tmpout.name, "lodders2003"])
+    var content: Buffer = fs.readFileSync(tmpout.name, { encoding: null })
+    var abund = new Float64Array(content.buffer, content.byteOffset, content.length / Float64Array.BYTES_PER_ELEMENT)
+    sme["abund/pattern"] = abund
+    sme["abund/info"]["type"] = "H-12"
+    sme["abund/info"]["monh"] = 0
+    update_abundance(sme)
+})
+
+function update_abundance(sme: SmeFile) {
+    for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        let field = document.getElementById(`par-abund-input-${element}`) as HTMLInputElement
+        let value = sme["abund/pattern"][i]
+        if (isNaN(value)) value = -99
+        field.value = value
+    }
+}
+
 // All the elements that can be used in SME (the first 100)
 var elements = [
     "H", "He",
@@ -171,14 +218,7 @@ async function load_parameter_values(sme: SmeFile) {
     add_atmosphere_file(atmo_file)
     FieldAtmosphereFile.value = sme["atmo/info"].source
 
-
-    for (let i = 0; i < elements.length; i++) {
-        const element = elements[i];
-        let field = document.getElementById(`par-abund-input-${element}`) as HTMLInputElement
-        let value = sme["abund/pattern"][i]
-        if (isNaN(value)) value = -99
-        field.value = value
-    }
+    update_abundance(sme)
 }
 
 // React to the values being changed
