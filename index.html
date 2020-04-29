@@ -1134,18 +1134,34 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
                       aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Options</div>
+                      <div class="dropdown-header">Choose Log Level</div>
+                      <span class="dropdown-item" href="#nav-log" id="btn-log-level-debug">Debug</span>
+                      <span class="dropdown-item" href="#nav-log" id="btn-log-level-info">Info</span>
+                      <span class="dropdown-item" href="#nav-log" id="btn-log-level-warning">Warning</span>
+                      <span class="dropdown-item" href="#nav-log" id="btn-log-level-error">Error</span>
                     </div>
                   </div>
                 </div>
                 <div class="card-body" id="div-log">
+                  <table id="table-log" class="table table-bordered table-hover table-sm w-100">
+                    <thead>
+                      <tr>
+                        <th>Timestamp</th>
+                        <th>Log Level</th>
+                        <th>Module</th>
+                        <th>Message</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-log-body">
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Content Row Citations -->
-          <div class="row">
+          <div class=" row">
             <!-- Content Column -->
             <div class="col">
               <!-- Project Card Example -->
@@ -1196,6 +1212,7 @@
     <script src="./dist/python.js"></script>
     <script src="./dist/parameters.js"></script>
     <script src="./dist/citation.js"></script>
+    <script src="./dist/logging.js"></script>
     <script src="./dist/renderer.js"></script>
 </body>
 

@@ -437,7 +437,6 @@ async function load_from_idl_file(fname: string) {
     return fname_out
 }
 
-var logDiv = document.getElementById('log-div');
 async function synthesize_spectrum(sme: SmeFile) {
     var script_file = join(__dirname, "scripts/synthesize_spectrum.py")
     var tmpin = tmp.fileSync({ postfix: ".sme" });
@@ -447,11 +446,7 @@ async function synthesize_spectrum(sme: SmeFile) {
     // Watch the logfile
     console.log("Watching file: " + tmplog.name)
     const watcher = chokidar.watch(tmplog.name, { usePolling: true })
-    watcher.on('change', (path: any, stats: any) => {
-        // TODO: color the log
-        var log = fs.readFileSync(path, { encoding: "utf-8" })
-        logDiv.innerText = log;
-    });
+    watcher.on('change', update_log)
 
     var promise = new Promise<SmeFile>((resolve, reject) => {
         save_file(tmpin.name, sme).then(() => {
@@ -473,11 +468,7 @@ async function fit_spectrum(sme: SmeFile) {
 
     console.log("Watching file: " + tmplog.name)
     const watcher = chokidar.watch(tmplog.name, { usePolling: true })
-    watcher.on('change', (path: any, stats: any) => {
-        // TODO: color the log
-        var log = fs.readFileSync(path, { encoding: "utf-8" })
-        logDiv.innerText = log;
-    });
+    watcher.on('change', update_log);
 
     var promise = new Promise<SmeFile>((resolve, reject) => {
         save_file(tmpin.name, sme).then(() => {

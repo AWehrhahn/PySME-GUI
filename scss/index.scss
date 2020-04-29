@@ -22,6 +22,36 @@ $sizes: ( 5: 5%  );
 @import "error.scss";
 @import "footer.scss";
 
+.text-black{
+    color: $black !important;
+}
+
+.log-debug{
+    color: $black !important;
+}
+
+.log-info{
+    background-color: $cyan !important;
+    color: $black !important;
+}
+
+.log-warning{
+    background-color: $orange !important;
+    color: $black !important;
+}
+
+.log-error{
+    background-color: $red !important;
+    color: $black !important;
+}
+
+.log-critical{
+    background-color: $yellow !important;
+    color: $black !important;
+    font-weight: 700 !important;
+}
+
+
 .hover-color{
     cursor: pointer;
     &:hover{

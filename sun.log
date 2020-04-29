@@ -1,0 +1,256 @@
+2020-04-29 14:16:08,166 - DEBUG - pysme.util - ----------------------
+2020-04-29 14:16:08,167 - DEBUG - pysme.util - Python version: 3.7.2
+2020-04-29 14:16:08,168 - DEBUG - pysme.util - SME CLib version: SME Library version: 5.10, September 2017, Linux_64_Gnu
+2020-04-29 14:16:08,168 - DEBUG - pysme.util - PySME version: 0.4.2+0.g66f3fe7.dirty
+2020-04-29 14:16:08,168 - DEBUG - pysme.util - Numpy version: 1.18.2
+2020-04-29 14:16:08,168 - DEBUG - pysme.util - Scipy version: 1.4.1
+2020-04-29 14:16:08,168 - DEBUG - pysme.util - Pandas version: 1.0.1
+2020-04-29 14:16:11,142 - INFO - pysme.sme - Loading SME file /home/ansgar/Documents/Python/sme/examples/sun_6440_grid.inp
+2020-04-29 14:16:11,186 - INFO - pysme.linelist.vald - Loading VALD file /home/ansgar/Documents/Python/sme/examples/sun.lin
+2020-04-29 14:16:12,507 - CRITICAL - pysme.synthesize - Don't forget to cite your sources. Use sme.citation()
+2020-04-29 14:16:14,110 - INFO - pysme.solve - Fitting Spectrum with Parameters: teff,logg,monh
+2020-04-29 14:16:29,879 - INFO - pysme.nlte - Running in LTE
+2020-04-29 14:16:29,880 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:30,274 - DEBUG - pysme.synthesize - Radial velocity: [0.33910219]
+2020-04-29 14:16:30,275 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:16:30,281 - DEBUG - pysme.solve - {'teff': 5770.0, 'logg': 4.0, 'monh': 0.0}
+2020-04-29 14:16:30,910 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:32,173 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:33,255 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:34,494 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:35,509 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:36,305 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:36,793 - INFO - pysme.util -    Iteration     Total nfev        Cost      Cost reduction    Step norm     Optimality   
+2020-04-29 14:16:36,794 - INFO - pysme.util -        0              1         9.3839e+03                                    2.79e+04    
+2020-04-29 14:16:37,574 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:38,031 - DEBUG - pysme.synthesize - Radial velocity: [0.37103714]
+2020-04-29 14:16:38,032 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:16:38,037 - DEBUG - pysme.solve - {'teff': 4583.3377599741325, 'logg': 4.442198872606541, 'monh': -1.0623571986426328}
+2020-04-29 14:16:38,479 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:38,828 - DEBUG - pysme.synthesize - Radial velocity: [0.26348176]
+2020-04-29 14:16:38,828 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:16:38,833 - DEBUG - pysme.solve - {'teff': 5583.595081100264, 'logg': 4.334427617479925, 'monh': -0.24271331251965342}
+2020-04-29 14:16:39,388 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:40,151 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:41,012 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:41,833 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:42,579 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:43,448 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:43,774 - INFO - pysme.util -        1              3         6.3719e+03      3.01e+03       1.86e+02       7.99e+04    
+2020-04-29 14:16:44,252 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:44,649 - DEBUG - pysme.synthesize - Radial velocity: [0.29275122]
+2020-04-29 14:16:44,650 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:16:44,656 - DEBUG - pysme.solve - {'teff': 5400.634877560807, 'logg': 4.350749893209946, 'monh': -0.49936760156911175}
+2020-04-29 14:16:45,285 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:46,051 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:46,905 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:47,732 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:48,611 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:49,589 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:49,927 - INFO - pysme.util -        2              4         5.8535e+03      5.18e+02       1.83e+02       2.70e+04    
+2020-04-29 14:16:50,361 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:50,882 - DEBUG - pysme.synthesize - Radial velocity: [0.26815037]
+2020-04-29 14:16:50,883 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:16:50,888 - DEBUG - pysme.solve - {'teff': 5236.521876139172, 'logg': 4.133452601212353, 'monh': -0.49798647120212025}
+2020-04-29 14:16:51,493 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:52,398 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:53,306 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:54,318 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:55,258 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:56,118 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:56,479 - INFO - pysme.util -        3              5         5.4581e+03      3.95e+02       1.64e+02       2.13e+04    
+2020-04-29 14:16:56,993 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:57,471 - DEBUG - pysme.synthesize - Radial velocity: [0.27187967]
+2020-04-29 14:16:57,471 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:16:57,476 - DEBUG - pysme.solve - {'teff': 4855.705566181632, 'logg': 4.035816707028388, 'monh': -0.8776825221587724}
+2020-04-29 14:16:58,024 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:16:59,184 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:00,290 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:01,191 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:02,190 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:03,144 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:03,443 - INFO - pysme.util -        4              6         5.2401e+03      2.18e+02       3.81e+02       4.29e+03    
+2020-04-29 14:17:03,878 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:04,372 - DEBUG - pysme.synthesize - Radial velocity: [0.25761947]
+2020-04-29 14:17:04,372 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:04,377 - DEBUG - pysme.solve - {'teff': 5100.494056014613, 'logg': 3.836572638972453, 'monh': -0.45484805932308525}
+2020-04-29 14:17:05,139 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:05,582 - DEBUG - pysme.synthesize - Radial velocity: [0.26043986]
+2020-04-29 14:17:05,582 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:05,587 - DEBUG - pysme.solve - {'teff': 4886.476548006738, 'logg': 3.9581460241211803, 'monh': -0.7941331529146467}
+2020-04-29 14:17:06,144 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:06,929 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:07,732 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:08,536 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:09,694 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:10,598 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:11,046 - INFO - pysme.util -        5              8         5.1112e+03      1.29e+02       3.08e+01       5.51e+03    
+2020-04-29 14:17:11,512 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:11,836 - DEBUG - pysme.synthesize - Radial velocity: [0.25715034]
+2020-04-29 14:17:11,837 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:11,842 - DEBUG - pysme.solve - {'teff': 4846.067025335403, 'logg': 3.728623508645293, 'monh': -0.6871821712831059}
+2020-04-29 14:17:12,305 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:13,229 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:14,040 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:14,897 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:15,978 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:16,964 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:17,443 - INFO - pysme.util -        6              9         4.9668e+03      1.44e+02       4.04e+01       3.05e+03    
+2020-04-29 14:17:17,943 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:18,297 - DEBUG - pysme.synthesize - Radial velocity: [0.23483864]
+2020-04-29 14:17:18,298 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:18,303 - DEBUG - pysme.solve - {'teff': 4703.819384898902, 'logg': 3.624811199995752, 'monh': -0.7946164896541633}
+2020-04-29 14:17:18,915 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:20,155 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:21,263 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:22,327 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:23,300 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:24,255 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:24,591 - INFO - pysme.util -        7             10         4.8603e+03      1.07e+02       1.42e+02       1.50e+04    
+2020-04-29 14:17:25,122 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:25,506 - DEBUG - pysme.synthesize - Radial velocity: [0.23788932]
+2020-04-29 14:17:25,506 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:25,511 - DEBUG - pysme.solve - {'teff': 4614.468112167247, 'logg': 3.5881351014832497, 'monh': -0.8998738636494101}
+2020-04-29 14:17:26,089 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:26,445 - DEBUG - pysme.synthesize - Radial velocity: [0.24088238]
+2020-04-29 14:17:26,446 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:26,450 - DEBUG - pysme.solve - {'teff': 4682.037531945237, 'logg': 3.6185808983879353, 'monh': -0.8252545122281106}
+2020-04-29 14:17:26,950 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:27,806 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:29,140 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:30,088 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:30,895 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:31,782 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:32,169 - INFO - pysme.util -        8             12         4.8473e+03      1.30e+01       2.18e+01       2.13e+02    
+2020-04-29 14:17:32,661 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:32,990 - DEBUG - pysme.synthesize - Radial velocity: [0.23816336]
+2020-04-29 14:17:32,991 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:32,996 - DEBUG - pysme.solve - {'teff': 4673.955074757275, 'logg': 3.5983999697748974, 'monh': -0.8237101576752957}
+2020-04-29 14:17:33,506 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:34,395 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:35,612 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:36,430 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:37,710 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:38,917 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:39,300 - INFO - pysme.util -        9             13         4.8406e+03      6.63e+00       8.08e+00       6.20e+02    
+2020-04-29 14:17:39,834 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:40,184 - DEBUG - pysme.synthesize - Radial velocity: [0.2334676]
+2020-04-29 14:17:40,185 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:40,189 - DEBUG - pysme.solve - {'teff': 4648.0106968830705, 'logg': 3.5636966981435156, 'monh': -0.836807352582346}
+2020-04-29 14:17:40,710 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:41,610 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:42,751 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:43,636 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:44,766 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:45,587 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:46,003 - INFO - pysme.util -       10             14         4.8318e+03      8.83e+00       2.59e+01       7.41e+02    
+2020-04-29 14:17:46,532 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:46,946 - DEBUG - pysme.synthesize - Radial velocity: [0.22811481]
+2020-04-29 14:17:46,947 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:46,951 - DEBUG - pysme.solve - {'teff': 4618.139076593358, 'logg': 3.521419829636449, 'monh': -0.8503504372670982}
+2020-04-29 14:17:47,539 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:48,676 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:49,513 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:50,348 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:51,398 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:52,230 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:52,668 - INFO - pysme.util -       11             15         4.8267e+03      5.16e+00       2.99e+01       3.39e+02    
+2020-04-29 14:17:53,462 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:53,980 - DEBUG - pysme.synthesize - Radial velocity: [0.22730221]
+2020-04-29 14:17:53,980 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:17:53,984 - DEBUG - pysme.solve - {'teff': 4611.217801606512, 'logg': 3.5057380611138496, 'monh': -0.8496503983529559}
+2020-04-29 14:17:54,656 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:55,468 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:56,283 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:57,340 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:58,275 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:59,143 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:17:59,527 - INFO - pysme.util -       12             16         4.8259e+03      7.20e-01       6.92e+00       1.06e+02    
+2020-04-29 14:18:00,178 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:00,509 - DEBUG - pysme.synthesize - Radial velocity: [0.22709995]
+2020-04-29 14:18:00,510 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:00,515 - DEBUG - pysme.solve - {'teff': 4611.258079620826, 'logg': 3.5033990505696253, 'monh': -0.8480567716115532}
+2020-04-29 14:18:01,195 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:02,286 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:03,088 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:04,331 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:05,231 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:06,441 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:06,761 - INFO - pysme.util -       13             17         4.8259e+03      5.29e-02       4.04e-02       1.23e+02    
+2020-04-29 14:18:07,350 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:07,757 - DEBUG - pysme.synthesize - Radial velocity: [0.22701619]
+2020-04-29 14:18:07,758 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:07,763 - DEBUG - pysme.solve - {'teff': 4606.330196920991, 'logg': 3.498188388575098, 'monh': -0.851403910607131}
+2020-04-29 14:18:08,291 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:09,301 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:10,245 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:11,411 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:12,838 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:13,747 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:14,178 - INFO - pysme.util -       14             18         4.8258e+03      7.49e-02       4.93e+00       1.26e+01    
+2020-04-29 14:18:14,754 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:15,100 - DEBUG - pysme.synthesize - Radial velocity: [0.22679688]
+2020-04-29 14:18:15,100 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:15,105 - DEBUG - pysme.solve - {'teff': 4601.273606455539, 'logg': 3.4913969376196765, 'monh': -0.853801707190113}
+2020-04-29 14:18:15,650 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:16,823 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:17,795 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:18,739 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:19,803 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:20,843 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:21,166 - INFO - pysme.util -       15             19         4.8258e+03      4.30e-02       5.06e+00       8.29e+01    
+2020-04-29 14:18:21,964 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:22,315 - DEBUG - pysme.synthesize - Radial velocity: [0.22664046]
+2020-04-29 14:18:22,316 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:22,320 - DEBUG - pysme.solve - {'teff': 4603.284285094905, 'logg': 3.4918617860283323, 'monh': -0.8513655403146204}
+2020-04-29 14:18:22,829 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:23,709 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:24,847 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:25,654 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:26,572 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:27,805 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:28,161 - INFO - pysme.util -       16             20         4.8257e+03      3.57e-02       2.01e+00       1.08e+02    
+2020-04-29 14:18:28,774 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:29,230 - DEBUG - pysme.synthesize - Radial velocity: [0.22650643]
+2020-04-29 14:18:29,231 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:29,235 - DEBUG - pysme.solve - {'teff': 4595.359443826557, 'logg': 3.4833068965503893, 'monh': -0.8563966927148681}
+2020-04-29 14:18:29,808 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:30,347 - DEBUG - pysme.synthesize - Radial velocity: [0.22669317]
+2020-04-29 14:18:30,348 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:30,353 - DEBUG - pysme.solve - {'teff': 4601.242084891897, 'logg': 3.49057601911261, 'monh': -0.853257525103859}
+2020-04-29 14:18:30,906 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:31,268 - DEBUG - pysme.synthesize - Radial velocity: [0.22670483]
+2020-04-29 14:18:31,268 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:31,275 - DEBUG - pysme.solve - {'teff': 4602.845146840856, 'logg': 3.492020065911026, 'monh': -0.8520605409368017}
+2020-04-29 14:18:31,967 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:32,535 - DEBUG - pysme.synthesize - Radial velocity: [0.22667106]
+2020-04-29 14:18:32,535 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:32,540 - DEBUG - pysme.solve - {'teff': 4603.193264584815, 'logg': 3.491946573818552, 'monh': -0.8515538452251936}
+2020-04-29 14:18:33,136 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:33,503 - DEBUG - pysme.synthesize - Radial velocity: [0.22665314]
+2020-04-29 14:18:33,503 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:33,508 - DEBUG - pysme.solve - {'teff': 4603.264650465241, 'logg': 3.4918822026799847, 'monh': -0.8514166460307651}
+2020-04-29 14:18:34,072 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:34,437 - DEBUG - pysme.synthesize - Radial velocity: [0.22666327]
+2020-04-29 14:18:34,437 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:34,443 - DEBUG - pysme.solve - {'teff': 4603.280733472382, 'logg': 3.491865214836023, 'monh': -0.8513799656795131}
+2020-04-29 14:18:35,019 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:35,481 - DEBUG - pysme.synthesize - Radial velocity: [0.22666035]
+2020-04-29 14:18:35,481 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:35,486 - DEBUG - pysme.solve - {'teff': 4603.2837206856675, 'logg': 3.491862217782617, 'monh': -0.8513693883850306}
+2020-04-29 14:18:36,100 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:36,446 - DEBUG - pysme.synthesize - Radial velocity: [0.22664373]
+2020-04-29 14:18:36,447 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:36,451 - DEBUG - pysme.solve - {'teff': 4603.284175837314, 'logg': 3.491861852226443, 'monh': -0.8513665171408911}
+2020-04-29 14:18:37,000 - DEBUG - pysme.synthesize - Segment 0
+2020-04-29 14:18:37,418 - DEBUG - pysme.synthesize - Radial velocity: [0.22664493]
+2020-04-29 14:18:37,419 - DEBUG - pysme.synthesize - Continuum coefficients: [[2.19457499e-04 9.98130488e-01]]
+2020-04-29 14:18:37,424 - DEBUG - pysme.solve - {'teff': 4603.284259973313, 'logg': 3.491861799712001, 'monh': -0.8513657853335365}
+2020-04-29 14:18:37,425 - INFO - pysme.util -       17             29         4.8257e+03      0.00e+00       0.00e+00       1.08e+02    
+2020-04-29 14:18:37,425 - INFO - pysme.util - `xtol` termination condition is satisfied.
+2020-04-29 14:18:37,426 - INFO - pysme.util - Function evaluations 29, initial cost 9.3839e+03, final cost 4.8257e+03, first-order optimality 1.08e+02.
+2020-04-29 14:18:37,432 - DEBUG - pysme.solve - Reduced chi square: 16.583
+2020-04-29 14:18:37,432 - INFO - pysme.solve - teff      	4603.28429 +- 2.8529
+2020-04-29 14:18:37,432 - INFO - pysme.solve - logg      	3.49186 +- 0.0040039
+2020-04-29 14:18:37,433 - INFO - pysme.solve - monh      	-0.85137 +- 0.0016479
+2020-04-29 14:18:37,433 - INFO - pysme.solve - v_rad     	[0.22664493] +- [[0. 0.]]
