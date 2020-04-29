@@ -72,13 +72,15 @@ function refresh_log(log_parsed: LogEntry[], log_level: number) {
     TabelBodyLog.textContent = ""
 
     // Set new entries
-    log_parsed.forEach(async (row) => {
-        if (row) {
-            if (log_levels[row.level] >= log_level) {
-                TabelBodyLog.appendChild(create_node(row))
+    if (log_parsed) {
+        log_parsed.forEach(async (row) => {
+            if (row) {
+                if (log_levels[row.level] >= log_level) {
+                    TabelBodyLog.appendChild(create_node(row))
+                }
             }
-        }
-    })
+        })
+    }
 
 }
 
