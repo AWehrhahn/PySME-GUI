@@ -102,6 +102,12 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link" href="#nav-nlte">
+            <i class="fas fa-not-equal"></i>
+            <span>NLTE</span></a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" href="#nav-log">
             <i class="far fa-sticky-note"></i>
             <span>Log</span></a>
@@ -1119,6 +1125,34 @@
             </div>
           </div>
 
+          <!-- Content Row NLTE -->
+          <div class="row">
+            <!-- Content Column -->
+            <div class="col">
+              <!-- Project Card Example -->
+              <div class="card mb-4" id="nav-nlte">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">NLTE</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw section-menu"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
+                      aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Options</div>
+                      <span class="dropdown-item" href="#" id="btn-linelist-load">...</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body" id="div-nlte">
+                  <!-- New NLTE fields will be added here-->
+                  <button class="btn btn-outline-secondary" id="btn-nlte-add">Add NLTE element</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Content Row Log -->
           <div class="row">
             <!-- Content Column -->
@@ -1213,6 +1247,7 @@
     <script src="./dist/parameters.js"></script>
     <script src="./dist/citation.js"></script>
     <script src="./dist/logging.js"></script>
+    <script src="./dist/nlte.js"></script>
     <script src="./dist/renderer.js"></script>
 </body>
 

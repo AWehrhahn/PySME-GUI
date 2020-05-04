@@ -152,6 +152,7 @@ var atmo_files: string[] = [];
 fs.readFile(join(homedir, ".sme", "config.json"), "utf-8", (err: any, data: string) => {
     config = JSON.parse(data)
     load_atmosphere_files()
+    load_nlte_files()
 });
 
 var ButtonAtmosphereAdd = document.getElementById("btn-atmosphere-add") as HTMLButtonElement

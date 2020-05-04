@@ -52,6 +52,10 @@ $sizes: ( 5: 5%  );
 }
 
 
+.input-group-width-small{
+    max-width: 10%
+}
+
 .hover-color{
     cursor: pointer;
     &:hover{
