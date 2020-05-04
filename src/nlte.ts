@@ -1,6 +1,27 @@
 var BtnNlteAdd = document.getElementById("btn-nlte-add")
 var DivNlte = document.getElementById("div-nlte")
 
+var elements = [
+    "H", "He",
+    "Li", "Be", "B", "C", "N", "O", "F", "Ne",
+    "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar",
+    "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe",
+    "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se",
+    "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo",
+    "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn",
+    "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce",
+    "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy",
+    "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W",
+    "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb",
+    "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th",
+    "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf",
+    "Es",]
+
+addEventListener("pysme_load", (event: any) => {
+    let sme: SmeFile = event.detail
+    load_nlte_values(sme)
+})
+
 function get_available_elements() {
     let used_elements: string[] = [];
     if (sme) {
@@ -235,10 +256,8 @@ function load_nlte_values(sme: SmeFile) {
     console.log("Number of NLTE elements: " + sme["nlte/info"].elements.length)
     let nelements = sme["nlte/info"].elements.length
     for (let i = 0; i < nelements; i++) {
-        console.log(i)
         const element = sme["nlte/info"].elements[i];
         const datafile = sme["nlte/info"].grids[element];
-        console.log("add NLTE field " + element)
         let child = create_nlte_field(element, datafile)
         DivNlte.insertBefore(child, BtnNlteAdd)
     }

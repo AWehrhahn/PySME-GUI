@@ -1,5 +1,10 @@
 const Cite = require('citation-js')
 
+addEventListener("pysme_load", (event: any) => {
+    let sme: SmeFile = event.detail
+    show_citation(sme)
+})
+
 async function collect_citations(sme: SmeFile) {
     let data = await Cite.inputAsync(sme.citation_info, { forceType: "@bibtex/text" })
 

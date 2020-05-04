@@ -21,6 +21,11 @@ var data_index: { [id: string]: { [id: number]: number } } = {
     synth: {}
 }
 
+addEventListener("pysme_load", (event: any) => {
+    let sme: SmeFile = event.detail
+    plot_sme(sme)
+})
+
 function reset_plot() {
     initial_setup = true
     data = []

@@ -636,15 +636,7 @@ async function fit_spectrum(sme: SmeFile) {
     return promise
 }
 
-async function load_new_linelist(sme: SmeFile, linelist_file: string) {
-    var tmpout = tmp.fileSync({ postfix: ".json" });
-    var success = await call_python("load_new_linelist.py", [linelist_file, tmpout.name, "--format=VALD"])
-    var data = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
-    var json = JSON.parse(data)
-    sme["linelist/data"] = json.data
-    sme["linelist/info"] = json.info
-    return sme
-}
+
 
 async function get_pysme_version() {
     let tmpout = tmp.fileSync({ postfix: ".txt" });
@@ -653,25 +645,8 @@ async function get_pysme_version() {
     return data
 }
 
-
-function show_linelist(sme: SmeFile) {
-    $(document).ready(function () {
-        $('#table-linelist').DataTable({
-            destroy: true,
-            data: sme["linelist/data"],
-            columns: [
-                { title: 'species', data: 'species' },
-                { title: 'wlcent', data: 'wlcent' },
-                { title: 'excit', data: 'excit' },
-                { title: 'gflog', data: 'gflog' },
-                { title: 'gamrad', data: 'gamrad' },
-                { title: 'gamqst', data: 'gamqst' },
-                { title: 'gamvw', data: 'gamvw' },
-                { title: 'lande', data: 'lande' },
-                { title: 'depth', data: 'depth' }
-            ]
-        });
-    });
+function cast_load_event(sme: SmeFile) {
+    dispatchEvent(new CustomEvent("pysme_load", { detail: sme }))
 }
 
 var ButtonLoad = document.getElementById("btn-load")
@@ -702,11 +677,7 @@ ButtonLoad.addEventListener('click', async (event) => {
                 }
             }
         }
-        load_parameter_values(sme)
-        show_citation(sme)
-        show_linelist(sme)
-        load_nlte_values(sme)
-        plot_sme(sme)
+        cast_load_event(sme)
     } else {
         console.log("User did not select a file")
     }
@@ -726,12 +697,10 @@ ButtonSave.addEventListener('click', async (event) => {
 
 var ButtonSynthesize = document.getElementById("btn-synthesize")
 ButtonSynthesize.addEventListener('click', async (event) => {
-
     console.log("Start synthesizing")
     try {
         sme = await synthesize_spectrum(sme)
-        plot_sme(sme)
-        show_citation(sme)
+        cast_load_event(sme)
     } catch (err) {
         console.error(err)
     }
@@ -742,26 +711,9 @@ ButtonFit.addEventListener('click', async (event) => {
     console.log("Start fitting")
     try {
         sme = await fit_spectrum(sme)
-        load_parameter_values(sme)
-        plot_sme(sme)
-        show_citation(sme)
+        cast_load_event(sme)
     } catch (err) {
         console.error(err)
     }
 })
 
-var ButtonLinelistLoad = document.getElementById("btn-linelist-load") as HTMLButtonElement
-ButtonLinelistLoad.addEventListener("click", async (event) => {
-    console.log("load Linelist")
-    var out = await dialog.showOpenDialog({ properties: ["openFile"] })
-    if (!out.canceled) {
-        var fname = out.filePaths[0];
-        try {
-            sme = await load_new_linelist(sme, fname)
-            show_linelist(sme)
-            plot_sme(sme)
-        } catch (err) {
-            console.error(err)
-        }
-    }
-})
