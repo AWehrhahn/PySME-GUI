@@ -42,7 +42,7 @@ BtnAbundAsplund2009.addEventListener("click", async (event) => {
     var content: Buffer = fs.readFileSync(tmpout.name, { encoding: null })
     var abund = new Float64Array(content.buffer, content.byteOffset, content.length / Float64Array.BYTES_PER_ELEMENT)
     sme["abund/pattern"] = abund
-    sme["abund/info"]["type"] = "H-12"
+    sme["abund/info"]["format"] = "H=12"
     sme["abund/info"]["monh"] = 0
     update_abundance(sme)
 })
@@ -54,7 +54,7 @@ BtnAbundAsplund2009.addEventListener("click", async (event) => {
     var content: Buffer = fs.readFileSync(tmpout.name, { encoding: null })
     var abund = new Float64Array(content.buffer, content.byteOffset, content.length / Float64Array.BYTES_PER_ELEMENT)
     sme["abund/pattern"] = abund
-    sme["abund/info"]["type"] = "H-12"
+    sme["abund/info"]["format"] = "H=12"
     sme["abund/info"]["monh"] = 0
     update_abundance(sme)
 })
@@ -66,7 +66,7 @@ BtnAbundAsplund2009.addEventListener("click", async (event) => {
     var content: Buffer = fs.readFileSync(tmpout.name, { encoding: null })
     var abund = new Float64Array(content.buffer, content.byteOffset, content.length / Float64Array.BYTES_PER_ELEMENT)
     sme["abund/pattern"] = abund
-    sme["abund/info"]["type"] = "H-12"
+    sme["abund/info"]["format"] = "H=12"
     sme["abund/info"]["monh"] = 0
     update_abundance(sme)
 })
@@ -77,7 +77,7 @@ function update_abundance(sme: SmeFile) {
         let field = document.getElementById(`par-abund-input-${element}`) as HTMLInputElement
         let value = sme["abund/pattern"][i]
         if (isNaN(value)) value = -99
-        field.value = value
+        field.value = String(value)
     }
 }
 
@@ -172,21 +172,21 @@ ButtonAtmosphereAdd.addEventListener("click", async (event) => {
 
 async function load_parameter_values(sme: SmeFile) {
     // Load all values from sme and display them
-    FieldTeff.value = sme.teff
-    FieldLogg.value = sme.logg
-    FieldMonh.value = sme["abund/info"]["monh"]
-    FieldVmic.value = sme.vmic
-    FieldVmac.value = sme.vmac
-    FieldVsini.value = sme.vsini
-    FieldGamma6.value = sme.gam6
-    FieldAccrt.value = sme.accrt
-    FieldAccwi.value = sme.accwi
+    FieldTeff.value = String(sme.teff)
+    FieldLogg.value = String(sme.logg)
+    FieldMonh.value = String(sme["abund/info"]["monh"])
+    FieldVmic.value = String(sme.vmic)
+    FieldVmac.value = String(sme.vmac)
+    FieldVsini.value = String(sme.vsini)
+    FieldGamma6.value = String(sme.gam6)
+    FieldAccrt.value = String(sme.accrt)
+    FieldAccwi.value = String(sme.accwi)
 
     FieldCscaleFlag.value = sme.cscale_flag
     FieldCscaleType.value = sme.cscale_type
     FieldVradFlag.value = sme.vrad_flag
 
-    FieldH2broad.value = sme.h2broad
+    FieldH2broad.value = String(sme.h2broad)
 
     // Fitparameters
     for (let i = 0; i < sme.fitparameters.length; i++) {
@@ -208,7 +208,7 @@ async function load_parameter_values(sme: SmeFile) {
             BtnMuAdd.click()
         }
         let field = get_mu_field(i);
-        field.value = element
+        field.value = String(element)
         field.dispatchEvent(new Event("change"))
     }
     while (sme.mu.length < get_n_mu_fields()) {

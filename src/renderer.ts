@@ -88,22 +88,178 @@ interface ZipObject {
     async: Function
 }
 
+type IntArray = Int16Array | Int8Array | Int32Array | BigInt64Array | Uint8Array
+type FloatArray = Float32Array | Float64Array
+
 interface SmeFile {
-    [id: string]: any;
+    vrad: FloatArray;
+    cscale: FloatArray[];
+    wran: FloatArray[];
+    "abund/info": {
+        format: "H=12" | "sme" | "n/nTot" | "n/nH";
+        monh: number;
+        citation_info: string;
+    };
+    "abund/pattern": FloatArray;
+    wave: FloatArray[];
+    spec: FloatArray[];
+    uncs: FloatArray[];
+    mask: IntArray[];
+    synth: FloatArray[];
+    cont: FloatArray[];
+    "linelist/info": {
+        format: "short" | "long";
+        medium: "air" | "vac";
+        citation_info: string;
+    };
+    "linelist/data": { [id: string]: any };
+    "atmo/info": {
+        teff: number;
+        logg: number;
+        vturb: number;
+        lonh: number;
+        source: string;
+        method: "grid" | "embedded";
+        geom: "PP" | "SPH";
+        radius: FloatArray;
+        height: FloatArray;
+        opflag: number[];
+        wlstd: number;
+        depth: "TAU" | "RHOX";
+        interp: "TAU" | "RHOX";
+        citation_info: string;
+    };
+    "atmo/rhox": FloatArray;
+    "atmo/tau": FloatArray;
+    "atmo/temp": FloatArray;
+    "atmo/rho": FloatArray;
+    "atmo/xna": FloatArray;
+    "atmo/xne": FloatArray;
+    "atmo/abund/info": { [id: string]: any };
+    "atmo/abund/pattern": FloatArray;
+    "nlte/info": {
+        citation_info: string;
+        elements: string[];
+        grids: { [id: string]: string };
+        subgrid_size: number[];
+    };
+    "nlte/flags": IntArray;
+    "system_info/info": {
+        [id: string]: any
+    };
+    citation_info: string;
+    teff: number;
+    logg: number;
+    vmic: number;
+    vmac: number;
+    vsini: number;
+    id: string;
+    object: string;
+    version: string;
+    vrad_flag: "fix" | "whole" | "each" | "none";
+    cscale_flag: "fix" | "none" | "constant" | "linear";
+    cscale_type: "mask" | "whole";
+    normalize_by_continuum: boolean;
+    specific_intensities_only: boolean;
+    gam6: number;
+    h2broad: boolean;
+    accwi: number;
+    accrt: number;
+    mu: number[]
+    fitparameters: string[];
+    ipres: number;
 }
 
-var sme: SmeFile;
 
 class SmeError {
     constructor(public message: string) {
     }
 }
 
+function create_empty_sme_structure() {
+    let struct: SmeFile = {
+        vrad: new Float64Array(),
+        cscale: [],
+        wran: [],
+        "abund/info": {
+            format: "H=12",
+            monh: 0,
+            citation_info: "",
+        },
+        "abund/pattern": new Float64Array(99),
+        wave: [],
+        spec: [],
+        uncs: [],
+        mask: [],
+        synth: [],
+        cont: [],
+        "linelist/info": {
+            format: "short",
+            medium: "vac",
+            citation_info: "",
+        },
+        "linelist/data": {},
+        "atmo/info": {
+            teff: 5000,
+            logg: 4,
+            vturb: 0,
+            lonh: 0,
+            source: "",
+            method: "grid",
+            geom: "PP",
+            radius: new Float64Array(),
+            height: new Float64Array(),
+            opflag: [],
+            wlstd: 5000,
+            depth: "RHOX",
+            interp: "TAU",
+            citation_info: "",
+        },
+        "atmo/rhox": new Float64Array(),
+        "atmo/tau": new Float64Array(),
+        "atmo/temp": new Float64Array(),
+        "atmo/rho": new Float64Array(),
+        "atmo/xna": new Float64Array(),
+        "atmo/xne": new Float64Array(),
+        "atmo/abund/info": {},
+        "atmo/abund/pattern": new Float64Array(99),
+        "nlte/info": {
+            citation_info: "",
+            elements: [],
+            grids: {},
+            subgrid_size: [2, 2, 2, 2],
+        },
+        "nlte/flags": new Int8Array(),
+        "system_info/info": {},
+        citation_info: "",
+        teff: 5000,
+        logg: 4,
+        vmic: 1,
+        vmac: 1,
+        vsini: 1,
+        id: "DEFAULT",
+        object: "",
+        version: "PySME-GUI",
+        vrad_flag: "whole",
+        cscale_flag: "constant",
+        cscale_type: "mask",
+        normalize_by_continuum: true,
+        specific_intensities_only: false,
+        gam6: 1,
+        h2broad: true,
+        accwi: 0.1,
+        accrt: 0.1,
+        mu: [0.1, 0.5, 1],
+        fitparameters: [],
+        ipres: 0,
+    }
+    return struct
+}
+
+var sme = create_empty_sme_structure();
+
 class EndianError extends SmeError { }
 class IdlError extends SmeError { }
-
-
-
 
 function checkEndian() {
     var arrayBuffer = new ArrayBuffer(2);
@@ -253,7 +409,7 @@ async function load_file(filename: string) {
         i += 1
     })
 
-    var files: SmeFile = {}
+    var files: any = {};
 
     for (let index = 0; index < length; index++) {
         const element: ZipObject = arr[index];
@@ -288,7 +444,7 @@ async function load_file(filename: string) {
         delete files.info
     }
 
-    return files
+    return files as SmeFile
 }
 
 function determine_datatype(obj: any, key: string) {
@@ -371,14 +527,14 @@ async function save_feather(obj: any) {
 
 async function save_file(fname: string, sme: SmeFile) {
     var zip = JSZip()
+    var info: { [id: string]: any } = {}
 
     for (const key in sme) {
         if (sme.hasOwnProperty(key)) {
-            const element = sme[key];
+            const element: any = (sme as { [id: string]: any })[key];
             let dtype = determine_datatype(element, key)
             let content: any = ""
             let ending = "dat"
-            var info: any = {}
             switch (dtype) {
                 case "dict":
                     content = JSON.stringify(element)
@@ -406,8 +562,7 @@ async function save_file(fname: string, sme: SmeFile) {
                 default:
                     // Add to info
                     info[key] = element
-                    // throw new Error(`No saving mechanism for given filetype ${dtype}`)
-                    break;
+                    continue;
             }
             zip.file(`${key}.${ending}`, content)
         }
@@ -550,6 +705,7 @@ ButtonLoad.addEventListener('click', async (event) => {
         load_parameter_values(sme)
         show_citation(sme)
         show_linelist(sme)
+        load_nlte_values(sme)
         plot_sme(sme)
     } else {
         console.log("User did not select a file")

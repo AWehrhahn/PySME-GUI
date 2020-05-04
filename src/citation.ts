@@ -5,7 +5,7 @@ async function collect_citations(sme: SmeFile) {
 
     for (const key in sme) {
         if (sme.hasOwnProperty(key)) {
-            const element = sme[key];
+            const element = (sme as { [id: string]: any })[key];
             if (typeof element == "object") {
                 if (element.hasOwnProperty("citation_info")) {
                     let temp = await Cite.inputAsync(element["citation_info"], { forceType: "@bibtex/text" })

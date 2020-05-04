@@ -8,7 +8,8 @@ var fmt = {
     ContMask: { facecolor: "#d62728", alpha: 1 },
 }
 
-var mask_mode: "bad" | "line" | "cont" = "cont"
+type mask_modes = "bad" | "line" | "cont";
+var mask_mode: mask_modes = "cont"
 var initial_setup = true
 var graphDiv: any = document.getElementById('div-graph') as HTMLDivElement;
 var data: any = []
@@ -51,13 +52,13 @@ function set_mask(sme: SmeFile, range: [number, number]) {
     var value = get_mask_value()
     var seg = get_segment()
 
-    var wave: Float64Array = sme.wave[seg]
+    var wave = sme.wave[seg]
     var wmin = range[0]
     var wmax = range[1]
 
     if (typeof (sme.mask[seg][0]) === "bigint") {
-        var mask: BigInt64Array = sme.mask[seg]
-        var big_value = BigInt(value)
+        let mask = sme.mask[seg] as BigInt64Array
+        let big_value = BigInt(value)
         sme.mask[seg] = mask.map((v, i) => {
             if ((wave[i] >= wmin) && (wave[i] <= wmax)) {
                 return big_value
@@ -66,7 +67,7 @@ function set_mask(sme: SmeFile, range: [number, number]) {
             }
         })
     } else {
-        var mask2: Uint8Array = sme.mask[seg]
+        let mask2 = sme.mask[seg] as Int8Array
         sme.mask[seg] = mask2.map((v, i) => {
             if ((wave[i] >= wmin) && (wave[i] <= wmax)) {
                 return value
@@ -95,9 +96,9 @@ function set_mask(sme: SmeFile, range: [number, number]) {
     Plotly.react(graphDiv, data, layout)
 }
 
-function create_mask_points(x: Float64Array, y: Float64Array, mask: Uint8Array, value: number) {
+function create_mask_points(x: FloatArray, y: FloatArray, mask: IntArray, value: number) {
     // Creates the points that define the outer edge of the mask region
-    y = y.map((v, i) => {
+    y = y.map((v: number, i: number) => {
         if (mask[i] == value) {
             return v
         } else {
@@ -105,7 +106,7 @@ function create_mask_points(x: Float64Array, y: Float64Array, mask: Uint8Array, 
         }
     })
 
-    x = x.map((v, i, a) => {
+    x = x.map((v: number, i: number, a: FloatArray) => {
         if ((i == 0) || (i == a.length - 1)) {
             return v
         } else {

@@ -220,148 +220,150 @@
                   </div>
                 </div>
                 <div class="card-body" id="parameter-div">
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Teff</span>
+                  <div class="form-group mx-0">
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Teff</span>
+                      </div>
+                      <input type="number" class="form-control" id="par-teff" min="0" step="any">
+                      <div class="input-group-append">
+                        <span class="input-group-text">K</span>
+                      </div>
                     </div>
-                    <input type="number" class="form-control" id="par-teff" min="0" step="any">
-                    <div class="input-group-append">
-                      <span class="input-group-text">K</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">log(g)</span>
+                      </div>
+                      <input type="number" class="form-control" id="par-logg" step="any">
+                      <div class="input-group-append">
+                        <span class="input-group-text">log(cm/s**2)</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">log(g)</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">[M/H]</span>
+                      </div>
+                      <input type="number" class="form-control" id="par-monh" step="any">
+                      <div class="input-group-append">
+                        <span class="input-group-text">log</span>
+                      </div>
                     </div>
-                    <input type="number" class="form-control" id="par-logg" step="any">
-                    <div class="input-group-append">
-                      <span class="input-group-text">log(cm/s**2)</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">v<sub>mic</sub></span>
+                      </div>
+                      <input type="number" class="form-control" id="par-vmic" step="any">
+                      <div class="input-group-append">
+                        <span class="input-group-text">km/s</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">[M/H]</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">v<sub>mac</sub></span>
+                      </div>
+                      <input type="number" class="form-control" id="par-vmac" step="any">
+                      <div class="input-group-append">
+                        <span class="input-group-text">km/s</span>
+                      </div>
                     </div>
-                    <input type="number" class="form-control" id="par-monh" step="any">
-                    <div class="input-group-append">
-                      <span class="input-group-text">log</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">v sin(i)</span>
+                      </div>
+                      <input type="number" class="form-control" id="par-vsini" step="any">
+                      <div class="input-group-append">
+                        <span class="input-group-text">km/s</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">v<sub>mic</sub></span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">gamma 6</span>
+                      </div>
+                      <input type="number" class="form-control" id="par-gamma6" step="any">
                     </div>
-                    <input type="number" class="form-control" id="par-vmic" step="any">
-                    <div class="input-group-append">
-                      <span class="input-group-text">km/s</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">H2 broadening</span>
+                      </div>
+                      <select class="custom-select" id="par-h2broad">
+                        <option value="true">true</option>
+                        <option value="false">false</option>
+                      </select>
                     </div>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">v<sub>mac</sub></span>
+                    <div class="input-group input-group-sm mb-1" id="par-mu-div">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Mu</span>
+                      </div>
+                      <input type="number" class="form-control" id="par-mu" step="any" min="0" max="1">
+                      <div class="input-group-append" id="par-mu-end">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-mu-rem">-</button>
+                        <button class="btn btn-outline-secondary" type="button" id="btn-mu-add">+</button>
+                      </div>
                     </div>
-                    <input type="number" class="form-control" id="par-vmac" step="any">
-                    <div class="input-group-append">
-                      <span class="input-group-text">km/s</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" for="par-cscale-flag">continuum flag</span>
+                      </div>
+                      <select class="custom-select" id="par-cscale-flag">
+                        <option value="none">none</option>
+                        <option value="fix">fix</option>
+                        <option value="constant">constant</option>
+                        <option value="linear">linear</option>
+                      </select>
                     </div>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">v sin(i)</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" for="par-cscale-type">continuum fit method</span>
+                      </div>
+                      <select class="custom-select" id="par-cscale-type">
+                        <option value="whole">whole</option>
+                        <option value="mask">mask</option>
+                      </select>
                     </div>
-                    <input type="number" class="form-control" id="par-vsini" step="any">
-                    <div class="input-group-append">
-                      <span class="input-group-text">km/s</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" for="par-vrad-flag">Radial velocity flag</span>
+                      </div>
+                      <select class="custom-select" id="par-vrad-flag">
+                        <option selected value="none">none</option>
+                        <option value="fix">fix</option>
+                        <option value="whole">whole</option>
+                        <option value="each">each</option>
+                      </select>
                     </div>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">gamma 6</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" for="par-atmosphere-file">Atmosphere Source</span>
+                      </div>
+                      <select class="custom-select" id="par-atmosphere-file">
+                      </select>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-atmosphere-add">Add Model
+                          Atmosphere</button>
+                      </div>
                     </div>
-                    <input type="number" class="form-control" id="par-gamma6" step="any">
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">H2 broadening</span>
+                    <div class="input-group input-group-sm mb-1" id="par-fitparameters-div">
+                      <div class=" input-group-prepend">
+                        <span class="input-group-text">Fitparameters</span>
+                      </div>
+                      <input type="text" class="form-control" id="par-fitparameters">
+                      <div class="input-group-append" id="par-fitparameters-end">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-fitparameters-rem">-</button>
+                        <button class="btn btn-outline-secondary" type="button" id="btn-fitparameters-add">+</button>
+                      </div>
                     </div>
-                    <select class="custom-select" id="par-h2broad">
-                      <option value="true">true</option>
-                      <option value="false">false</option>
-                    </select>
-                  </div>
-                  <div class="input-group input-group-sm mb-1" id="par-mu-div">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Mu</span>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">accuracy radiative transfer</span>
+                      </div>
+                      <input type="number" class="form-control" id="par-accrt" step="any">
                     </div>
-                    <input type="number" class="form-control" id="par-mu" step="any" min="0" max="1">
-                    <div class="input-group-append" id="par-mu-end">
-                      <button class="btn btn-outline-secondary" type="button" id="btn-mu-rem">-</button>
-                      <button class="btn btn-outline-secondary" type="button" id="btn-mu-add">+</button>
+                    <div class="input-group input-group-sm mb-1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">accuracy wavelength resolution</span>
+                      </div>
+                      <input type="number" class="form-control" id="par-accwi" step="any">
                     </div>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" for="par-cscale-flag">continuum flag</span>
-                    </div>
-                    <select class="custom-select" id="par-cscale-flag">
-                      <option value="none">none</option>
-                      <option value="fix">fix</option>
-                      <option value="constant">constant</option>
-                      <option value="linear">linear</option>
-                    </select>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" for="par-cscale-type">continuum fit method</span>
-                    </div>
-                    <select class="custom-select" id="par-cscale-type">
-                      <option value="whole">whole</option>
-                      <option value="mask">mask</option>
-                    </select>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" for="par-vrad-flag">Radial velocity flag</span>
-                    </div>
-                    <select class="custom-select" id="par-vrad-flag">
-                      <option selected value="none">none</option>
-                      <option value="fix">fix</option>
-                      <option value="whole">whole</option>
-                      <option value="each">each</option>
-                    </select>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" for="par-atmosphere-file">Atmosphere Source</span>
-                    </div>
-                    <select class="custom-select" id="par-atmosphere-file">
-                    </select>
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="button" id="btn-atmosphere-add">Add Model
-                        Atmosphere</button>
-                    </div>
-                  </div>
-                  <div class="input-group input-group-sm mb-1" id="par-fitparameters-div">
-                    <div class=" input-group-prepend">
-                      <span class="input-group-text">Fitparameters</span>
-                    </div>
-                    <input type="text" class="form-control" id="par-fitparameters">
-                    <div class="input-group-append" id="par-fitparameters-end">
-                      <button class="btn btn-outline-secondary" type="button" id="btn-fitparameters-rem">-</button>
-                      <button class="btn btn-outline-secondary" type="button" id="btn-fitparameters-add">+</button>
-                    </div>
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">accuracy radiative transfer</span>
-                    </div>
-                    <input type="number" class="form-control" id="par-accrt" step="any">
-                  </div>
-                  <div class="input-group input-group-sm mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">accuracy wavelength resolution</span>
-                    </div>
-                    <input type="number" class="form-control" id="par-accwi" step="any">
                   </div>
                 </div>
               </div>
