@@ -1,6 +1,6 @@
 {
   "name": "pysme-gui",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "A GUI for PySME",
   "repository": "https://github.com/AWehrhahn/PySME-GUI",
   "homepage": "https://github.com/AWehrhahn/PySME-GUI",
