@@ -343,7 +343,6 @@ function plot_sme(sme: any) {
 var ButtonMaskLine = document.getElementById("btn-mask-line")
 ButtonMaskLine.addEventListener('click', () => {
     mask_mode = "line"
-    show_error("Mask Mode: Line", "debug")
 })
 
 

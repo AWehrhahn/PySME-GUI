@@ -165,16 +165,19 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
                       aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Mask Selection</div>
-                      <span class="dropdown-item" id="btn-mask-bad">Bad Pixel</span>
-                      <span class="dropdown-item" id="btn-mask-line">Line Pixel</span>
-                      <span class="dropdown-item" id="btn-mask-cont">Cont Pixel</span>
+                      <div class="dropdown-header">Options</div>
+                      <span class="dropdown-item">...</span>
                     </div>
                   </div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div id="div-graph">
+                  <div class="mb-2" id="div-graph">
+                  </div>
+                  <div>
+                    <button class="btn btn-outline-secondary" id="btn-mask-bad">Bad Pixel</button>
+                    <button class="btn btn-linemask" id="btn-mask-line">Line Pixel</button>
+                    <button class="btn btn-contmask" id="btn-mask-cont">Cont Pixel</button>
                   </div>
                 </div>
               </div>

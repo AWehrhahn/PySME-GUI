@@ -12,7 +12,9 @@ $theme-colors: (
     "info": $teal,
     "warning": $orange,
     "error": $red,
-    "critical": $yellow
+    "critical": $yellow,
+    "linemask": #bcbd22,
+    "contmask": #d62728,
 );
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
