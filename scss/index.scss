@@ -4,7 +4,17 @@
 // Import Bootstrap
 // 18 Columns of the Periodic Table
 // $grid-columns: 18;
-$sizes: ( 5: 5%  );
+$sizes: ( 5: 5%,  10: 10%);
+
+$theme-colors: (
+    "success": $green,
+    "debug": $cyan,
+    "info": $teal,
+    "warning": $orange,
+    "error": $red,
+    "critical": $yellow
+);
+
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 // Import Custom SB Admin 2 Mixins and Components
@@ -26,35 +36,12 @@ $sizes: ( 5: 5%  );
     color: $black !important;
 }
 
-.log-debug{
-    color: $black !important;
-}
-
-.log-info{
-    background-color: $cyan !important;
-    color: $black !important;
-}
-
-.log-warning{
-    background-color: $orange !important;
-    color: $black !important;
-}
-
-.log-error{
-    background-color: $red !important;
-    color: $black !important;
-}
-
-.log-critical{
-    background-color: $yellow !important;
-    color: $black !important;
-    font-weight: 700 !important;
-}
-
-
-.input-group-width-small{
-    max-width: 10%
-}
+@each $color, $value in $theme-colors {
+    .log-#{$color} {
+        background-color: $value;
+        color: $black;
+    }
+  }
 
 .hover-color{
     cursor: pointer;

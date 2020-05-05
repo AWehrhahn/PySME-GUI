@@ -8,12 +8,6 @@ let log_levels = {
     "critical": 50,
 }
 
-interface LogEntry {
-    level: "debug" | "warning" | "info" | "error" | "critical";
-    message: string;
-    source: string;
-    datetime: string;
-}
 
 var log_level = log_levels.info
 var log_parsed: LogEntry[]
@@ -58,7 +52,7 @@ function parse_log(log: string) {
     while ((match = re.exec(log)) !== null) {
         let row: LogEntry = {
             datetime: `${match[1]}-${match[2]}-${match[3]} ${match[4]}:${match[5]}:${match[6]}`,
-            level: match[7].toLowerCase() as "debug" | "warning" | "info" | "error" | "critical",
+            level: match[7].toLowerCase() as LogLevel,
             source: match[8],
             message: match[9]
         }

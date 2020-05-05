@@ -31,7 +31,7 @@
       <div class="sticky-top">
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-          <div class="sidebar-brand-icon">
+          <div class="sidebar-brand-icon rotate-15">
             <i class="far fa-sun"></i>
           </div>
         </a>
@@ -49,6 +49,12 @@
           <a class="nav-link" href="#nav-parameters">
             <i class="fas fa-sliders-h"></i>
             <span>Parameters</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#nav-atmosphere">
+            <i class="fas fa-cloud"></i>
+            <span>Atmosphere</span></a>
         </li>
 
         <li class="nav-item">
@@ -81,12 +87,8 @@
             <span>Citations</span></a>
         </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
         <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        <div class="text-center d-none" id="sidebarToggle">
         </div>
       </div>
     </ul>
@@ -312,17 +314,7 @@
                         <option value="each">each</option>
                       </select>
                     </div>
-                    <div class="input-group input-group-sm mb-1">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" for="par-atmosphere-file">Atmosphere Source</span>
-                      </div>
-                      <select class="custom-select" id="par-atmosphere-file">
-                      </select>
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="btn-atmosphere-add">Add Model
-                          Atmosphere</button>
-                      </div>
-                    </div>
+
                     <div class="input-group input-group-sm mb-1" id="par-fitparameters-div">
                       <div class=" input-group-prepend">
                         <span class="input-group-text">Fitparameters</span>
@@ -351,12 +343,67 @@
             </div>
           </div>
 
+          <!-- Content Row Atmosphere -->
+          <div class="row">
+            <!-- Content Column -->
+            <div class="col">
+              <!-- Project Card Example -->
+              <div class="card mb-4" id="nav-atmosphere">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Atmosphere</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw section-menu"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right  animated--fade-in"
+                      aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Options</div>
+                      <span class="dropdown-item" id="btn-atmo">...</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="input-group input-group-sm mb-1">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" for="par-atmosphere-file">Source</span>
+                    </div>
+                    <select class="custom-select" id="par-atmosphere-file">
+                    </select>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" id="btn-atmosphere-add">Add Model
+                        Atmosphere</button>
+                    </div>
+                  </div>
+                  <div class="input-group input-group-sm mb-1">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Geometry</span>
+                    </div>
+                    <select class="custom-select" id="par-atmosphere-geometry">
+                      <option value="PP">Plane Parallel</option>
+                      <option value="SPH">Spherical</option>
+                    </select>
+                  </div>
+                  <div class="input-group input-group-sm mb-1">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Method</span>
+                    </div>
+                    <select class="custom-select" id="par-atmosphere-method">
+                      <option value="grid">grid</option>
+                      <option value="embedded">embedded</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Content Row Abundance -->
           <div class="row">
             <!-- Content Column -->
             <div class="col">
               <!-- Project Card Example -->
-              <div class="card mb-4" id="nav-abundance">
+              <div class="card mb-4 w-100" id="nav-abundance">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Abundance</h6>
                   <div class="dropdown no-arrow">
@@ -374,7 +421,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <table id="table-abundance" class="table table-bordered table-sm" style="width:100%;">
+                  <table id="table-abundance" class="table table-bordered table-sm table-responsive w-100">
                     <thead>
                       <tr>
                         <th scope="col" class="w-5">1</th>
@@ -1225,6 +1272,9 @@
     </div>
     <!-- End of Page Wrapper -->
 
+    <!-- Renderer.js goes first and has all the requires -->
+    <script src="./dist/renderer.js"></script>
+    <!-- The others go in whatever order -->
     <script src="./dist/plotting.js"></script>
     <script src="./dist/python.js"></script>
     <script src="./dist/abundance.js"></script>
@@ -1232,8 +1282,9 @@
     <script src="./dist/citation.js"></script>
     <script src="./dist/logging.js"></script>
     <script src="./dist/nlte.js"></script>
-    <script src="./dist/renderer.js"></script>
     <script src="./dist/linelist.js"></script>
+    <script src="./dist/atmosphere.js"></script>
+    <script src="./dist/alerts.js"></script>
 </body>
 
 </html>

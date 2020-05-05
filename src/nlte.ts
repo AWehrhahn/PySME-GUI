@@ -22,6 +22,11 @@ addEventListener("pysme_load", (event: any) => {
     load_nlte_values(sme)
 })
 
+addEventListener("config_loaded", (event: any) => {
+    let config: Config = event.detail
+    load_nlte_files(config)
+})
+
 function get_available_elements() {
     let used_elements: string[] = [];
     if (sme) {
@@ -71,7 +76,7 @@ function set_nlte_element(element: string, datafile: string) {
     }
 }
 
-async function load_nlte_files() {
+async function load_nlte_files(config: Config) {
     // Add files that are available from the server
     let nlte_file = join(homedir, ".sme", config["data.pointers.nlte_grids"])
     let data: string = fs.readFileSync(nlte_file, "utf-8")
@@ -82,7 +87,7 @@ async function load_nlte_files() {
         }
     }
 
-    // Add atmosphere files in the correct folder
+    // Add nlte files in the correct folder
     let misc_files_dir = untildify(config["data.nlte_grids"])
     var misc_files = fs.readdirSync(misc_files_dir, { withFileTypes: true });
     for (let index = 0; index < misc_files.length; index++) {

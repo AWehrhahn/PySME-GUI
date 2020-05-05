@@ -1,3 +1,5 @@
+
+
 addEventListener("pysme_load", (event: any) => {
     let sme: SmeFile = event.detail
     show_linelist(sme)
@@ -24,6 +26,12 @@ function show_linelist(sme: SmeFile) {
     $(document).ready(function () {
         $('#table-linelist').DataTable({
             destroy: true,
+            responsive: {
+                details: {
+                    type: 'column',
+                    target: 'tr'
+                }
+            },
             data: sme["linelist/data"],
             columns: [
                 { title: 'species', data: 'species' },

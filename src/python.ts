@@ -1,4 +1,3 @@
-const { spawn } = require('child_process');
 
 async function call_python(script: string, args: string[]) {
     var promise = new Promise<boolean>((resolve, reject) => {

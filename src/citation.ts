@@ -1,4 +1,3 @@
-const Cite = require('citation-js')
 
 addEventListener("pysme_load", (event: any) => {
     let sme: SmeFile = event.detail

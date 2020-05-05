@@ -5,6 +5,7 @@
 const $ = require("jquery");
 var dt = require('datatables.net')();
 require('datatables.net-bs4')();
+require('datatables.net-responsive-bs4')();
 require("popper.js")
 require("bootstrap");
 
@@ -13,6 +14,14 @@ var JSZip = require("jszip");
 var tmp = require('tmp');
 const chokidar = require('chokidar');
 const { Table } = require("apache-arrow");
+const homedir = require('os').homedir();
+const { join } = require('path');
+const fs = require('fs');
+const untildify = require('untildify');
+var Plotly = require("plotly.js")
+const { spawn } = require('child_process');
+const Cite = require('citation-js')
+
 
 // This section is from the template: https://startbootstrap.com/themes/sb-admin-2/
 // Toggle the side navigation
@@ -24,24 +33,6 @@ $("#sidebarToggle, #sidebarToggleTop").on('click', function (e: any) {
     };
 });
 
-var DivAlert = document.getElementById("div-alert")
-
-function show_error(message: string) {
-    let alert = document.createElement("div")
-    alert.classList.add("alert", "alert-danger", "alert-dismissable", "fade", "show")
-    alert.innerHTML = `
-        <div class="d-flex flex-row align-items-center justify-content-between">
-            <h4 class="alert-heading">Error</h4>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <hr>
-        <pre>${message}</pre>
-        </div>
-    `
-    DivAlert.appendChild(alert)
-}
 
 // Close any open menu accordions when window is resized below 768px
 $(window).resize(function () {
@@ -83,98 +74,12 @@ $("#sidebarToggle").click()
 
 tmp.setGracefulCleanup();
 
-interface ZipObject {
-    name: string
-    async: Function
-}
-
-type IntArray = Int16Array | Int8Array | Int32Array | BigInt64Array | Uint8Array
-type FloatArray = Float32Array | Float64Array
-
-interface SmeFile {
-    vrad: FloatArray;
-    cscale: FloatArray[];
-    wran: FloatArray[];
-    "abund/info": {
-        format: "H=12" | "sme" | "n/nTot" | "n/nH";
-        monh: number;
-        citation_info: string;
-    };
-    "abund/pattern": FloatArray;
-    wave: FloatArray[];
-    spec: FloatArray[];
-    uncs: FloatArray[];
-    mask: IntArray[];
-    synth: FloatArray[];
-    cont: FloatArray[];
-    "linelist/info": {
-        format: "short" | "long";
-        medium: "air" | "vac";
-        citation_info: string;
-    };
-    "linelist/data": { [id: string]: any };
-    "atmo/info": {
-        teff: number;
-        logg: number;
-        vturb: number;
-        lonh: number;
-        source: string;
-        method: "grid" | "embedded";
-        geom: "PP" | "SPH";
-        radius: FloatArray;
-        height: FloatArray;
-        opflag: number[];
-        wlstd: number;
-        depth: "TAU" | "RHOX";
-        interp: "TAU" | "RHOX";
-        citation_info: string;
-    };
-    "atmo/rhox": FloatArray;
-    "atmo/tau": FloatArray;
-    "atmo/temp": FloatArray;
-    "atmo/rho": FloatArray;
-    "atmo/xna": FloatArray;
-    "atmo/xne": FloatArray;
-    "atmo/abund/info": { [id: string]: any };
-    "atmo/abund/pattern": FloatArray;
-    "nlte/info": {
-        citation_info: string;
-        elements: string[];
-        grids: { [id: string]: string };
-        subgrid_size: number[];
-    };
-    "nlte/flags": IntArray;
-    "system_info/info": {
-        [id: string]: any
-    };
-    citation_info: string;
-    teff: number;
-    logg: number;
-    vmic: number;
-    vmac: number;
-    vsini: number;
-    id: string;
-    object: string;
-    version: string;
-    vrad_flag: "fix" | "whole" | "each" | "none";
-    cscale_flag: "fix" | "none" | "constant" | "linear";
-    cscale_type: "mask" | "whole";
-    normalize_by_continuum: boolean;
-    specific_intensities_only: boolean;
-    gam6: number;
-    h2broad: boolean;
-    accwi: number;
-    accrt: number;
-    mu: number[]
-    fitparameters: string[];
-    ipres: number;
-}
-
-
 class SmeError {
     constructor(public message: string) {
     }
 }
+class EndianError extends SmeError { }
+class IdlError extends SmeError { }
 
 function create_empty_sme_structure() {
     let struct: SmeFile = {
@@ -258,8 +163,15 @@ function create_empty_sme_structure() {
 
 var sme = create_empty_sme_structure();
 
-class EndianError extends SmeError { }
-class IdlError extends SmeError { }
+
+
+var config: { [id: string]: any } = {};
+fs.readFile(join(homedir, ".sme", "config.json"), "utf-8", (err: any, data: string) => {
+    config = JSON.parse(data)
+    dispatchEvent(new CustomEvent("config_loaded", { detail: config }))
+});
+
+
 
 function checkEndian() {
     var arrayBuffer = new ArrayBuffer(2);
