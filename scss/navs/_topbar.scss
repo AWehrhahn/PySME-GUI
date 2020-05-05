@@ -25,10 +25,12 @@
     margin: auto 1rem;
   }
   .nav-item {
+    cursor: pointer;
     .nav-link {
       height: $topbar-base-height;
       display: flex;
       align-items: center;
+      text-align: center;
       padding: 0 0.75rem;
       &:focus {
         outline: none;
@@ -117,12 +119,12 @@
   .navbar-nav {
     .nav-item {
       .nav-link {
-        color: $gray-400;
+        color: $gray-600;
         &:hover {
-          color: $gray-500;
+          color: $black;
         }
         &:active {
-          color: $gray-600;
+          color: $black;
         }
       }
     }
