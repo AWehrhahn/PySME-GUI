@@ -46,4 +46,12 @@ npm start
 Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
 ## How it works
-The GUI itself is written using Electron, that means most of the code is in javascript. For the parts that need a python script, they all follow the same principle. We save the input parameters to a file, then we spawn a new python process with the filename as a parameter. When the process finishes we load the data from an output file. If there is a log, that is is also written to a file that javascript watches for changes. Basically everything is done via the file system.
+The GUI itself is written using [Electron](https://www.electronjs.org/), that means most of the code is in javascript. For the parts that need a python script, they all follow the same principle. We save the input parameters to a file, then we spawn a new python process with the filename as a parameter. When the process finishes we load the data from an output file. If there is a log, that is is also written to a file that javascript watches for changes. Basically everything is done via the file system.
+
+The HTML/CSS is mostly [Bootstrap 4](https://getbootstrap.com/) with some changes from the [SB Admin 2 Template](https://github.com/BlackrockDigital/startbootstrap-sb-admin-2). The CSS is compiled from the SCSS files in the scss folder using [SASS](https://sass-lang.com/). All color definitions etc should be done there. The HTML has the actual location of most objects, although some are created in scripts.
+
+Each "card" in the GUI is controlled by one [typescript](https://www.typescriptlang.org/) file in src. Also there is one file for the process in general (renderer.ts) and one to create the window in the first place (main.ts). All typescript definitions are in interfaces.ts. The code has to be compiled by typescript into javascript files.
+
+The main plot is done using [plotly](https://plotly.com/), this includes the tools to manipulate the plot. The linelist table is done usongh [DataTables](https://datatables.net/). The citation module uses [citation.js](https://citation.js.org/).
+
+Miscellaneous data files are stored in the data folder. So far those are only used for the citation module.
