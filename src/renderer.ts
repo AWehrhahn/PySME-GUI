@@ -21,7 +21,7 @@ const untildify = require('untildify');
 var Plotly = require("plotly.js")
 const { spawn } = require('child_process');
 const Cite = require('citation-js');
-
+const nodemailer = require('nodemailer');
 
 // This section is from the template: https://startbootstrap.com/themes/sb-admin-2/
 // Toggle the side navigation
