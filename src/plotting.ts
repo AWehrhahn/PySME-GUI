@@ -328,8 +328,8 @@ function plot_sme(sme: any) {
         annotations: annotations[0]
     }
 
-    var buttons = [["zoom2d", "pan2d", "select2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"]];
-    Plotly.react(graphDiv, data, layout, { responsive: true, modeBarButtons: buttons });
+    var buttons = [["toImage", "zoom2d", "pan2d", "select2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"]];
+    Plotly.react(graphDiv, data, layout, { responsive: true, displayModeBar: true, modeBarButtons: buttons });
 
     if (initial_setup) {
         graphDiv.on('plotly_selected', (event: any) => {

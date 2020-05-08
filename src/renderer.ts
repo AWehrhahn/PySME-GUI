@@ -20,7 +20,7 @@ const fs = require('fs');
 const untildify = require('untildify');
 var Plotly = require("plotly.js")
 const { spawn } = require('child_process');
-const Cite = require('citation-js')
+const Cite = require('citation-js');
 
 
 // This section is from the template: https://startbootstrap.com/themes/sb-admin-2/
@@ -518,7 +518,7 @@ async function synthesize_spectrum(sme: SmeFile) {
     var promise = new Promise<SmeFile>((resolve, reject) => {
         save_file(tmpin.name, sme).then(() => {
             call_python("synthesize_spectrum.py", [tmpin.name, tmpout.name, "--log_file=" + tmplog.name]).then(() => {
-                load_file(tmpout.name).then(resolve)
+                load_file(tmpout.name).then((sme) => { show_alert("Synthesis Completed", "info"); resolve(sme) })
             })
         });
     })
@@ -540,7 +540,7 @@ async function fit_spectrum(sme: SmeFile) {
     var promise = new Promise<SmeFile>((resolve, reject) => {
         save_file(tmpin.name, sme).then(() => {
             call_python("fit_spectrum.py", [tmpin.name, tmpout.name, ...sme.fitparameters, "--log_file=" + tmplog.name]).then(() => {
-                load_file(tmpout.name).then(resolve)
+                load_file(tmpout.name).then((sme) => { show_alert("Fit Completed", "info"); resolve(sme); })
             })
         });
     })

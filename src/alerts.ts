@@ -1,24 +1,27 @@
 var DivAlert = document.getElementById("div-alert")
 
-addEventListener("show_error", (event: CustomEvent) => {
+addEventListener("show_alert", (event: CustomEvent) => {
     let message = event.detail.message as string
     let level = event.detail.level as LogLevel
-    show_error_sync(message, level)
+    show_alert_sync(message, level)
 })
 
-
-function show_error(message: string, level: LogLevel = "error") {
-    dispatchEvent(new CustomEvent("show_error", { detail: { message: message, level: level } }))
+function show_alert(message: string, level: LogLevel) {
+    dispatchEvent(new CustomEvent("show_alert", { detail: { message: message, level: level } }))
 }
 
-function show_error_sync(message: string, level: LogLevel = "error") {
+function show_error(message: string, level: LogLevel = "error") {
+    show_alert(message, level)
+}
+
+function show_alert_sync(message: string, level: LogLevel = "error") {
 
     let header = "Error"
     let alert_class = "alert-danger"
     switch (level) {
         case "error":
             header = "Error"
-            alert_class = "alert-danger"
+            alert_class = "alert-error"
             break;
         case "critical":
             header = "Critical"
