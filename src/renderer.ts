@@ -284,14 +284,22 @@ function load_npy(data: ArrayBuffer) {
 async function load_feather(data: ArrayBuffer) {
     console.log("Loading Linelist")
 
-    var tmpin = tmp.fileSync({ postfix: ".txt" });
-    var tmpout = tmp.fileSync({ postfix: ".json" });
-    fs.writeFileSync(tmpin.name, new Uint8Array(data), { encoding: null })
+    try {
+        // Try reading it as a JSON
+        let str = String.fromCharCode.apply(null, new Uint16Array(data))
+        let linelist = JSON.parse(str)
+    } catch (err) {
+        // Otherwise assume its a feather file
+        // If given as a feather file
+        var tmpin = tmp.fileSync({ postfix: ".txt" });
+        var tmpout = tmp.fileSync({ postfix: ".json" });
+        fs.writeFileSync(tmpin.name, new Uint8Array(data), { encoding: null })
 
-    var success = await call_python("read_linelist.py", [tmpin.name, tmpout.name])
+        var success = await call_python("read_linelist.py", [tmpin.name, tmpout.name])
 
-    var content: string = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
-    var linelist = JSON.parse(content)
+        var content: string = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
+        var linelist = JSON.parse(content)
+    }
     return linelist
 }
 
@@ -423,18 +431,18 @@ async function save_npz(obj: Array<Float64Array>) {
 }
 
 async function save_feather(obj: any) {
-    console.log("Loading Linelist")
+    console.log("Saving Linelist")
 
-    var tmpin = tmp.fileSync({ postfix: ".txt" });
-    var tmpout = tmp.fileSync({ postfix: ".json" });
+    // var tmpin = tmp.fileSync({ postfix: ".txt" });
+    // var tmpout = tmp.fileSync({ postfix: ".json" });
 
     var data = JSON.stringify(obj)
-    fs.writeFileSync(tmpin.name, data, { encoding: "utf8" })
+    // fs.writeFileSync(tmpin.name, data, { encoding: "utf8" })
 
-    var success = await call_python("read_linelist.py", ["--save", tmpin.name, tmpout.name])
+    // var success = await call_python("read_linelist.py", ["--save", tmpin.name, tmpout.name])
 
-    var content = fs.readFileSync(tmpout.name, { encoding: null })
-    return content
+    // var content = fs.readFileSync(tmpout.name, { encoding: null })
+    return data
 }
 
 async function save_file(fname: string, sme: SmeFile) {
@@ -469,7 +477,7 @@ async function save_file(fname: string, sme: SmeFile) {
                     break;
                 case "feather":
                     content = await save_feather(element)
-                    ending = "feather"
+                    ending = "json"
                     break;
                 default:
                     // Add to info
