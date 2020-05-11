@@ -159,6 +159,7 @@ function plot_sme(sme: any) {
             )
 
             data.push({
+                type: "scattergl",
                 x: x,
                 y: y,
                 fillcolor: fmt["LineMask"]["facecolor"],
@@ -180,6 +181,7 @@ function plot_sme(sme: any) {
 
             data.push(
                 {
+                    type: "scattergl",
                     x: x,
                     y: y,
                     fillcolor: fmt["ContMask"]["facecolor"],
@@ -199,6 +201,7 @@ function plot_sme(sme: any) {
         if (sme.spec) {
             //Observation
             data.push({
+                type: "scattergl",
                 x: sme.wave[seg],
                 y: sme.spec[seg],
                 line: { "color": fmt["Obs"]["color"] },
@@ -213,6 +216,7 @@ function plot_sme(sme: any) {
         if (sme.synth) {
             // Synthetic
             data.push({
+                type: "scattergl",
                 x: sme.wave[seg],
                 y: sme.synth[seg],
                 name: "Synthethic",
@@ -333,8 +337,10 @@ function plot_sme(sme: any) {
 
     if (initial_setup) {
         graphDiv.on('plotly_selected', (event: any) => {
-            var range: [number, number] = event.range.x
-            set_mask(sme, range)
+            if (event) {
+                var range: [number, number] = event.range.x
+                set_mask(sme, range)
+            }
         })
         initial_setup = false
     }
