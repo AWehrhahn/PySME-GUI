@@ -14,6 +14,7 @@ function createWindow() {
     width: 800,
     minHeight: 300,
     minWidth: 400,
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, "preload.js"),
@@ -25,6 +26,8 @@ function createWindow() {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
+  mainWindow.maximize()
+  mainWindow.show()
 
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {

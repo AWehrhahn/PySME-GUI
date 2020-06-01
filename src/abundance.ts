@@ -1,7 +1,11 @@
 
 addEventListener("pysme_load", (event: any) => {
-    let sme: SmeFile = event.detail
-    update_abundance(sme)
+    let sme: SmeFile = event.detail.structure
+    let updated: string[] = event.detail.updated
+    console.log(updated)
+    if (!updated.length || updated.includes("abundance")) {
+        update_abundance(sme)
+    }
 })
 
 var BtnAbundAsplund2009 = document.getElementById("btn-abund-asplund2009") as HTMLButtonElement
@@ -13,7 +17,7 @@ BtnAbundAsplund2009.addEventListener("click", async (event) => {
     sme["abund/pattern"] = abund
     sme["abund/info"]["format"] = "H=12"
     sme["abund/info"]["monh"] = 0
-    update_abundance(sme)
+    cast_load_event(sme, "abundance")
 })
 
 var BtnAbundGrevesse2007 = document.getElementById("btn-abund-grevesse2007") as HTMLButtonElement
@@ -25,7 +29,7 @@ BtnAbundAsplund2009.addEventListener("click", async (event) => {
     sme["abund/pattern"] = abund
     sme["abund/info"]["format"] = "H=12"
     sme["abund/info"]["monh"] = 0
-    update_abundance(sme)
+    cast_load_event(sme, "abundance")
 })
 
 var BtnAbundLodders2003 = document.getElementById("btn-abund-lodders2003") as HTMLButtonElement
@@ -37,7 +41,7 @@ BtnAbundAsplund2009.addEventListener("click", async (event) => {
     sme["abund/pattern"] = abund
     sme["abund/info"]["format"] = "H=12"
     sme["abund/info"]["monh"] = 0
-    update_abundance(sme)
+    cast_load_event(sme, "abundance")
 })
 
 function update_abundance(sme: SmeFile) {

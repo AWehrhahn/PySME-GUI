@@ -19,10 +19,15 @@ var data_index: { [id: string]: { [id: number]: number } } = {
     spec: {},
     synth: {}
 }
+// Not showing annotations is a lot faster
+var show_annotations = true;
 
 addEventListener("pysme_load", (event: any) => {
-    let sme: SmeFile = event.detail
-    plot_sme(sme)
+    let sme: SmeFile = event.detail.structure
+    let updated: string[] = event.detail.updated
+    if (!updated.length || updated.includes("spectrum") || updated.includes("linelist")) {
+        plot_sme(sme)
+    }
 })
 
 function reset_plot() {
@@ -228,8 +233,7 @@ function plot_sme(sme: any) {
             data_index["synth"][seg] = counter
             counter += 1
         }
-        // TODO: annotations
-        if (sme["linelist/data"]) {
+        if (show_annotations && sme["linelist/data"]) {
             var lines = sme["linelist/data"]
             var wmin: number = sme.wave[seg][0]
             var wmax: number = sme.wave[seg][sme.wave[seg].length - 1]

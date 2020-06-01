@@ -1,8 +1,11 @@
 
 
 addEventListener("pysme_load", (event: any) => {
-    let sme: SmeFile = event.detail
-    show_linelist(sme)
+    let sme: SmeFile = event.detail.structure
+    let updated: string[] = event.detail.updated
+    if (!updated.length || updated.includes("linelist")) {
+        show_linelist(sme)
+    }
 })
 
 
@@ -14,7 +17,7 @@ ButtonLinelistLoad.addEventListener("click", async (event) => {
         var fname = out.filePaths[0];
         try {
             sme = await load_new_linelist(sme, fname)
-            cast_load_event(sme)
+            cast_load_event(sme, "linelist")
         } catch (err) {
             console.error(err)
         }
@@ -112,7 +115,7 @@ ${abundances}
 end request`;
 
     let message = {
-        from: 'ansgar.wehrhahn@hotmail.de',
+        from: 'ansgar.wehrhahn@physics.uu.se',
         to: vald_email[0],
         subject: "VALD request",
         text: text

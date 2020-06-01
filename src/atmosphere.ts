@@ -7,6 +7,20 @@ var FieldAtmosphereMethod = document.getElementById("par-atmosphere-method") as 
 
 var atmo_files: string[] = [];
 
+// listen to global/custom events
+addEventListener("pysme_load", (event: any) => {
+    let sme: SmeFile = event.detail.structure
+    let updated: string[] = event.detail.updated
+    if (!updated.length || updated.includes("atmosphere")) {
+        load_atmosphere_values(sme)
+    }
+})
+
+addEventListener("config_loaded", (event: any) => {
+    let config: Config = event.detail
+    load_atmosphere_files(config)
+})
+
 // define functions
 function load_atmosphere_values(sme: SmeFile) {
     let atmo_file: string = sme["atmo/info"].source
@@ -49,15 +63,7 @@ function add_atmosphere_file(fname: string) {
 }
 
 // listen for events
-addEventListener("pysme_load", (event: any) => {
-    let sme: SmeFile = event.detail
-    load_atmosphere_values(sme)
-})
 
-addEventListener("config_loaded", (event: any) => {
-    let config: Config = event.detail
-    load_atmosphere_files(config)
-})
 
 ButtonAtmosphereAdd.addEventListener("click", async (event) => {
     var out = await dialog.showOpenDialog({ properties: ["openFile"] })

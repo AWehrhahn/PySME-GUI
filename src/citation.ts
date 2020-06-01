@@ -1,6 +1,8 @@
 
 addEventListener("pysme_load", (event: any) => {
-    let sme: SmeFile = event.detail
+    let sme: SmeFile = event.detail.structure
+    let updated: string[] = event.detail.updated
+    // Citations can be updated from any event
     show_citation(sme)
 })
 

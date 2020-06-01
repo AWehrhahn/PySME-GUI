@@ -18,8 +18,11 @@ var elements = [
     "Es",]
 
 addEventListener("pysme_load", (event: any) => {
-    let sme: SmeFile = event.detail
-    load_nlte_values(sme)
+    let sme: SmeFile = event.detail.structure
+    let updated: string[] = event.detail.updated
+    if (!updated.length || updated.includes("nlte")) {
+        load_nlte_values(sme)
+    }
 })
 
 addEventListener("config_loaded", (event: any) => {

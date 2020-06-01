@@ -556,8 +556,6 @@ async function fit_spectrum(sme: SmeFile) {
     return promise
 }
 
-
-
 async function get_pysme_version() {
     let tmpout = tmp.fileSync({ postfix: ".txt" });
     let success = await call_python("get_pysme_version.py", [tmpout.name])
@@ -565,8 +563,8 @@ async function get_pysme_version() {
     return data
 }
 
-function cast_load_event(sme: SmeFile) {
-    dispatchEvent(new CustomEvent("pysme_load", { detail: sme }))
+function cast_load_event(sme: SmeFile, ...updated: string[]) {
+    dispatchEvent(new CustomEvent("pysme_load", { detail: { structure: sme, updated: updated } }))
 }
 
 var ButtonLoad = document.getElementById("btn-load")
@@ -620,7 +618,7 @@ ButtonSynthesize.addEventListener('click', async (event) => {
     console.log("Start synthesizing")
     try {
         sme = await synthesize_spectrum(sme)
-        cast_load_event(sme)
+        cast_load_event(sme, "spectrum", "citation")
     } catch (err) {
         console.error(err)
     }

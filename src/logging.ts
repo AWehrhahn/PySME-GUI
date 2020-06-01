@@ -16,7 +16,6 @@ var groups: any = [];
 var DivLog = document.getElementById('div-log');
 var TabelBodyLog = document.getElementById('table-log-body');
 
-
 var BtnLogLevelDebug = document.getElementById("btn-log-level-debug") as HTMLButtonElement
 var BtnLogLevelInfo = document.getElementById("btn-log-level-info") as HTMLButtonElement
 var BtnLogLevelWarning = document.getElementById("btn-log-level-warning") as HTMLButtonElement
