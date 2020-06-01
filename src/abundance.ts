@@ -2,7 +2,6 @@
 addEventListener("pysme_load", (event: any) => {
     let sme: SmeFile = event.detail.structure
     let updated: string[] = event.detail.updated
-    console.log(updated)
     if (!updated.length || updated.includes("abundance")) {
         update_abundance(sme)
     }

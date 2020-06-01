@@ -8,8 +8,26 @@ function load_np_array(data: any) {
     return arr
 }
 
+function save_np_array(data: FloatArray | IntArray) {
+    let encoded = Base64.encode(data.buffer)
+    let dtype = determine_datatype(data)
+
+    let result = {
+        "dtype": dtype,
+        "data": encoded,
+        "shape": [data.length],
+        "order": "C",
+    }
+    return result
+}
+
 function load_binary_data_extension(header: any, data: any) {
     let arr = load_np_array(data["data"])
+    return { "header": header, "data": arr }
+}
+
+function save_binary_data_extension(header: any, data: any) {
+    let arr = save_np_array(data["data"])
     return { "header": header, "data": arr }
 }
 
@@ -26,7 +44,24 @@ function load_multiple_data_extension(header: any, data: any) {
     return result
 }
 
+function save_multiple_data_extension(header: any, data: any) {
+    let result: any = { "header": header }
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            if (key == "header") continue;
+            if (key == "length") continue;
+            const element = data[key]
+            result[key] = save_np_array(element)
+        }
+    }
+    return result;
+}
+
 function load_table_extension(header: any, data: any) {
+    return { "header": header, "data": data["data"] }
+}
+
+function save_table_extension(header: any, data: any) {
     return { "header": header, "data": data["data"] }
 }
 
@@ -63,12 +98,34 @@ async function load_file(filename: string) {
     return result as SmeFile
 }
 
-async function save_file(filename: string, sme: SmeFile) {
+async function save_file(filename: string, sme: any) {
+    var result: any = { "header": sme.header }
+    for (const key in sme) {
+        if (sme.hasOwnProperty(key)) {
+            if (key == "header") continue;
+            const element = sme[key];
+            const ext_class = element["header"]["extension_class"];
+            let ext: any = {};
+            if (ext_class == "BinaryDataExtension") {
+                ext = save_binary_data_extension(element["header"], element)
+            }
+            if (ext_class == "MultipleDataExtension") {
+                ext = save_multiple_data_extension(element["header"], element)
+            }
+            if (ext_class == "JSONTableExtension") {
+                ext = save_table_extension(element["header"], element)
+            }
+
+            result[key] = ext;
+        }
+    }
+
     var tmpin = tmp.fileSync({ postfix: ".json" });
-    var content = JSON.stringify(sme)
+    var content = JSON.stringify(result)
     fs.writeFileSync(tmpin.name, content)
 
     var success = await call_python("sme_io.py", ["--save", tmpin.name, filename])
+    console.log("Written file to disk")
     return success
 }
 
@@ -127,10 +184,7 @@ function create_array(data: ArrayBuffer, descr: string) {
 }
 
 
-function determine_datatype(obj: any, key: string) {
-    if (key) {
-        if (key == "linelist/data") return "feather"
-    }
+function determine_datatype(obj: any) {
     if (obj.constructor == Object) return "dict"
     if (Array.isArray(obj)) {
         if (typeof obj[0] === "object") return "array"
