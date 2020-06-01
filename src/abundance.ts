@@ -10,37 +10,40 @@ addEventListener("pysme_load", (event: any) => {
 
 var BtnAbundAsplund2009 = document.getElementById("btn-abund-asplund2009") as HTMLButtonElement
 BtnAbundAsplund2009.addEventListener("click", async (event) => {
+    console.log("Resetting Abundance to Asplund2009")
     let tmpout = tmp.fileSync({ postfix: ".dat" });
     let success = await call_python("get_abundance_values.py", [tmpout.name, "asplund2009"])
     var content: Buffer = fs.readFileSync(tmpout.name, { encoding: null })
     var abund = new Float64Array(content.buffer, content.byteOffset, content.length / Float64Array.BYTES_PER_ELEMENT)
-    sme["abund/pattern"] = abund
-    sme["abund/info"]["format"] = "H=12"
-    sme["abund/info"]["monh"] = 0
+    sme.abund.data = abund
+    sme.abund.header["format"] = "H=12"
+    sme.abund.header["monh"] = 0
     cast_load_event(sme, "abundance")
 })
 
 var BtnAbundGrevesse2007 = document.getElementById("btn-abund-grevesse2007") as HTMLButtonElement
 BtnAbundAsplund2009.addEventListener("click", async (event) => {
+    console.log("Resetting Abundance to Grevesse2007")
     let tmpout = tmp.fileSync({ postfix: ".dat" });
     let success = await call_python("get_abundance_values.py", [tmpout.name, "grevesse2007"])
     var content: Buffer = fs.readFileSync(tmpout.name, { encoding: null })
     var abund = new Float64Array(content.buffer, content.byteOffset, content.length / Float64Array.BYTES_PER_ELEMENT)
-    sme["abund/pattern"] = abund
-    sme["abund/info"]["format"] = "H=12"
-    sme["abund/info"]["monh"] = 0
+    sme.abund.data = abund
+    sme.abund.header["format"] = "H=12"
+    sme.abund.header["monh"] = 0
     cast_load_event(sme, "abundance")
 })
 
 var BtnAbundLodders2003 = document.getElementById("btn-abund-lodders2003") as HTMLButtonElement
 BtnAbundAsplund2009.addEventListener("click", async (event) => {
+    console.log("Resetting Abundance to Lodders2003")
     let tmpout = tmp.fileSync({ postfix: ".dat" });
     let success = await call_python("get_abundance_values.py", [tmpout.name, "lodders2003"])
     var content: Buffer = fs.readFileSync(tmpout.name, { encoding: null })
     var abund = new Float64Array(content.buffer, content.byteOffset, content.length / Float64Array.BYTES_PER_ELEMENT)
-    sme["abund/pattern"] = abund
-    sme["abund/info"]["format"] = "H=12"
-    sme["abund/info"]["monh"] = 0
+    sme.abund.data = abund
+    sme.abund.header["format"] = "H=12"
+    sme.abund.header["monh"] = 0
     cast_load_event(sme, "abundance")
 })
 
@@ -48,7 +51,7 @@ function update_abundance(sme: SmeFile) {
     for (let i = 0; i < elements.length; i++) {
         const element = elements[i];
         let field = document.getElementById(`par-abund-input-${element}`) as HTMLInputElement
-        let value = sme["abund/pattern"][i]
+        let value = sme.abund.data[i]
         if (isNaN(value)) value = -99
         field.value = String(value)
     }
@@ -84,6 +87,6 @@ for (let i = 0; i < elements.length; i++) {
     field.addEventListener("change", (event: any) => {
         let i = elements_dict[element]
         let value = Number(event.target.value)
-        sme["abund/pattern"][i] = value
+        sme.abund.data[i] = value
     })
 }

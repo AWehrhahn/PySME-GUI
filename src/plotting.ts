@@ -49,7 +49,7 @@ function get_mask_value() {
 }
 
 function get_segment() {
-    var seg = layout.sliders[0].active
+    var seg: number = layout.sliders[0].active
     return seg
 }
 
@@ -136,7 +136,7 @@ function create_mask_points(x: FloatArray, y: FloatArray, mask: IntArray, value:
 
 function plot_sme(sme: any) {
     reset_plot()
-    var nSegment = sme["wave"].length
+    var nSegment = sme.wave.length
 
     // Create Plot
     var annotations: any = {};

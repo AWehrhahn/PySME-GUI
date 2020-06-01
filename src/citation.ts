@@ -7,7 +7,7 @@ addEventListener("pysme_load", (event: any) => {
 })
 
 async function collect_citations(sme: SmeFile) {
-    let data = await Cite.inputAsync(sme.citation_info, { forceType: "@bibtex/text" })
+    let data = await Cite.inputAsync(sme.header.citation_info, { forceType: "@bibtex/text" })
 
     for (const key in sme) {
         if (sme.hasOwnProperty(key)) {

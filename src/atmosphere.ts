@@ -23,11 +23,11 @@ addEventListener("config_loaded", (event: any) => {
 
 // define functions
 function load_atmosphere_values(sme: SmeFile) {
-    let atmo_file: string = sme["atmo/info"].source
+    let atmo_file: string = sme.atmo.header.source
     add_atmosphere_file(atmo_file)
-    FieldAtmosphereFile.value = sme["atmo/info"].source
-    FieldAtmosphereGeometry.value = sme["atmo/info"].geom
-    FieldAtmosphereMethod.value = sme["atmo/info"].method
+    FieldAtmosphereFile.value = sme.atmo.header.source
+    FieldAtmosphereGeometry.value = sme.atmo.header.geom
+    FieldAtmosphereMethod.value = sme.atmo.header.method
 }
 
 async function load_atmosphere_files(config: Config) {
@@ -72,7 +72,7 @@ ButtonAtmosphereAdd.addEventListener("click", async (event) => {
         try {
             add_atmosphere_file(fname)
             FieldAtmosphereFile.value = fname
-            sme["atmo/info"].source = fname
+            sme.atmo.header.source = fname
         } catch (err) {
             console.error(err)
         }
@@ -81,17 +81,17 @@ ButtonAtmosphereAdd.addEventListener("click", async (event) => {
 
 FieldAtmosphereFile.addEventListener("change", (event) => {
     let target = event.target as HTMLSelectElement
-    sme["atmo/info"].source = target.value
+    sme.atmo.header.source = target.value
 })
 
 FieldAtmosphereGeometry.addEventListener("change", (event) => {
     let target = event.target as HTMLSelectElement
     let value = target.value as AtmosphereGeometry
-    sme["atmo/info"].geom = value
+    sme.atmo.header.geom = value
 })
 
 FieldAtmosphereMethod.addEventListener("change", (event) => {
     let target = event.target as HTMLSelectElement
     let value = target.value as AtmosphereMethod
-    sme["atmo/info"].method = value
+    sme.atmo.header.method = value
 })

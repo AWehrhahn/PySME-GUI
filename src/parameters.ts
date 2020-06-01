@@ -39,38 +39,38 @@ addEventListener("pysme_load", (event: any) => {
 
 async function load_parameter_values(sme: SmeFile) {
     // Load all values from sme and display them
-    FieldTeff.value = String(sme.teff)
-    FieldLogg.value = String(sme.logg)
-    FieldMonh.value = String(sme["abund/info"]["monh"])
-    FieldVmic.value = String(sme.vmic)
-    FieldVmac.value = String(sme.vmac)
-    FieldVsini.value = String(sme.vsini)
-    FieldGamma6.value = String(sme.gam6)
-    FieldAccrt.value = String(sme.accrt)
-    FieldAccwi.value = String(sme.accwi)
+    FieldTeff.value = String(sme.header.teff)
+    FieldLogg.value = String(sme.header.logg)
+    FieldMonh.value = String(sme.abund.header["monh"])
+    FieldVmic.value = String(sme.header.vmic)
+    FieldVmac.value = String(sme.header.vmac)
+    FieldVsini.value = String(sme.header.vsini)
+    FieldGamma6.value = String(sme.header.gam6)
+    FieldAccrt.value = String(sme.header.accrt)
+    FieldAccwi.value = String(sme.header.accwi)
 
-    FieldCscaleFlag.value = sme.cscale_flag
-    FieldCscaleType.value = sme.cscale_type
-    FieldVradFlag.value = sme.vrad_flag
+    FieldCscaleFlag.value = sme.header.cscale_flag
+    FieldCscaleType.value = sme.header.cscale_type
+    FieldVradFlag.value = sme.header.vrad_flag
 
-    FieldH2broad.value = String(sme.h2broad)
+    FieldH2broad.value = String(sme.header.h2broad)
 
     // Fitparameters
-    for (let i = 0; i < sme.fitparameters.length; i++) {
-        const element = sme.fitparameters[i];
+    for (let i = 0; i < sme.header.fitparameters.length; i++) {
+        const element = sme.header.fitparameters[i];
         if (i >= get_n_fitparameters_fields()) {
             BtnFitparametersAdd.click()
         }
         let field = get_fitparamters_field(i);
         field.value = element
     }
-    while (sme.fitparameters.length < get_n_fitparameters_fields()) {
+    while (sme.header.fitparameters.length < get_n_fitparameters_fields()) {
         BtnFitparametersRem.click()
     }
 
     // Mu
-    for (let i = 0; i < sme.mu.length; i++) {
-        const element = sme.mu[i];
+    for (let i = 0; i < sme.header.mu.length; i++) {
+        const element = sme.header.mu[i];
         if (i >= get_n_mu_fields()) {
             BtnMuAdd.click()
         }
@@ -78,57 +78,57 @@ async function load_parameter_values(sme: SmeFile) {
         field.value = String(element)
         field.dispatchEvent(new Event("change"))
     }
-    while (sme.mu.length < get_n_mu_fields()) {
+    while (sme.header.mu.length < get_n_mu_fields()) {
         BtnMuRem.click()
     }
 }
 
 // React to the values being changed
 FieldTeff.addEventListener("change", (event: any) => {
-    sme.teff = Number(event.target.value)
+    sme.header.teff = Number(event.target.value)
 })
 FieldLogg.addEventListener("change", (event: any) => {
-    sme.logg = Number(event.target.value)
+    sme.header.logg = Number(event.target.value)
 })
 FieldMonh.addEventListener("change", (event: any) => {
-    sme["abund/info"]["monh"] = Number(event.target.value)
+    sme.abund.header.monh = Number(event.target.value)
 })
 FieldVmic.addEventListener("change", (event: any) => {
-    sme.vmic = Number(event.target.value)
+    sme.header.vmic = Number(event.target.value)
 })
 FieldVmac.addEventListener("change", (event: any) => {
-    sme.vmac = Number(event.target.value)
+    sme.header.vmac = Number(event.target.value)
 })
 FieldVsini.addEventListener("change", (event: any) => {
-    sme.vsini = Number(event.target.value)
+    sme.header.vsini = Number(event.target.value)
 })
 FieldGamma6.addEventListener("change", (event: any) => {
-    sme.gam6 = Number(event.target.value)
+    sme.header.gam6 = Number(event.target.value)
 })
 FieldH2broad.addEventListener("change", (event: any) => {
-    sme.h2broad = Boolean(event.target.value)
+    sme.header.h2broad = Boolean(event.target.value)
 })
 FieldAccrt.addEventListener("change", (event: any) => {
-    sme.accrt = Number(event.target.value)
+    sme.header.accrt = Number(event.target.value)
 })
 FieldAccwi.addEventListener("change", (event: any) => {
-    sme.accwi = Number(event.target.value)
+    sme.header.accwi = Number(event.target.value)
 })
 
 FieldCscaleFlag.addEventListener("change", (event: any) => {
-    sme.cscale_flag = event.target.value
+    sme.header.cscale_flag = event.target.value
 })
 FieldCscaleType.addEventListener("change", (event: any) => {
-    sme.cscale_type = event.target.value
+    sme.header.cscale_type = event.target.value
 })
 FieldVradFlag.addEventListener("change", (event: any) => {
-    sme.vrad_flag = event.target.value
+    sme.header.vrad_flag = event.target.value
 })
 
 // Fitparameters
 FieldFitparameters.addEventListener("change", (event: any) => {
     var value: string = event.target.value
-    sme.fitparameters[0] = value
+    sme.header.fitparameters[0] = value
 })
 
 function get_n_fitparameters_fields() {
@@ -153,12 +153,12 @@ BtnFitparametersAdd.addEventListener("click", (event: any) => {
     child.classList.add("form-control")
     child.addEventListener("change", (event: any) => {
         var value: string = event.target.value
-        sme.fitparameters[i] = value
+        sme.header.fitparameters[i] = value
     })
     DivFitparameters.insertBefore(child, DivFitparametersEnd)
     try {
-        if (sme.fitparameters.length < get_n_fitparameters_fields()) {
-            sme.fitparameters.push("")
+        if (sme.header.fitparameters.length < get_n_fitparameters_fields()) {
+            sme.header.fitparameters.push("")
         }
     } catch (err) { console.log(err) }
 })
@@ -173,8 +173,8 @@ BtnFitparametersRem.addEventListener("click", (event: any) => {
         let child = DivFitparameters.childNodes[j]
         DivFitparameters.removeChild(child)
         try {
-            if (sme.fitparameters.length > get_n_fitparameters_fields()) {
-                sme.fitparameters.pop()
+            if (sme.header.fitparameters.length > get_n_fitparameters_fields()) {
+                sme.header.fitparameters.pop()
             }
         } catch (err) { console.log(err) }
     }
@@ -188,7 +188,7 @@ FieldMu.addEventListener("change", (event) => {
         field.classList.add("is-invalid")
     } else {
         field.classList.remove("is-invalid")
-        sme.mu[0] = value
+        sme.header.mu[0] = value
     }
 })
 
@@ -223,13 +223,13 @@ BtnMuAdd.addEventListener("click", (event: any) => {
             field.classList.add("is-invalid")
         } else {
             field.classList.remove("is-invalid")
-            sme.mu[i] = value
+            sme.header.mu[i] = value
         }
     })
     DivMu.insertBefore(child, DivMUEnd)
     try {
-        if (sme.mu.length < get_n_mu_fields()) {
-            sme.mu.push(NaN)
+        if (sme.header.mu.length < get_n_mu_fields()) {
+            sme.header.mu.push(NaN)
         }
     } catch (err) { console.log(err) }
 })
@@ -244,8 +244,8 @@ BtnMuRem.addEventListener("click", (event: any) => {
         let child = DivMu.childNodes[j]
         DivMu.removeChild(child)
         try {
-            if (sme.mu.length > get_n_mu_fields()) {
-                sme.mu.pop()
+            if (sme.header.mu.length > get_n_mu_fields()) {
+                sme.header.mu.pop()
             }
         } catch (err) { console.log(err) }
     }

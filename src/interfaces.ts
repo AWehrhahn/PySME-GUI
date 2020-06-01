@@ -24,8 +24,19 @@ interface LogEntry {
     datetime: string;
 }
 
+type Dict = { [id: string]: any }
 type IntArray = Int16Array | Int8Array | Int32Array | BigInt64Array | Uint8Array
 type FloatArray = Float32Array | Float64Array
+type Vector = { header: Dict;[id: number]: FloatArray }
+type IntVector = { header: Dict;[id: number]: IntArray }
+
+
+type AbundanceFormat = "H=12" | "sme" | "n/nTot" | "n/nH";
+interface Abundance {
+    format: AbundanceFormat;
+    monh: number;
+    citation_info: string;
+}
 
 type AtmosphereGeometry = "PP" | "SPH";
 type AtmosphereMethod = "grid" | "embedded";
@@ -45,13 +56,8 @@ interface Atmosphere {
     depth: AtmosphereAxis;
     interp: AtmosphereAxis;
     citation_info: string;
-}
-
-type AbundanceFormat = "H=12" | "sme" | "n/nTot" | "n/nH";
-interface Abundance {
-    format: AbundanceFormat;
+    abund_format: AbundanceFormat;
     monh: number;
-    citation_info: string;
 }
 
 type LineListFormat = "short" | "long";
@@ -67,6 +73,7 @@ interface NLTE {
     elements: string[];
     grids: { [id: string]: string };
     subgrid_size: number[];
+    flags: IntArray;
 }
 
 type SystemInfo = { [id: string]: string };
@@ -75,50 +82,60 @@ type VradFlag = "fix" | "whole" | "each" | "none";
 type CscaleFlag = "fix" | "none" | "constant" | "linear";
 type CscaleType = "mask" | "whole";
 interface SmeFile {
-    vrad: FloatArray;
-    cscale: FloatArray[];
-    wran: FloatArray[];
-    "abund/info": Abundance;
-    "abund/pattern": FloatArray;
-    wave: FloatArray[];
-    spec: FloatArray[];
-    uncs: FloatArray[];
-    mask: IntArray[];
-    synth: FloatArray[];
-    cont: FloatArray[];
-    "linelist/info": LineList;
-    "linelist/data": { [id: string]: any };
-    "atmo/info": Atmosphere;
-    "atmo/rhox": FloatArray;
-    "atmo/tau": FloatArray;
-    "atmo/temp": FloatArray;
-    "atmo/rho": FloatArray;
-    "atmo/xna": FloatArray;
-    "atmo/xne": FloatArray;
-    "atmo/abund/info": { [id: string]: any };
-    "atmo/abund/pattern": FloatArray;
-    "nlte/info": NLTE;
-    "nlte/flags": IntArray;
-    "system_info/info": SystemInfo;
-    citation_info: string;
-    teff: number;
-    logg: number;
-    vmic: number;
-    vmac: number;
-    vsini: number;
-    id: string;
-    object: string;
-    version: string;
-    vrad_flag: VradFlag;
-    cscale_flag: CscaleFlag;
-    cscale_type: CscaleType;
-    normalize_by_continuum: boolean;
-    specific_intensities_only: boolean;
-    gam6: number;
-    h2broad: boolean;
-    accwi: number;
-    accrt: number;
-    mu: number[]
-    fitparameters: string[];
-    ipres: number;
+    header: {
+        vrad: FloatArray;
+        cscale: FloatArray[];
+        wran: FloatArray[];
+        citation_info: string;
+        teff: number;
+        logg: number;
+        vmic: number;
+        vmac: number;
+        vsini: number;
+        id: string;
+        object: string;
+        version: string;
+        vrad_flag: VradFlag;
+        cscale_flag: CscaleFlag;
+        cscale_type: CscaleType;
+        normalize_by_continuum: boolean;
+        specific_intensities_only: boolean;
+        gam6: number;
+        h2broad: boolean;
+        accwi: number;
+        accrt: number;
+        mu: number[]
+        fitparameters: string[];
+        ipres: number;
+    },
+    abund: {
+        header: Abundance;
+        data: FloatArray;
+    },
+    wave: Vector;
+    spec: Vector;
+    uncs: Vector;
+    mask: IntVector;
+    synth: Vector;
+    cont: Vector;
+    linelist: {
+        header: LineList;
+        data: { [id: string]: any };
+    };
+    atmo: {
+        header: Atmosphere;
+        rhox: FloatArray;
+        tau: FloatArray;
+        temp: FloatArray;
+        rho: FloatArray;
+        xna: FloatArray;
+        xne: FloatArray;
+        abund: FloatArray;
+    }
+    nlte: {
+        header: NLTE;
+    }
+    system_info: {
+        header: SystemInfo
+    }
 }

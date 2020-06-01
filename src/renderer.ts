@@ -10,7 +10,6 @@ require("popper.js")
 require("bootstrap");
 
 const { dialog } = require('electron').remote
-var JSZip = require("jszip");
 var tmp = require('tmp');
 const chokidar = require('chokidar');
 const { Table } = require("apache-arrow");
@@ -21,7 +20,8 @@ const untildify = require('untildify');
 var Plotly = require("plotly.js")
 const { spawn } = require('child_process');
 const Cite = require('citation-js');
-const nodemailer = require('nodemailer');
+var Base64 = require('base64-arraybuffer');
+
 
 // This section is from the template: https://startbootstrap.com/themes/sb-admin-2/
 // Toggle the side navigation
@@ -83,80 +83,93 @@ class IdlError extends SmeError { }
 
 function create_empty_sme_structure() {
     let struct: SmeFile = {
-        vrad: new Float64Array(),
-        cscale: [],
-        wran: [],
-        "abund/info": {
-            format: "H=12",
-            monh: 0,
+        header: {
+            vrad: new Float64Array(),
+            cscale: [],
+            wran: [],
             citation_info: "",
-        },
-        "abund/pattern": new Float64Array(99),
-        wave: [],
-        spec: [],
-        uncs: [],
-        mask: [],
-        synth: [],
-        cont: [],
-        "linelist/info": {
-            format: "short",
-            medium: "vac",
-            citation_info: "",
-        },
-        "linelist/data": {},
-        "atmo/info": {
             teff: 5000,
             logg: 4,
-            vturb: 0,
-            lonh: 0,
-            source: "",
-            method: "grid",
-            geom: "PP",
-            radius: new Float64Array(),
-            height: new Float64Array(),
-            opflag: [],
-            wlstd: 5000,
-            depth: "RHOX",
-            interp: "TAU",
-            citation_info: "",
+            vmic: 1,
+            vmac: 1,
+            vsini: 1,
+            id: "DEFAULT",
+            object: "",
+            version: "PySME-GUI",
+            vrad_flag: "whole",
+            cscale_flag: "constant",
+            cscale_type: "mask",
+            normalize_by_continuum: true,
+            specific_intensities_only: false,
+            gam6: 1,
+            h2broad: true,
+            accwi: 0.1,
+            accrt: 0.1,
+            mu: [0.1, 0.5, 1],
+            fitparameters: [],
+            ipres: 0,
         },
-        "atmo/rhox": new Float64Array(),
-        "atmo/tau": new Float64Array(),
-        "atmo/temp": new Float64Array(),
-        "atmo/rho": new Float64Array(),
-        "atmo/xna": new Float64Array(),
-        "atmo/xne": new Float64Array(),
-        "atmo/abund/info": {},
-        "atmo/abund/pattern": new Float64Array(99),
-        "nlte/info": {
-            citation_info: "",
-            elements: [],
-            grids: {},
-            subgrid_size: [2, 2, 2, 2],
+        abund: {
+            header: {
+                format: "H=12",
+                monh: 0,
+                citation_info: "",
+            },
+            data: new Float64Array(99),
         },
-        "nlte/flags": new Int8Array(),
-        "system_info/info": {},
-        citation_info: "",
-        teff: 5000,
-        logg: 4,
-        vmic: 1,
-        vmac: 1,
-        vsini: 1,
-        id: "DEFAULT",
-        object: "",
-        version: "PySME-GUI",
-        vrad_flag: "whole",
-        cscale_flag: "constant",
-        cscale_type: "mask",
-        normalize_by_continuum: true,
-        specific_intensities_only: false,
-        gam6: 1,
-        h2broad: true,
-        accwi: 0.1,
-        accrt: 0.1,
-        mu: [0.1, 0.5, 1],
-        fitparameters: [],
-        ipres: 0,
+        wave: null,
+        spec: null,
+        uncs: null,
+        mask: null,
+        synth: null,
+        cont: null,
+        linelist: {
+            header: {
+                format: "short",
+                medium: "vac",
+                citation_info: "",
+            },
+            data: {}
+        },
+        atmo: {
+            header: {
+                teff: 5000,
+                logg: 4,
+                vturb: 0,
+                lonh: 0,
+                source: "",
+                method: "grid",
+                geom: "PP",
+                radius: new Float64Array(),
+                height: new Float64Array(),
+                opflag: [],
+                wlstd: 5000,
+                depth: "RHOX",
+                interp: "TAU",
+                citation_info: "",
+                abund_format: "H=12",
+                monh: 0
+            },
+            tau: new Float64Array(),
+            rhox: new Float64Array(),
+            temp: new Float64Array(),
+            rho: new Float64Array(),
+            xna: new Float64Array(),
+            xne: new Float64Array(),
+            abund: new Float64Array(99),
+        },
+        nlte: {
+            header: {
+                citation_info: "",
+                elements: [],
+                grids: {},
+                subgrid_size: [2, 2, 2, 2],
+                flags: new Int8Array()
+            }
+        },
+        system_info: {
+            header: {}
+        }
     }
     return struct
 }
@@ -171,346 +184,6 @@ fs.readFile(join(homedir, ".sme", "config.json"), "utf-8", (err: any, data: stri
     dispatchEvent(new CustomEvent("config_loaded", { detail: config }))
 });
 
-
-
-function checkEndian() {
-    var arrayBuffer = new ArrayBuffer(2);
-    var uint8Array = new Uint8Array(arrayBuffer);
-    var uint16array = new Uint16Array(arrayBuffer);
-    uint8Array[0] = 0xAA; // set first byte
-    uint8Array[1] = 0xBB; // set second byte
-    if (uint16array[0] === 0xBBAA) return true; // little endian
-    if (uint16array[0] === 0xAABB) return false; // big endian
-    else throw new Error("Something crazy just happened");
-}
-
-function load_json(text: string) {
-    var content = JSON.parse(text)
-    return content
-}
-
-async function load_npz(data: ArrayBuffer) {
-    var zip = await JSZip.loadAsync(data)
-    var length = 0
-    zip.forEach(() => length += 1)
-    var arr = Array.from({ length: length }, (v, i) => null)
-    zip.forEach((relative_path: string, zipEntry: ZipObject) => {
-        arr[Number(zipEntry.name.slice(4, -4))] = zipEntry;
-    })
-
-    for (let index = 0; index < length; index++) {
-        const element: ZipObject = arr[index];
-        var tmp: ArrayBuffer = await element.async("arraybuffer")
-        arr[index] = load_npy(tmp)
-    }
-    return arr
-}
-
-function create_array(data: ArrayBuffer, descr: string) {
-    var endian = (descr[0] == "<")
-    var floatiness = descr[1]
-    var bytenumber = Number(descr[2])
-
-    if ((descr[0] != "|") && (endian != checkEndian())) {
-        // TODO: flip endianness of data
-        throw new EndianError(`Endianess of datafile ${descr[0]} does not match machine Endianness`)
-    }
-
-    // new DataView(buffer).setFloat64(0, endian_flag)
-    if (floatiness == "f") {
-        // Floating point number
-        if (bytenumber == 4) {
-            return new Float32Array(data)
-        }
-        if (bytenumber == 8) {
-            return new Float64Array(data)
-        }
-        throw new Error(`Array is floating point, but the bytenumber ${bytenumber} is not supported`)
-    }
-    if (floatiness == "i") {
-        // signed integer
-        if (bytenumber == 2) {
-            return new Int16Array(data)
-        }
-        if (bytenumber == 4) {
-            return new Int32Array(data)
-        }
-        if (bytenumber == 8) {
-            return new BigInt64Array(data)
-        }
-        throw new Error(`Array is integer, but the bytenumber ${bytenumber} is not supported`)
-    }
-    if (floatiness == "b") {
-        if (bytenumber == 1) {
-            return new Int8Array(data)
-        }
-        throw new Error(`Array is byte, but the bytenumber ${bytenumber} is not supported`)
-    }
-    throw new Error(`Datatype ${floatiness} of the Array not understood`)
-}
-
-function load_npy(data: ArrayBuffer) {
-    var decoder = new TextDecoder()
-    var magic = data.slice(0, 6)
-    var major = new DataView(data, 6, 1).getUint8(0)
-    var minor = new DataView(data, 7, 1).getUint8(0)
-    var header_len = new DataView(data, 8, 2).getUint16(0, true)
-
-    var header = decoder.decode(data.slice(10, 10 + header_len)).trim().slice(1, -1)
-
-    var descr = header.match("'descr':(.*?),")[1].trim().slice(1, -1)
-    var fortran = eval(header.match("'fortran_order':(.*?),")[1].trim().toLowerCase())
-    var shape: number[] = eval(header.match("'shape': *(\(.*\)),")[1].trim().replace("(", "[").replace(")", "]"))
-
-    var arraydata = create_array(data.slice(10 + header_len), descr)
-    //TODO: shape and fortran_order
-
-    if (shape.length > 1) {
-        if (shape.length == 2) {
-            var nseg = shape[0]
-            var npoints = shape[1]
-            var arr = Array.from({ length: nseg }, (v, i) => {
-                return arraydata.slice(i * npoints, (i + 1) * npoints)
-            })
-            return arr
-        }
-        console.warn("Only 1D and 2D arrays at the moment, but got shape: " + shape)
-
-    }
-
-    return arraydata
-}
-
-async function load_feather(data: ArrayBuffer) {
-    console.log("Loading Linelist")
-
-    try {
-        // Try reading it as a JSON
-        let str = String.fromCharCode.apply(null, new Uint16Array(data))
-        let linelist = JSON.parse(str)
-    } catch (err) {
-        // Otherwise assume its a feather file
-        // If given as a feather file
-        var tmpin = tmp.fileSync({ postfix: ".txt" });
-        var tmpout = tmp.fileSync({ postfix: ".json" });
-        fs.writeFileSync(tmpin.name, new Uint8Array(data), { encoding: null })
-
-        var success = await call_python("read_linelist.py", [tmpin.name, tmpout.name])
-
-        var content: string = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
-        var linelist = JSON.parse(content)
-    }
-    return linelist
-}
-
-async function load_file(filename: string) {
-    var promise = new Promise((resolve, reject) => {
-        fs.readFile(filename, (err: any, data: any) => {
-            if (err) {
-                reject(err.message)
-                return;
-            }
-            resolve(data)
-        })
-    });
-    try {
-        var data = await promise
-        var zip = await JSZip.loadAsync(data)
-    } catch (err) {
-        throw new IdlError(err.message)
-    }
-
-    var length = 0
-    zip.forEach(() => length += 1)
-    var arr = Array.from({ length: length }, (v, i) => null)
-    var i = 0
-    zip.forEach((relative_path: string, zipEntry: ZipObject) => {
-        arr[i] = zipEntry;
-        i += 1
-    })
-
-    var files: any = {};
-
-    for (let index = 0; index < length; index++) {
-        const element: ZipObject = arr[index];
-        const name = element.name;
-        switch (name.split(".")[1]) {
-            case "json":
-                files[name.slice(0, -5)] = load_json(await element.async("string"))
-                break;
-            case "npz":
-                files[name.slice(0, -4)] = await load_npz(await element.async("arraybuffer"))
-                break;
-            case "npy":
-                files[name.slice(0, -4)] = load_npy(await element.async("arraybuffer"))
-                break;
-            case "feather":
-                console.log(element.name)
-                files[name.slice(0, -8)] = await load_feather(await element.async("arraybuffer"))
-                break;
-            default:
-                console.log("File type not understood: " + name)
-                break;
-        }
-    }
-
-    if (files.hasOwnProperty("info")) {
-        for (const key in files.info) {
-            if (files.info.hasOwnProperty(key)) {
-                const element = files.info[key];
-                files[key] = element
-            }
-        }
-        delete files.info
-    }
-
-    return files as SmeFile
-}
-
-function determine_datatype(obj: any, key: string) {
-    if (key) {
-        if (key == "linelist/data") return "feather"
-    }
-    if (obj.constructor == Object) return "dict"
-    if (Array.isArray(obj)) {
-        if (typeof obj[0] === "object") return "array"
-        // other array that goes in info.json
-        return "object"
-    }
-    if (obj instanceof Float64Array) return "<f8"
-    if (obj instanceof Float32Array) return "<f4"
-    if (obj instanceof Int8Array) return "|b1"
-    if (obj instanceof Int16Array) return "<i2"
-    if (obj instanceof Int32Array) return "<i4"
-    if (obj instanceof BigInt64Array) return "<i8"
-    if (obj instanceof ArrayBuffer) return "feather"
-    if (typeof obj === "string") return "string"
-    if (typeof obj === "number") return "number"
-    if (typeof obj === "boolean") return "boolean"
-    throw new Error(`Data type of ${obj} not recognised`)
-}
-
-function save_npy(obj: Float64Array, dtype: string) {
-    var encoder = new TextEncoder()
-    var magic = new Uint8Array([147, 78, 85, 77, 80, 89]) // "\x93NUMPY"
-    var major = new Uint8Array([1])
-    var minor = new Uint8Array([0])
-
-    var shape = obj.length
-    var header_str = `{'descr': '${dtype}', 'fortran_order': False, 'shape': (${shape},), }`
-    var total = (6 + 2 + 2 + header_str.length + 1) % 64
-    if (total != 0) total = 64 - total
-    header_str = header_str.padEnd(header_str.length + total) + "\n"
-    var header = encoder.encode(header_str)
-    var header_len = new Uint8Array((new Uint16Array([header.length])).buffer)
-
-    var arraydata = new Uint8Array(obj.buffer)
-
-    // TODO: combine everything into one big buffer
-    var buffer = new Uint8Array(6 + 2 + 2 + header.length + obj.buffer.byteLength)
-    buffer.set(magic)
-    buffer.set(major, 6)
-    buffer.set(minor, 7)
-    buffer.set(header_len, 8)
-    buffer.set(header, 10)
-    buffer.set(arraydata, 10 + header.length)
-    return buffer
-}
-
-async function save_npz(obj: Array<Float64Array>) {
-    var zip = JSZip()
-    for (let i = 0; i < obj.length; i++) {
-        const element = obj[i];
-        var name = `arr_${i}.npy`
-        var dtype = determine_datatype(element, name)
-        var buffer = save_npy(element, dtype)
-        zip.file(name, buffer)
-    }
-    var stream = await zip.generateAsync({ type: "arraybuffer" })
-    return stream
-}
-
-async function save_feather(obj: any) {
-    console.log("Saving Linelist")
-
-    // var tmpin = tmp.fileSync({ postfix: ".txt" });
-    // var tmpout = tmp.fileSync({ postfix: ".json" });
-
-    var data = JSON.stringify(obj)
-    // fs.writeFileSync(tmpin.name, data, { encoding: "utf8" })
-
-    // var success = await call_python("read_linelist.py", ["--save", tmpin.name, tmpout.name])
-
-    // var content = fs.readFileSync(tmpout.name, { encoding: null })
-    return data
-}
-
-async function save_file(fname: string, sme: SmeFile) {
-    var zip = JSZip()
-    var info: { [id: string]: any } = {}
-
-    for (const key in sme) {
-        if (sme.hasOwnProperty(key)) {
-            const element: any = (sme as { [id: string]: any })[key];
-            let dtype = determine_datatype(element, key)
-            let content: any = ""
-            let ending = "dat"
-            switch (dtype) {
-                case "dict":
-                    content = JSON.stringify(element)
-                    ending = "json"
-                    break;
-                case "array":
-                    // Save as npz
-                    content = await save_npz(element)
-                    ending = "npz"
-                    break;
-                case "<f8":
-                case "<f4":
-                case "|b1":
-                case "<i2":
-                case "<i4":
-                case "<i8":
-                    // save as npy
-                    content = save_npy(element, dtype)
-                    ending = "npy"
-                    break;
-                case "feather":
-                    content = await save_feather(element)
-                    ending = "json"
-                    break;
-                default:
-                    // Add to info
-                    info[key] = element
-                    continue;
-            }
-            zip.file(`${key}.${ending}`, content)
-        }
-    }
-    zip.file("info.json", JSON.stringify(info))
-    zip.generateNodeStream({ type: 'nodebuffer', streamFiles: true })
-        .pipe(fs.createWriteStream(fname))
-        .on('finish', function () {
-            // JSZip generates a readable stream with a "end" event,
-            // but is piped here in a writable stream which emits a "finish" event.
-            console.log(`${fname} written.`);
-        });
-}
-
-
-async function cast_to_little_endian(fname: string) {
-    var tmpobj = tmp.fileSync({ postfix: ".sme" });
-    var fname_out: string = tmpobj.name;
-    var success = await call_python("to_little_endian.py", [fname, fname_out])
-    return fname_out
-}
-
-async function load_from_idl_file(fname: string) {
-    var tmpobj = tmp.fileSync({ postfix: ".sme" });
-    var fname_out: string = tmpobj.name;
-    var success = await call_python("from_idl_file.py", [fname, fname_out])
-    return fname_out
-}
 
 async function synthesize_spectrum(sme: SmeFile) {
     var script_file = join(__dirname, "scripts/synthesize_spectrum.py")
@@ -547,7 +220,7 @@ async function fit_spectrum(sme: SmeFile) {
 
     var promise = new Promise<SmeFile>((resolve, reject) => {
         save_file(tmpin.name, sme).then(() => {
-            call_python("fit_spectrum.py", [tmpin.name, tmpout.name, ...sme.fitparameters, "--log_file=" + tmplog.name]).then(() => {
+            call_python("fit_spectrum.py", [tmpin.name, tmpout.name, ...sme.header.fitparameters, "--log_file=" + tmplog.name]).then(() => {
                 load_file(tmpout.name).then((sme) => { show_alert("Fit Completed", "info"); resolve(sme); })
             })
         });
@@ -573,28 +246,7 @@ ButtonLoad.addEventListener('click', async (event) => {
     if (!out.canceled) {
         var fname = out.filePaths[0];
         console.log("Opening new file: " + fname)
-        var attempts = 0;
-        while (attempts < 3) {
-            attempts += 1
-            try {
-                console.log("Load file: " + fname)
-                sme = await load_file(fname)
-                break;
-            } catch (err) {
-                // if error is big endian
-                console.error(err)
-                if (err instanceof EndianError) {
-                    console.log("Casting file to little endian")
-                    fname = await cast_to_little_endian(fname)
-                    continue;
-                }
-                if (err instanceof IdlError) {
-                    console.log("Loading IDL SME file")
-                    fname = await load_from_idl_file(fname)
-                    continue;
-                }
-            }
-        }
+        sme = await load_file(fname)
         cast_load_event(sme)
     } else {
         console.log("User did not select a file")

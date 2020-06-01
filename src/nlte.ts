@@ -33,7 +33,7 @@ addEventListener("config_loaded", (event: any) => {
 function get_available_elements() {
     let used_elements: string[] = [];
     if (sme) {
-        used_elements = sme["nlte/info"].elements
+        used_elements = sme.nlte.header.elements
     } else {
         used_elements = []
     }
@@ -47,19 +47,19 @@ function get_all_elements() {
 
 function remove_nlte_element(element: string) {
     if (sme) {
-        let elements: string[] = sme["nlte/info"].elements
+        let elements: string[] = sme.nlte.header.elements
         let idx = elements.indexOf(element)
         if (idx > -1) {
             elements.splice(idx, 1)
         }
-        delete sme["nlte/info"].grids[element]
+        delete sme.nlte.header.grids[element]
     }
 }
 
 function add_nlte_element(element: string, datafile: string) {
     if (sme) {
-        let elements = sme["nlte/info"].elements
-        let grids = sme["nlte/info"].grids
+        let elements = sme.nlte.header.elements
+        let grids = sme.nlte.header.grids
         if (!elements.includes(element)) {
             elements.push(element)
         }
@@ -69,11 +69,11 @@ function add_nlte_element(element: string, datafile: string) {
 
 function set_nlte_element(element: string, datafile: string) {
     if (sme) {
-        let elements = sme["nlte/info"].elements
+        let elements = sme.nlte.header.elements
         if (!elements.includes(element)) {
             add_nlte_element(element, datafile)
         } else {
-            let grids = sme["nlte/info"].grids
+            let grids = sme.nlte.header.grids
             grids[element] = datafile
         }
     }
@@ -261,11 +261,11 @@ function load_nlte_values(sme: SmeFile) {
         DivNlte.removeChild(child)
     }
 
-    console.log("Number of NLTE elements: " + sme["nlte/info"].elements.length)
-    let nelements = sme["nlte/info"].elements.length
+    console.log("Number of NLTE elements: " + sme.nlte.header.elements.length)
+    let nelements = sme.nlte.header.elements.length
     for (let i = 0; i < nelements; i++) {
-        const element = sme["nlte/info"].elements[i];
-        const datafile = sme["nlte/info"].grids[element];
+        const element = sme.nlte.header.elements[i];
+        const datafile = sme.nlte.header.grids[element];
         let child = create_nlte_field(element, datafile)
         DivNlte.insertBefore(child, BtnNlteAdd)
     }
