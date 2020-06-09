@@ -41,7 +41,7 @@ async function load_parameter_values(sme: SmeFile) {
     // Load all values from sme and display them
     FieldTeff.value = String(sme.header.teff)
     FieldLogg.value = String(sme.header.logg)
-    FieldMonh.value = String(sme.abund.header["monh"])
+    FieldMonh.value = String(sme.abund.header.monh)
     FieldVmic.value = String(sme.header.vmic)
     FieldVmac.value = String(sme.header.vmac)
     FieldVsini.value = String(sme.header.vsini)
@@ -66,6 +66,7 @@ async function load_parameter_values(sme: SmeFile) {
     }
     while (sme.header.fitparameters.length < get_n_fitparameters_fields()) {
         BtnFitparametersRem.click()
+        if (get_n_fitparameters_fields() == 1) break;
     }
 
     // Mu
@@ -80,6 +81,7 @@ async function load_parameter_values(sme: SmeFile) {
     }
     while (sme.header.mu.length < get_n_mu_fields()) {
         BtnMuRem.click()
+        if (get_n_mu_fields() == 1) break;
     }
 }
 
