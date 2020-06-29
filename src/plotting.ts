@@ -233,12 +233,12 @@ function plot_sme(sme: any) {
             data_index["synth"][seg] = counter
             counter += 1
         }
-        if (show_annotations && sme["linelist/data"]) {
-            var lines = sme["linelist/data"]
+        if (show_annotations && sme.linelist.data) {
+            var lines = sme.linelist.data
             var wmin: number = sme.wave[seg][0]
             var wmax: number = sme.wave[seg][sme.wave[seg].length - 1]
             var vrad = 0
-            if (sme.vrad) vrad = sme.vrad[seg]
+            if (sme.header.vrad) vrad = sme.header.vrad[seg]
             wmin *= 1 - vrad / 3e5
             wmax *= 1 - vrad / 3e5
 
@@ -265,6 +265,8 @@ function plot_sme(sme: any) {
                     }, wmax)
 
                     if (idx != -1) {
+                        x_loc = sme.wave[seg][idx]
+
                         if (sme.synth) {
                             y_loc = sme.synth[seg][idx]
                         } else {
