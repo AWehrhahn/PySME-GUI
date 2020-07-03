@@ -18,7 +18,7 @@
     "lint": "eslint --ext .ts ."
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.50",
+    "@electron-forge/cli": "^6.0.0-beta.52",
     "@electron-forge/maker-deb": "^6.0.0-beta.50",
     "@electron-forge/maker-dmg": "^6.0.0-beta.50",
     "@electron-forge/maker-rpm": "^6.0.0-beta.50",
@@ -43,7 +43,7 @@
     "datatables.net-responsive-bs4": "^2.2.3",
     "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.5.0",
-    "plotly.js": "^1.54.1",
+    "plotly.js": "^1.54.5",
     "popper.js": "^1.16.1",
     "tmp": "^0.1.0",
     "untildify": "^4.0.0"
@@ -60,7 +60,10 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {},
+          "platforms": [
+            "linux"
+          ]
         },
         {
           "name": "@electron-forge/maker-dmg",
