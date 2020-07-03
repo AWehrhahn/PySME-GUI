@@ -39,6 +39,9 @@ git clone https://github.com/AWehrhahn/PySME-GUI
 cd pysme-gui
 # Install dependencies
 npm install
+# Compile SCSS to CSS
+npm install -g sass
+npm run sass
 # Run the app
 npm start
 ```
