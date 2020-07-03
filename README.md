@@ -20,11 +20,22 @@ To change the mask, select the "box select" tool in the upper right corner of th
 
 Save the SME file by clicking the "Save File" button.
 
-### Running the PySME
+### Running PySME
 *EXPERIMENTAL*
 
 To run PySME directly from the GUI use the "Synthesize" and "Fit" buttons. At the moment this will fit "teff", "logg", and "monh".
 Do not close the GUI once it is running, or you will probably loose all progress. If you still do, the output file is in the tmp directory of your system.
+
+## FAQ
+
+If things don't work, try the following steps:
+  - Use the GitHub version (as described in Build)
+  - make sure you are running in the same virtual environment as your PySME installation
+  - upgrade to the latest version of PySME (using the GitHub repository if necessary)
+  - upgrade all PySME requirements, using the PySME requirements.txt `pip install --upgrade -r requirements.txt`
+  - make a clean install by deleting node_modules and running `npm clean-install`
+  
+If it still doesn't work, open a pull request, or send me an email.
 
 ## Build
 
