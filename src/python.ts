@@ -16,7 +16,7 @@ async function call_python(script: string, args: string[]) {
                     console.error(err)
                     reject(err)
                 } catch (err) {
-                    err = `Unknown Python Error, code: ${code}`
+                    err = `Unknown Python Error, code: ${code}\n${err}`
                     show_error(err)
                     console.error(err)
                     reject(err)
