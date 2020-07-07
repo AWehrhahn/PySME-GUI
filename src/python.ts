@@ -1,12 +1,35 @@
+
+var settings = require('electron-settings');
+
+settings.configure({ dir: join(homedir, ".sme"), fileName: "gui-config.json", prettify: true })
+
+if (!settings.hasSync("python.command")) {
+    let obj = settings.getSync()
+    if (!obj.hasOwnProperty("python")) {
+        obj["python"] = {}
+    }
+    obj["python"]["command"] = "python"
+    settings.setSync(obj)
+}
+
 // Make this a setting that persist through restart?
-var python_command: string = "python"
 
 async function call_python(script: string, args: string[]) {
     var promise = new Promise<boolean>((resolve, reject) => {
         var script_file = join(__dirname, "scripts", script)
         args.unshift(script_file)
         // TODO test the version of the default python and also try python3
-        var child = spawn(python_command, args)
+        let obj = settings.getSync()
+        var python_command: string = obj["python"]["command"]
+
+        try {
+            var child = spawn(python_command, args)
+        } catch (err) {
+            let puberr = `Could not launch python using command '${python_command}\n${err}`
+            show_error(puberr)
+            console.error(err)
+            reject(puberr)
+        }
 
         child.on('exit', (code: any, signal: any) => {
             console.log(`child process exited with code ${code}`);
