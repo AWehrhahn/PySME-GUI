@@ -34,8 +34,14 @@ If things don't work, try the following steps:
   - upgrade to the latest version of PySME (using the GitHub repository if necessary)
   - upgrade all PySME requirements, using the PySME requirements.txt `pip install --upgrade -r requirements.txt`
   - make a clean install by deleting node_modules and running `npm clean-install`
+  - make sure that "python" calls a python version > 3.6 (i.e. what is compatible with pysme)
   
 If it still doesn't work, open a pull request, or send me an email.
+
+## Settings
+
+At the first execution, the GUI will create a settings file in your "~/.sme" directory called "gui-config.json".
+At the moment this only allows you to change the default python call. For example if your default pyhon calls python 2, and you want the PySME GUI to use python3 instead.
 
 ## Build
 
