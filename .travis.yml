@@ -6,9 +6,11 @@ jobs:
   include:
     - os: linux
       dist: bionic
-      before_install:
-        - sudo apt-get install dpkg
-        - sudo apt-get install fakeroot
+      addons:
+        apt:
+          packages:
+            - dpkg
+            - fakeroot
     - os: windows
     - os: osx
       before_install:
