@@ -80,24 +80,15 @@ function set_nlte_element(element: string, datafile: string) {
 }
 
 async function load_nlte_files(config: Config) {
-    // Add files that are available from the server
-    let nlte_file = join(homedir, ".sme", config["data.pointers.nlte_grids"])
-    let data: string = fs.readFileSync(nlte_file, "utf-8")
+    // Add files that are available on the server and in the local cache
+    let tmpout = tmp.fileSync({ postfix: ".json" });
+    let success = await call_python("get_datafiles.py", [tmpout.name, "nlte"])
+    let data: string = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
     let json = JSON.parse(data)
-    for (const key in json) {
-        if (json.hasOwnProperty(key)) {
-            add_nlte_file(key)
-        }
-    }
-
-    // Add nlte files in the correct folder
-    let misc_files_dir = untildify(config["data.nlte_grids"])
-    var misc_files = fs.readdirSync(misc_files_dir, { withFileTypes: true });
-    for (let index = 0; index < misc_files.length; index++) {
-        const element = misc_files[index];
-        if (element.isFile()) {
-            add_nlte_file(element.name)
-        }
+    // add the files to the internal list
+    for (let i = 0; i < json.length; i++) {
+        const element = json[i];
+        add_nlte_file(element)
     }
 }
 

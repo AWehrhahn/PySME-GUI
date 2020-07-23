@@ -31,24 +31,14 @@ function load_atmosphere_values(sme: SmeFile) {
 }
 
 async function load_atmosphere_files(config: Config) {
-    // Add files that are available from the server
-    let atmo_file = join(homedir, ".sme", config["data.pointers.atmospheres"])
-    let data: string = fs.readFileSync(atmo_file, "utf-8")
+    let tmpout = tmp.fileSync({ postfix: ".json" });
+    let success = await call_python("get_datafiles.py", [tmpout.name, "atmosphere"])
+    let data: string = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
     let json = JSON.parse(data)
-    for (const key in json) {
-        if (json.hasOwnProperty(key)) {
-            add_atmosphere_file(key)
-        }
-    }
 
-    // Add atmosphere files in the correct folder
-    let misc_files_dir = untildify(config["data.atmospheres"])
-    var misc_files = fs.readdirSync(misc_files_dir, { withFileTypes: true });
-    for (let index = 0; index < misc_files.length; index++) {
-        const element = misc_files[index];
-        if (element.isFile()) {
-            add_atmosphere_file(element.name)
-        }
+    for (let i = 0; i < json.length; i++) {
+        const element = json[i];
+        add_atmosphere_file(element)
     }
 }
 
