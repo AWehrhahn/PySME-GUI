@@ -244,55 +244,102 @@ function plot_sme(sme: any) {
 
             var seg_annotations: any = []
 
+            let lines_wlcent: number[] = []
+            let lines_labels: string[] = []
             for (let key = 0; key < lines.length; key++) {
                 const element: number = lines[key]["wlcent"];
                 if ((element > wmin) && (element < wmax)) {
+                    lines_wlcent.push(element)
+                    lines_labels.push(lines[key].species)
+                }
+            }
 
-                    var x_loc = element * (1 + vrad / 3e5)
-                    var y_loc = 1
+            // # Filter out closely packaged lines of the same species
+            // # Threshold for the distance between lines
+            let wlcent: number[] = []
+            let labels: string[] = []
+            let threshold = (wmax - wmin) / 100
+            let species: string[] = lines_labels.filter((v: string, i: number, a: string[]) => a.indexOf(v) === i)
 
-                    // Find the clostest data point
-                    var i = 0;
-                    var idx = -1;
-                    var closest = sme.wave[seg].reduce((acc: number, value: number) => {
-                        i += 1;
-                        if (Math.abs(value - x_loc) < acc) {
-                            idx = i;
-                            return Math.abs(value - x_loc)
-                        } else {
-                            return acc
+            for (let key = 0; key < species.length; key++) {
+                const sp = species[key]
+                let sp_lines: number[] = lines_wlcent.filter((v: number, i: number, a: number[]) => lines_labels[i] == sp)
+                let sp_mask: boolean[] = []
+                for (let k2 = 1; k2 < sp_lines.length; k2++){
+                    sp_mask.push(sp_lines[k2] - sp_lines[k2-1] < threshold)
+                }
+                sp_mask.push(false)
+                if (sp_mask.some((v) => v)) {
+                    let j = 0
+                    for (j = 0; (j < sp_lines.length) && !(sp_mask[j]); j++) {}
+
+                    for (let i = j; i < sp_lines.length; i++) {
+                        j = i
+                        let sp_wmid = 0;
+                        for (j = i; (j < sp_lines.length) && (sp_mask[j]); j++) {
+                            sp_wmid += sp_lines[j]
                         }
-                    }, wmax)
+                        sp_wmid /= (j - i)
+                        wlcent.push(sp_wmid)
+                        labels.push(sp + " +" + (j - i).toString())
+                        i = j
+                    }
+                } else {
+                    for (let k2 = 0; k2 < sp_lines.length; k2++) {
+                        wlcent.push(sp_lines[k2])
+                        labels.push(sp)
+                    }
+                }
+            }
 
-                    if (idx != -1) {
-                        x_loc = sme.wave[seg][idx]
+            console.log(labels)
+            console.log(wlcent)
 
-                        if (sme.synth) {
-                            y_loc = sme.synth[seg][idx]
-                        } else {
-                            if (sme.spec) {
-                                y_loc = sme.spec[seg][idx]
-                            }
+            for (let key = 0; key < wlcent.length; key++) {
+                var x_loc = wlcent[key] * (1 + vrad / 3e5)
+                var y_loc = 1
+
+                // Find the clostest data point
+                var i = 0;
+                var idx = -1;
+                var closest = sme.wave[seg].reduce((acc: number, value: number) => {
+                    i += 1;
+                    if (Math.abs(value - x_loc) < acc) {
+                        idx = i;
+                        return Math.abs(value - x_loc)
+                    } else {
+                        return acc
+                    }
+                }, wmax)
+
+                if (idx != -1) {
+                    x_loc = sme.wave[seg][idx]
+
+                    if (sme.synth) {
+                        y_loc = sme.synth[seg][idx]
+                    } else {
+                        if (sme.spec) {
+                            y_loc = sme.spec[seg][idx]
                         }
                     }
-
-                    seg_annotations.push({
-                        x: x_loc,
-                        y: y_loc,
-                        xref: "x",
-                        yref: "y",
-                        text: lines[key]["species"],
-                        hovertext: lines[key]["wlcent"],
-                        textangle: 90,
-                        opacity: 1,
-                        ax: 0,
-                        ay: 1.2,
-                        ayref: "y",
-                        showarrow: true,
-                        arrowhead: 7,
-                        xanchor: "left"
-                    })
                 }
+
+                seg_annotations.push({
+                    x: x_loc,
+                    y: y_loc,
+                    xref: "x",
+                    yref: "y",
+                    text: labels[key],
+                    hovertext: wlcent[key],
+                    textangle: 90,
+                    opacity: 1,
+                    ax: 0,
+                    ay: 1.2,
+                    ayref: "y",
+                    showarrow: true,
+                    arrowhead: 7,
+                    xanchor: "left"
+                })
             }
             annotations[seg] = seg_annotations
         }
