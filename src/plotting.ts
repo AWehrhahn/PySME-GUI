@@ -5,6 +5,7 @@ var fmt = {
     Syn: { color: "#ff7f0e", linestyle: "solid", marker: "" },
     LineMask: { facecolor: "#bcbd22", alpha: 1 },
     ContMask: { facecolor: "#d62728", alpha: 1 },
+    fontsize: 16,
 }
 
 type mask_modes = "bad" | "line" | "cont";
@@ -265,13 +266,13 @@ function plot_sme(sme: any) {
                 const sp = species[key]
                 let sp_lines: number[] = lines_wlcent.filter((v: number, i: number, a: number[]) => lines_labels[i] == sp)
                 let sp_mask: boolean[] = []
-                for (let k2 = 1; k2 < sp_lines.length; k2++){
-                    sp_mask.push(sp_lines[k2] - sp_lines[k2-1] < threshold)
+                for (let k2 = 1; k2 < sp_lines.length; k2++) {
+                    sp_mask.push(sp_lines[k2] - sp_lines[k2 - 1] < threshold)
                 }
                 sp_mask.push(false)
                 if (sp_mask.some((v) => v)) {
                     let j = 0
-                    for (j = 0; (j < sp_lines.length) && !(sp_mask[j]); j++) {}
+                    for (j = 0; (j < sp_lines.length) && !(sp_mask[j]); j++) { }
 
                     for (let i = j; i < sp_lines.length; i++) {
                         j = i
@@ -334,11 +335,12 @@ function plot_sme(sme: any) {
                     textangle: 90,
                     opacity: 1,
                     ax: 0,
-                    ay: 1.2,
+                    ay: 1.3,
                     ayref: "y",
                     showarrow: true,
                     arrowhead: 7,
-                    xanchor: "left"
+                    xanchor: "left",
+                    font: { size: fmt["fontsize"] }
                 })
             }
             annotations[seg] = seg_annotations
@@ -379,7 +381,7 @@ function plot_sme(sme: any) {
         yaxis: { title: "Intensity" },
         showlegend: true,
         legend: { traceorder: "reversed" },
-        font: { family: "Open Sans, sans-serif" },
+        font: { family: "Open Sans, sans-serif", size: fmt["fontsize"] },
         selectdirection: "h",
         sliders: [slider],
         annotations: annotations[0]
