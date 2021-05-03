@@ -73,20 +73,23 @@ async function load_file(filename: string) {
     var content: string = fs.readFileSync(tmpout.name, { encoding: "utf-8" })
     var obj = JSON.parse(content)
 
+    console.log(obj)
+
     var result: any = { "header": obj["header"] }
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
             if (key == "header") continue;
             const element = obj[key];
-            const ext_class = element["header"]["extension_class"];
+            const ext_module = element["header"]["__module__"];
+            const ext_class = element["header"]["__class__"];
             let ext: any = {};
-            if (ext_class == "BinaryDataExtension") {
+            if ((ext_module == "flex.extensions.bindata") && (ext_class == "BinaryDataExtension")) {
                 ext = load_binary_data_extension(element["header"], element)
             }
-            if (ext_class == "MultipleDataExtension") {
+            if ((ext_module == "flex.extensions.bindata") && (ext_class == "MultipleDataExtension")) {
                 ext = load_multiple_data_extension(element["header"], element)
             }
-            if (ext_class == "JSONTableExtension") {
+            if ((ext_module == "flex.extensions.tabledata") && (ext_class == "JSONTableExtension")) {
                 ext = load_table_extension(element["header"], element)
             }
 
