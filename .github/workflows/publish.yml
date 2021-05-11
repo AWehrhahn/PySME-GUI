@@ -27,7 +27,7 @@ jobs:
     steps:
       # Install necessary packages on the machine
       - name: prepare machine
-        run: apt-get install -y dpkg fakeroot
+        run: sudo apt-get install -y dpkg fakeroot
       
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
