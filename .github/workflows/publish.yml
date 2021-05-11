@@ -13,9 +13,27 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  pre-release:
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create-release.outputs.upload_url }}
+      tag_name: ${{ steps.tag-release.outputs.new_tag }}
+    steps:
+      - name: GitHub Tag
+        id: tag-release
+        uses: mathieudutour/github-tag-action@v5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        id: create-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag_release.outputs.new_tag }}
+    
   build:
-  
     strategy:
       fail-fast: false
       matrix:
@@ -61,33 +79,12 @@ jobs:
       - run: npm run sass
       - run: npm run make
       
-      - name: Upload Build
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.name }}
-          path: out/make/**/*.*
-  
-  release:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-      - name: Download all Build Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: build
-  
-      - name: GitHub Tag
-        id: tag_release
-        uses: mathieudutour/github-tag-action@v5
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-  
+      # Add the files to the release
       - name: Release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: build/*
-          fail_on_unmatched_files: true
-          tag_name: ${{ steps.tag_release.outputs.new_tag }}
+          files: out/make/**/*.*
+          tag_name: ${{ needs.create_release.outputs.tag_name }}
   
