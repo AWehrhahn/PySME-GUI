@@ -34,6 +34,7 @@ jobs:
           tag_name: ${{ steps.tag_release.outputs.new_tag }}
     
   build:
+    needs: pre-release
     strategy:
       fail-fast: false
       matrix:
