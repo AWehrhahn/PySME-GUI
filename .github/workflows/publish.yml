@@ -18,21 +18,25 @@ jobs:
   
     strategy:
       matrix:
-        os-version: [ubuntu-latest]
+        os-version: [ubuntu-latest, macos-latest]
     
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os-version }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Install necessary packages on the machine
-      - name: prepare machine
-        run: sudo apt-get install -y dpkg fakeroot
+      # Set up Node js
+      - name: Use Node.js
+        uses: actions/setup-node@v2
       
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
+      # Install necessary packages on the machine
+      - name: install ubuntu requirements
+        if: matrix.os-version == 'ubuntu-latest'
+        run: sudo apt-get install -y dpkg fakeroot
+        
+      - name: install macos requirements
+        if: matrix.os-version == 'macos-latest'
+        run: npm install -D macos-alias
       
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
