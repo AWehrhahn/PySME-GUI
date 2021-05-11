@@ -19,7 +19,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os-version: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - name: ubuntu-latest
+            os-version: ubuntu-latest
+            sudo-cmd: sudo
+          - name: macos-latest
+            os-version: macos-latest
+            sudo-cmd: sudo
+          - name: windows-latest
+            os-version: windows-latest
+            sudo-cmd: ''
     
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os-version }}
@@ -40,7 +49,7 @@ jobs:
 
       # Install the packages and SASS
       - run: npm ci
-      - run: sudo npm install -g sass
+      - run: ${{ matrix.sudo-cmd }} npm install -g sass
       - run: mkdir -p css
       
       - name: install macos requirements
@@ -51,6 +60,21 @@ jobs:
       - run: npm run build
       - run: npm run sass
       - run: npm run make
+      
+      - name: Upload Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.name }}
+          path: out/make/**/*.*
+  
+  release:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+      - name: Download all Build Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: build
   
       - name: GitHub Tag
         id: tag_release
@@ -58,17 +82,12 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
   
-      - uses: actions/checkout@v2
-        with:
-          ref:  ${{ steps.tag_release.outputs.new_tag }}
-          clean: false
-  
       - name: Release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: out/make/**/*.*
+          files: build/*
           fail_on_unmatched_files: true
           tag_name: ${{ steps.tag_release.outputs.new_tag }}
   
