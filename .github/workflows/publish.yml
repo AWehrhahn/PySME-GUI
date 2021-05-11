@@ -87,5 +87,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: out/make/**/*.*
-          tag_name: ${{ needs.create_release.outputs.tag_name }}
+          tag_name: ${{ needs.pre-release.outputs.tag_name }}
   
