@@ -107,15 +107,16 @@ async function save_file(filename: string, sme: any) {
         if (sme.hasOwnProperty(key)) {
             if (key == "header") continue;
             const element = sme[key];
-            const ext_class = element["header"]["extension_class"];
+            const ext_module = element["header"]["__module__"];
+            const ext_class = element["header"]["__class__"];
             let ext: any = {};
-            if (ext_class == "BinaryDataExtension") {
+            if ((ext_module == "flex.extensions.bindata") && (ext_class == "BinaryDataExtension")) {
                 ext = save_binary_data_extension(element["header"], element)
             }
-            if (ext_class == "MultipleDataExtension") {
+            if ((ext_module == "flex.extensions.bindata") && (ext_class == "MultipleDataExtension")) {
                 ext = save_multiple_data_extension(element["header"], element)
             }
-            if (ext_class == "JSONTableExtension") {
+            if ((ext_module == "flex.extensions.tabledata") && (ext_class == "JSONTableExtension")) {
                 ext = save_table_extension(element["header"], element)
             }
 
