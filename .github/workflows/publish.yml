@@ -17,6 +17,7 @@ jobs:
   build:
   
     strategy:
+      fail-fast: false
       matrix:
         os-version: [ubuntu-latest, macos-latest]
     
@@ -43,7 +44,7 @@ jobs:
 
       # Install the packages and SASS
       - run: npm ci
-      - run: npm install -g sass
+      - run: sudo npm install -g sass
       - run: mkdir -p css
       
       # Build the app
