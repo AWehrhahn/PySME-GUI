@@ -118,6 +118,7 @@ interface SmeFile {
     mask: IntVector;
     synth: Vector;
     cont: Vector;
+    telluric: Vector;
     linelist: {
         header: LineList;
         data: { [id: string]: any };

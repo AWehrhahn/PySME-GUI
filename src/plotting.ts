@@ -221,10 +221,21 @@ function plot_sme(sme: any) {
         }
         if (sme.synth) {
             // Synthetic
+            let data_synth:FloatArray;
+            if (sme.telluric) {
+                data_synth = new Float64Array(sme.synth[seg].length)
+                for (let i = 0; i < sme.synth[seg].length; i++) {
+                    data_synth[i] = sme.synth[seg][i] * sme.telluric[seg][i];
+                }
+                console.log(data_synth)
+            } else {
+                data_synth = sme.synth[seg]
+            }
+
             data.push({
                 type: "scattergl",
                 x: sme.wave[seg],
-                y: sme.synth[seg],
+                y: data_synth,
                 name: "Synthethic",
                 line: { "color": fmt["Syn"]["color"] },
                 legendgroup: 1,

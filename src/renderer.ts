@@ -123,6 +123,7 @@ function create_empty_sme_structure() {
         mask: null,
         synth: null,
         cont: null,
+        telluric: null,
         linelist: {
             header: {
                 format: "short",
