@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/AWehrhahn/PySME-GUI.svg?branch=master)](https://travis-ci.com/AWehrhahn/PySME-GUI)
+[![CI](https://github.com/AWehrhahn/PySME-GUI/actions/workflows/publish.yml/badge.svg)](https://github.com/AWehrhahn/PySME-GUI/actions/workflows/publish.yml)
 
 # PySME-GUI
 
