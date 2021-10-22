@@ -12,7 +12,7 @@
     "sass": "sass scss/index.scss css/index.css",
     "watch": "tsc -w",
     "make": "electron-forge make",
-    "start": "electron-forge start",
+    "start": "tsc & electron-forge start",
     "package": "electron-forge package",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts ."
