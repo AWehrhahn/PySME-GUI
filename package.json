@@ -12,20 +12,21 @@
     "sass": "sass scss/index.scss css/index.css",
     "watch": "tsc -w",
     "make": "electron-forge make",
-    "start": "tsc && electron-forge start",
+    "start": "electron-forge start",
     "package": "electron-forge package",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts ."
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.52",
-    "@electron-forge/maker-deb": "^6.0.0-beta.50",
+    "@electron-forge/cli": "^6.0.0-beta.61",
+    "@electron-forge/maker-deb": "^6.0.0-beta.61",
     "@electron-forge/maker-dmg": "^6.0.0-beta.50",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.50",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.61",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
+    "@electron-forge/maker-zip": "^6.0.0-beta.61",
     "@types/plotly.js": "^1.50.1",
     "@types/tmp": "^0.1.0",
-    "electron": "^9.4.0",
+    "electron": "^11.5.0",
     "sass": "^1.26.3",
     "tslint": "^5.19.0",
     "typescript": "^3.6.0"
@@ -38,7 +39,7 @@
     "bootstrap": "^4.4.1",
     "chokidar": "^3.3.1",
     "citation-js": "^0.5.0-alpha.5",
-    "datatables.net": "^1.10.20",
+    "datatables.net": "^1.11.3",
     "datatables.net-bs4": "^1.10.20",
     "datatables.net-responsive-bs4": "^2.2.3",
     "electron-settings": "^4.0.2",
@@ -56,15 +57,15 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "PySmeGUI"
+            "name": "pysme_gui"
           }
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {},
           "platforms": [
             "linux"
-          ]
+          ],
+          "config": {}
         },
         {
           "name": "@electron-forge/maker-dmg",
