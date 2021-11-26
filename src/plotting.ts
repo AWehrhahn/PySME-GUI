@@ -1,3 +1,4 @@
+import { Main } from "electron";
 
 // Define the colors and linestyles to use in the plot
 var fmt = {
@@ -291,9 +292,11 @@ function plot_sme(sme: any) {
                         for (j = i; (j < sp_lines.length) && (sp_mask[j]); j++) {
                             sp_wmid += sp_lines[j]
                         }
-                        sp_wmid /= (j - i)
-                        wlcent.push(sp_wmid)
-                        labels.push(sp + " +" + (j - i).toString())
+                        sp_wmid /= Math.max((j - i), 1)
+                        if (sp_wmid != 0){
+                            wlcent.push(sp_wmid)
+                            labels.push(sp + " +" + (j - i).toString())
+                        }
                         i = j
                     }
                 } else {
@@ -310,6 +313,7 @@ function plot_sme(sme: any) {
             for (let key = 0; key < wlcent.length; key++) {
                 var x_loc = wlcent[key] * (1 + vrad / 3e5)
                 var y_loc = 1
+                var ay = 1.3;
 
                 // Find the clostest data point
                 var i = 0;
@@ -329,9 +333,23 @@ function plot_sme(sme: any) {
 
                     if (sme.synth) {
                         y_loc = sme.synth[seg][idx]
+                        ay = sme.synth[seg].reduce((p:number, c:number) => {
+                            if (p > c) {
+                                return p;
+                            }
+                            return c;
+                        })
+                        ay = ay * 1.1;
                     } else {
                         if (sme.spec) {
                             y_loc = sme.spec[seg][idx]
+                            ay = sme.spec[seg].reduce((p:number, c:number) => {
+                                if (p > c) {
+                                    return p;
+                                }
+                                return c;
+                            })
+                            ay = ay * 1.1;
                         }
                     }
                 }
@@ -346,7 +364,7 @@ function plot_sme(sme: any) {
                     textangle: 90,
                     opacity: 1,
                     ax: 0,
-                    ay: 1.3,
+                    ay: ay,
                     ayref: "y",
                     showarrow: true,
                     arrowhead: 7,
