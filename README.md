@@ -1,5 +1,7 @@
 [![CI](https://github.com/AWehrhahn/PySME-GUI/actions/workflows/publish.yml/badge.svg)](https://github.com/AWehrhahn/PySME-GUI/actions/workflows/publish.yml)
 
+# PySME-GUI continues development here: https://github.com/MingjieJian/PySME-GUI
+
 # PySME-GUI
 
 This is a GUI for [PySME](https://github.com/AWehrhahn/SME). It can be used to look at and modify SME structures, and will eventually also be able to monitor a run of PySME.
